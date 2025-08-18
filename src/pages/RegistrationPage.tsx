@@ -179,6 +179,30 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     }
   }
 
+  const isSidebarTabComplete = (tabNumber: number): boolean => {
+    switch (tabNumber) {
+      case 1:
+        // Check if all 3 sub-tabs are complete
+        return isTabValid(1) && isTabValid(2) && isTabValid(3)
+      case 2:
+        // Check if company heads and contact persons have required fields
+        const hasValidCompanyHeads = formData.companyHeads.every((head: any) => 
+          head.name && head.position && head.mobile && head.nationalId && head.email
+        )
+        const hasValidContactPersons = formData.contactPersons.every((person: any) => 
+          person.name && person.position && person.mobile && person.nationalId && person.email
+        )
+        return hasValidCompanyHeads && hasValidContactPersons
+      case 3:
+        // Check financial information completeness
+        return !!(formData.fiscalCapital && formData.domesticSalesDetails && 
+                 formData.domesticSalesValue && formData.totalRevenueYear && 
+                 formData.annualRevenue && formData.auditedBalanceSheet)
+      default:
+        return false
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Main Content */}
@@ -217,28 +241,43 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                   <li>
                     <button
                       onClick={() => setActiveSidebarTab(1)}
-                      className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center ${activeSidebarTab === 1 ? 'bg-itida-blue text-white' : 'hover:bg-gray-200 text-gray-700'}`}
+                      className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-between ${activeSidebarTab === 1 ? 'bg-itida-blue text-white' : 'hover:bg-gray-200 text-gray-700'}`}
                     >
-                      <span className="mr-2">1.</span>
-                      <span>{t.registrationCompany}</span>
+                      <div className="flex items-center">
+                        <span className="mr-2">1.</span>
+                        <span>{t.registrationCompany}</span>
+                      </div>
+                      {!isSidebarTabComplete(1) && (
+                        <span className="text-red-500 font-bold text-lg">*</span>
+                      )}
                     </button>
                   </li>
                   <li>
                     <button
                       onClick={() => setActiveSidebarTab(2)}
-                      className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center ${activeSidebarTab === 2 ? 'bg-itida-blue text-white' : 'hover:bg-gray-200 text-gray-700'}`}
+                      className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-between ${activeSidebarTab === 2 ? 'bg-itida-blue text-white' : 'hover:bg-gray-200 text-gray-700'}`}
                     >
-                      <span className="mr-2">2.</span>
-                      <span>{t.companyHeadContacts}</span>
+                      <div className="flex items-center">
+                        <span className="mr-2">2.</span>
+                        <span>{t.companyHeadContacts}</span>
+                      </div>
+                      {!isSidebarTabComplete(2) && (
+                        <span className="text-red-500 font-bold text-lg">*</span>
+                      )}
                     </button>
                   </li>
                   <li>
                     <button
                       onClick={() => setActiveSidebarTab(3)}
-                      className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center ${activeSidebarTab === 3 ? 'bg-itida-blue text-white' : 'hover:bg-gray-200 text-gray-700'}`}
+                      className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-between ${activeSidebarTab === 3 ? 'bg-itida-blue text-white' : 'hover:bg-gray-200 text-gray-700'}`}
                     >
-                      <span className="mr-2">3.</span>
-                      <span>{t.financialInformation}</span>
+                      <div className="flex items-center">
+                        <span className="mr-2">3.</span>
+                        <span>{t.financialInformation}</span>
+                      </div>
+                      {!isSidebarTabComplete(3) && (
+                        <span className="text-red-500 font-bold text-lg">*</span>
+                      )}
                     </button>
                   </li>
                 </ul>
