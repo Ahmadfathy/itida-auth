@@ -7,7 +7,7 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ variant = 'default', onClick, className = '' }) => {
-  const isWhite = variant === 'white'
+  // const isWhite = variant === 'white'
   
   return (
     <div 

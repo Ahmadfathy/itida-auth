@@ -8,7 +8,7 @@ interface Tab1CompanyLegalProps {
   language: 'en' | 'ar'
 }
 
-const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputChange, language }) => {
+const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputChange }) => {
   const { language: currentLanguage } = useLanguage()
   const t = translations[currentLanguage]
   

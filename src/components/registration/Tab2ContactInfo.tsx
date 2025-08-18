@@ -8,7 +8,7 @@ interface Tab2ContactInfoProps {
   language: 'en' | 'ar'
 }
 
-const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChange, language }) => {
+const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChange }) => {
   const { language: currentLanguage } = useLanguage()
   const t = translations[currentLanguage]
   

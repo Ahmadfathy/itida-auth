@@ -6,14 +6,12 @@ interface Tab3ActivitiesAttachmentsProps {
   formData: any
   onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
   onFileChange: (fieldName: string, file: File | null) => void
-  language: 'en' | 'ar'
 }
 
 const Tab3ActivitiesAttachments: React.FC<Tab3ActivitiesAttachmentsProps> = ({ 
   formData, 
   onInputChange, 
-  onFileChange, 
-  language 
+  onFileChange 
 }) => {
   const { language: currentLanguage } = useLanguage()
   const t = translations[currentLanguage]

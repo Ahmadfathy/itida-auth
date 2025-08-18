@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../contexts/LanguageContext'
-import Logo from './Logo'
+// import Logo from './Logo'
 
 interface ForgotPasswordProps {
   onBackToHome?: () => void
