@@ -188,7 +188,7 @@ const Tab3ActivitiesAttachments: React.FC<Tab3ActivitiesAttachmentsProps> = ({
         <div className="space-y-4">
           {/* Commercial Register */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               {t.commercialRegisterImage}
             </label>
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -208,7 +208,7 @@ const Tab3ActivitiesAttachments: React.FC<Tab3ActivitiesAttachmentsProps> = ({
 
           {/* Tax Card */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               {t.taxCardImage}
             </label>
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -228,7 +228,7 @@ const Tab3ActivitiesAttachments: React.FC<Tab3ActivitiesAttachmentsProps> = ({
 
           {/* National ID */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               {t.nationalIdImage}
             </label>
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -248,7 +248,7 @@ const Tab3ActivitiesAttachments: React.FC<Tab3ActivitiesAttachmentsProps> = ({
 
           {/* Investment Gazette */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               {t.investmentGazetteImage}
             </label>
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -268,7 +268,7 @@ const Tab3ActivitiesAttachments: React.FC<Tab3ActivitiesAttachmentsProps> = ({
 
           {/* Declaration Undertaking */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               {t.declarationUndertakingImage}
             </label>
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -295,7 +295,7 @@ const Tab3ActivitiesAttachments: React.FC<Tab3ActivitiesAttachmentsProps> = ({
         </h3>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             {t.methodOfLicenseReceipt}
           </label>
           <select

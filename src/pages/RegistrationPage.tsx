@@ -390,7 +390,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={head.name}
                                   onChange={(e) => handleDynamicInputChange('companyHeads', index, 'name', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="اسمك"
                                 />
                               </div>
@@ -400,7 +400,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={head.position}
                                   onChange={(e) => handleDynamicInputChange('companyHeads', index, 'position', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="المنصب"
                                 />
                               </div>
@@ -410,7 +410,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={head.mobile}
                                   onChange={(e) => handleDynamicInputChange('companyHeads', index, 'mobile', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="رقم المحمول"
                                 />
                               </div>
@@ -420,7 +420,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={head.nationalId}
                                   onChange={(e) => handleDynamicInputChange('companyHeads', index, 'nationalId', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="الرقم القومي"
                                 />
                               </div>
@@ -430,7 +430,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="email" 
                                   value={head.email}
                                   onChange={(e) => handleDynamicInputChange('companyHeads', index, 'email', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="البريد الإلكتروني"
                                 />
                               </div>
@@ -440,7 +440,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="email" 
                                   value={head.email2}
                                   onChange={(e) => handleDynamicInputChange('companyHeads', index, 'email2', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="البريد الإلكتروني 2"
                                 />
                               </div>
@@ -483,7 +483,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={person.name}
                                   onChange={(e) => handleDynamicInputChange('contactPersons', index, 'name', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="اسمك"
                                 />
                               </div>
@@ -493,7 +493,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={person.position}
                                   onChange={(e) => handleDynamicInputChange('contactPersons', index, 'position', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="المنصب"
                                 />
                               </div>
@@ -503,7 +503,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={person.mobile}
                                   onChange={(e) => handleDynamicInputChange('contactPersons', index, 'mobile', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="رقم المحمول"
                                 />
                               </div>
@@ -513,7 +513,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={person.nationalId}
                                   onChange={(e) => handleDynamicInputChange('contactPersons', index, 'nationalId', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="الرقم القومي"
                                 />
                               </div>
@@ -523,7 +523,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="email" 
                                   value={person.email}
                                   onChange={(e) => handleDynamicInputChange('contactPersons', index, 'email', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="البريد الإلكتروني"
                                 />
                               </div>
@@ -565,7 +565,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <label className="block text-sm font-medium text-gray-700 mb-1">Parent <span className="text-red-500">*</span></label>
                           <input 
                             type="text" 
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            className="input-field" 
                             placeholder="Parent"
                           />
                         </div>
@@ -573,7 +573,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <label className="block text-sm font-medium text-gray-700 mb-1">Child <span className="text-red-500">*</span></label>
                           <input 
                             type="text" 
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            className="input-field" 
                             placeholder="Child"
                           />
                         </div>
@@ -581,13 +581,13 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <label className="block text-sm font-medium text-gray-700 mb-1">Grand Child <span className="text-red-500">*</span></label>
                           <input 
                             type="text" 
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            className="input-field" 
                             placeholder="Grand Child"
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Industry Sectors</label>
-                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                          <select className="input-field">
                             <option value="">Select Industry Sector</option>
                           </select>
                         </div>
@@ -605,7 +605,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={product.name}
                                   onChange={(e) => handleDynamicInputChange('products', index, 'name', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Product Name"
                                 />
                               </div>
@@ -615,7 +615,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={product.description}
                                   onChange={(e) => handleDynamicInputChange('products', index, 'description', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Product Description"
                                 />
                               </div>
@@ -658,7 +658,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={service.name}
                                   onChange={(e) => handleDynamicInputChange('services', index, 'name', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Service Name"
                                 />
                               </div>
@@ -668,7 +668,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={service.description}
                                   onChange={(e) => handleDynamicInputChange('services', index, 'description', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Service Description"
                                 />
                               </div>
@@ -703,13 +703,13 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Key Technologies</label>
-                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                          <select className="input-field">
                             <option value="">Select Technology</option>
                           </select>
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Certificates</label>
-                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                          <select className="input-field">
                             <option value="">Select Certificate</option>
                           </select>
                         </div>
@@ -719,19 +719,19 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Affiliation</label>
-                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                          <select className="input-field">
                             <option value="">Select Affiliation</option>
                           </select>
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Memberships</label>
-                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                          <select className="input-field">
                             <option value="">Select Membership</option>
                           </select>
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Partnerships</label>
-                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                          <select className="input-field">
                             <option value="">Select Partnership</option>
                           </select>
                         </div>
@@ -749,7 +749,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={reference.name}
                                   onChange={(e) => handleDynamicInputChange('customerReferences', index, 'name', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Customer Name"
                                 />
                               </div>
@@ -758,7 +758,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                 <select 
                                   value={reference.country}
                                   onChange={(e) => handleDynamicInputChange('customerReferences', index, 'country', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                  className="input-field"
                                 >
                                   <option value="">Select Country</option>
                                   <option value="option1">Option 1</option>
@@ -770,7 +770,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={reference.projectSize}
                                   onChange={(e) => handleDynamicInputChange('customerReferences', index, 'projectSize', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Project Size"
                                 />
                               </div>
@@ -780,7 +780,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={reference.scope}
                                   onChange={(e) => handleDynamicInputChange('customerReferences', index, 'scope', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Scope"
                                 />
                               </div>
@@ -790,7 +790,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={reference.description}
                                   onChange={(e) => handleDynamicInputChange('customerReferences', index, 'description', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Project Description"
                                 />
                               </div>
@@ -882,7 +882,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <label className="block text-sm font-medium text-gray-700 mb-1">Fiscal Capital <span className="text-red-500">*</span></label>
                           <input 
                             type="text" 
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            className="input-field" 
                             placeholder="Enter fiscal capital"
                           />
                         </div>
@@ -894,7 +894,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <label className="block text-sm font-medium text-gray-700 mb-1">Domestic Sales Details <span className="text-red-500">*</span></label>
                           <input 
                             type="text" 
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            className="input-field" 
                             placeholder="Enter domestic sales details"
                           />
                         </div>
@@ -903,7 +903,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <div className="relative">
                             <input 
                               type="text" 
-                              className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                              className="input-field" 
                               placeholder="Enter domestic sales value"
                             />
                             <div className="absolute right-2 top-2">
@@ -923,7 +923,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <label className="block text-sm font-medium text-gray-700 mb-1">Total Revenue Year <span className="text-red-500">*</span></label>
                           <input 
                             type="text" 
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            className="input-field" 
                             placeholder="Enter total revenue year"
                           />
                         </div>
@@ -931,7 +931,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <label className="block text-sm font-medium text-gray-700 mb-1">Annual Revenue <span className="text-red-500">*</span></label>
                           <input 
                             type="text" 
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            className="input-field" 
                             placeholder="Enter annual revenue"
                           />
                         </div>
@@ -978,7 +978,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={exportInfo.year}
                                   onChange={(e) => handleDynamicInputChange('exportInformation', index, 'year', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Year"
                                 />
                               </div>
@@ -988,7 +988,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={exportInfo.marketRegion}
                                   onChange={(e) => handleDynamicInputChange('exportInformation', index, 'marketRegion', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Market region"
                                 />
                               </div>
@@ -998,7 +998,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={exportInfo.country}
                                   onChange={(e) => handleDynamicInputChange('exportInformation', index, 'country', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Country"
                                 />
                               </div>
@@ -1009,7 +1009,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                     type="text" 
                                     value={exportInfo.valueExported}
                                     onChange={(e) => handleDynamicInputChange('exportInformation', index, 'valueExported', e.target.value)}
-                                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                    className="input-field" 
                                     placeholder="Value exported"
                                   />
                                   <div className="absolute right-2 top-2">
@@ -1054,7 +1054,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <label className="block text-sm font-medium text-gray-700 mb-1">Total No of Employees</label>
                           <input 
                             type="text" 
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            className="input-field" 
                             placeholder="Enter total number of employees"
                           />
                         </div>
@@ -1062,7 +1062,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                           <label className="block text-sm font-medium text-gray-700 mb-1">Year of Establishment</label>
                           <input 
                             type="text" 
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            className="input-field" 
                             placeholder="Enter year of establishment"
                           />
                         </div>
@@ -1071,7 +1071,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       {/* Type of Ownership */}
                       <div className="mb-6">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Type of Ownership</label>
-                        <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <select className="input-field">
                           <option value="">Select type of ownership</option>
                           <option value="private">Private</option>
                           <option value="public">Public</option>
@@ -1091,7 +1091,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={owner.name}
                                   onChange={(e) => handleDynamicInputChange('owners', index, 'name', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Owner name"
                                 />
                               </div>
@@ -1101,7 +1101,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={owner.mobile}
                                   onChange={(e) => handleDynamicInputChange('owners', index, 'mobile', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Mobile number"
                                 />
                               </div>
@@ -1111,7 +1111,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                   type="text" 
                                   value={owner.telephone}
                                   onChange={(e) => handleDynamicInputChange('owners', index, 'telephone', e.target.value)}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  className="input-field" 
                                   placeholder="Telephone number"
                                 />
                               </div>
@@ -1122,7 +1122,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                                     type="email" 
                                     value={owner.email}
                                     onChange={(e) => handleDynamicInputChange('owners', index, 'email', e.target.value)}
-                                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                    className="input-field" 
                                     placeholder="Email address"
                                   />
                                   <div className="absolute right-2 top-2">

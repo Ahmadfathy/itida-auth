@@ -27,7 +27,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
       {/* Company Names */}
       <div className="grid md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             {t.companyNameEnglish}
             <span className="text-red-500 ml-1">*</span>
           </label>
@@ -43,7 +43,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             {t.companyNameArabic}
             <span className="text-red-500 ml-1">*</span>
           </label>
@@ -61,7 +61,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
 
       {/* Commercial Denomination */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {t.commercialDenomination}
         </label>
         <input
@@ -76,7 +76,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
 
       {/* Legal Type */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {t.legalType}
           <span className="text-red-500 ml-1">*</span>
         </label>
@@ -114,7 +114,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
               className="mt-1 h-4 w-4 text-itida-blue focus:ring-itida-blue border-gray-300 rounded"
             />
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 {t.commercialRegistryNumber}
               </label>
               <input
@@ -139,7 +139,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
               className="mt-1 h-4 w-4 text-itida-blue focus:ring-itida-blue border-gray-300 rounded"
             />
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 {t.unifiedCommercialRegistryNumber}
               </label>
               <input
@@ -164,7 +164,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
               className="mt-1 h-4 w-4 text-itida-blue focus:ring-itida-blue border-gray-300 rounded"
             />
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 {t.taxRegistryNumber}
               </label>
               <input
@@ -183,7 +183,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
 
       {/* Commercial Registration Date */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {t.commercialRegistrationDate}
         </label>
         <input
