@@ -208,11 +208,11 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
           </div>
 
           {/* Form Container with Sidebar */}
-          <div className="bg-white rounded-2xl shadow-xl border-2 border-green-200 flex flex-col md:flex-row">
+          <div className="bg-white rounded-2xl shadow-xl border-2 border-green-200 flex flex-col md:flex-row items-stretch">
             {/* Sidebar */}
-            <div className="w-full md:w-64 bg-gray-50 border-r border-gray-200 md:sticky md:top-8 md:self-start">
+            <div className="self-stretch w-full md:w-80 bg-gray-50 rounded-s-2xl border-gray-200 md:sticky md:top-8 md:self-start">
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">{t.companiesRegistrationForm}</h3>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">{t.companiesRegistrationForm}</h3>
                 <ul className="space-y-2">
                   <li>
                     <button
