@@ -12,7 +12,14 @@ export type Language = 'en' | 'ar'
 
 function App() {
   const [language, setLanguage] = useState<Language>(getInitialLanguage)
-  const [currentPage, setCurrentPage] = useState<'home' | 'forgot-password' | 'registration'>('home')
+  const getInitialPage = (): 'home' | 'forgot-password' | 'registration' => {
+    const path = window.location.pathname
+    if (path === '/forgot-password') return 'forgot-password'
+    if (path === '/registration') return 'registration'
+    return 'home'
+  }
+
+  const [currentPage, setCurrentPage] = useState<'home' | 'forgot-password' | 'registration'>(getInitialPage())
 
   const toggleLanguage = () => {
     const newLanguage = language === 'en' ? 'ar' : 'en'
@@ -37,16 +44,22 @@ function App() {
 
   // Update URL when page changes
   React.useEffect(() => {
+    const currentPath = window.location.pathname
+    let newPath = '/'
+    
     if (currentPage === 'forgot-password') {
-      window.history.pushState({}, '', '/forgot-password')
+      newPath = '/forgot-password'
     } else if (currentPage === 'registration') {
-      window.history.pushState({}, '', '/registration')
-    } else {
-      window.history.pushState({}, '', '/')
+      newPath = '/registration'
+    }
+    
+    // Only update URL if it's different from current path
+    if (currentPath !== newPath) {
+      window.history.pushState({}, '', newPath)
     }
   }, [currentPage])
 
-  // Handle browser back/forward buttons
+  // Handle browser back/forward buttons and refresh
   React.useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname

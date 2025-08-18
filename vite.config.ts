@@ -6,5 +6,7 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true
-  }
+  },
+  // Ensure client-side routing works on refresh
+  base: '/'
 })
