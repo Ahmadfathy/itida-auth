@@ -183,8 +183,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Main Content */}
       <main className="py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        </div>
+        <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back Button */}
           <div className="mb-6">
             <button
@@ -206,7 +205,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
              <p className="text-lg text-gray-600">
                {t.completeCompanyRegistration}
              </p>
-           </div>
+          </div>
 
           {/* Form Container with Sidebar */}
           <div className="bg-white rounded-2xl shadow-xl border-2 border-green-200 flex flex-col md:flex-row">
@@ -1182,9 +1181,12 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                     </div>
                   </form>
                 )}
+              </div>
             </div>
           </div>
+
         </div>
+
       </main>
 
       {/* Footer */}
