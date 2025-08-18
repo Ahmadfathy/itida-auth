@@ -16,6 +16,14 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
   const [activeTab, setActiveTab] = useState(1)
   const [activeSidebarTab, setActiveSidebarTab] = useState(1)
   const [formData, setFormData] = useState<any>({
+    // Dynamic arrays for repeatable sections
+    companyHeads: [{ name: '', position: '', mobile: '', nationalId: '', email: '', email2: '' }],
+    contactPersons: [{ name: '', position: '', mobile: '', nationalId: '', email: '' }],
+    products: [{ name: '', description: '' }],
+    services: [{ name: '', description: '' }],
+    customerReferences: [{ name: '', country: '', projectSize: '', scope: '', description: '' }],
+    exportInformation: [{ year: '', marketRegion: '', country: '', valueExported: '' }],
+    owners: [{ name: '', mobile: '', telephone: '', email: '' }],
     // Tab 1: Company Legal Information
     companyNameEn: '',
     companyNameAr: '',
@@ -90,6 +98,44 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     }
   }
 
+  // Handle input change for dynamic array fields
+  const handleDynamicInputChange = (section: string, index: number, field: string, value: string) => {
+    setFormData((prev: typeof formData) => {
+      const sectionArray = [...prev[section]]
+      sectionArray[index] = { ...sectionArray[index], [field]: value }
+      return { ...prev, [section]: sectionArray }
+    })
+  }
+
+  // Add a new row to a dynamic section
+  const addRow = (section: string, emptyRow: any) => {
+    setFormData((prev: typeof formData) => ({
+      ...prev,
+      [section]: [...prev[section], emptyRow]
+    }))
+  }
+
+  // Remove a row from a dynamic section
+  const removeRow = (section: string, index: number) => {
+    if (index === 0 && formData[section].length === 1) {
+      // Don't remove the last row, just clear it
+      const emptyRow = Object.keys(formData[section][0]).reduce((acc, key) => {
+        acc[key] = ''
+        return acc
+      }, {} as any)
+      
+      setFormData((prev: typeof formData) => ({
+        ...prev,
+        [section]: [emptyRow]
+      }))
+    } else {
+      setFormData((prev: typeof formData) => ({
+        ...prev,
+        [section]: prev[section].filter((_: any, i: number) => i !== index)
+      }))
+    }
+  }
+
   const handleFileChange = (fieldName: string, file: File | null) => {
     setFormData((prev: typeof formData) => ({
       ...prev,
@@ -138,6 +184,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
       {/* Main Content */}
       <main className="py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        </div>
           {/* Back Button */}
           <div className="mb-6">
             <button
@@ -201,10 +248,10 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
             
             {/* Main Content Area */}
             <div className="flex-1">
-              <form onSubmit={handleSubmit} className="p-8">
+              <div className="p-8">
                 {/* Only show the wizard form in the first sidebar tab */}
                 {activeSidebarTab === 1 && (
-                  <>
+                  <form onSubmit={handleSubmit}>
                     {/* Progress Tabs */}
                     <div className="mb-8">
                       <div className="flex items-center justify-center space-x-4 rtl:space-x-reverse">
@@ -316,51 +363,825 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                         </button>
                       )}
                     </div>
-                  </>
+                  </form>
                 )}
                 
                 {/* Company's Head & Contacts Tab Content */}
                 {activeSidebarTab === 2 && (
-                  <div className="py-4">
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    console.log('Company Head & Contacts form submitted');
+                  }} className="py-4">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.companyHeadContacts}</h2>
-                    <p className="text-gray-600 mb-8">This section will contain the company's head and contacts information.</p>
-                    <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-                      <p className="text-blue-700">Content for the Company's Head & Contacts tab will be implemented here.</p>
+                    
+                    {/* Company's Head & Contact Persons Section */}
+                    <div className="mb-8">
+                      <h3 className="text-xl font-semibold text-center mb-6">{t.companyHeadContacts}</h3>
+                      
+                      {/* Company's Head Section */}
+                      <div className="mb-8">
+                        <h4 className="font-medium mb-4">Company's Head</h4>
+                        {formData.companyHeads.map((head: any, index: number) => (
+                          <div key={`company-head-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="text" 
+                                  value={head.name}
+                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'name', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="اسمك"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Position <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="text" 
+                                  value={head.position}
+                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'position', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="المنصب"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="text" 
+                                  value={head.mobile}
+                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'mobile', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="رقم المحمول"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">National ID <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="text" 
+                                  value={head.nationalId}
+                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'nationalId', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="الرقم القومي"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="email" 
+                                  value={head.email}
+                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'email', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="البريد الإلكتروني"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Email 2</label>
+                                <input 
+                                  type="email" 
+                                  value={head.email2}
+                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'email2', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="البريد الإلكتروني 2"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex justify-end mt-2">
+                              <button 
+                                type="button" 
+                                onClick={() => removeRow('companyHeads', index)}
+                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="flex justify-end mt-2">
+                          <button 
+                            type="button" 
+                            onClick={() => addRow('companyHeads', { name: '', position: '', mobile: '', nationalId: '', email: '', email2: '' })}
+                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Contact Persons Section */}
+                      <div className="mb-8">
+                        <h4 className="font-medium mb-4">Contact Persons</h4>
+                        {formData.contactPersons.map((person: { name: string; position: string; mobile: string; nationalId: string; email: string; }, index: number) => (
+                          <div key={`contact-person-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="text" 
+                                  value={person.name}
+                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'name', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="اسمك"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Position <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="text" 
+                                  value={person.position}
+                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'position', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="المنصب"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="text" 
+                                  value={person.mobile}
+                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'mobile', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="رقم المحمول"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">National ID <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="text" 
+                                  value={person.nationalId}
+                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'nationalId', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="الرقم القومي"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail <span className="text-red-500">*</span></label>
+                                <input 
+                                  type="email" 
+                                  value={person.email}
+                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'email', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="البريد الإلكتروني"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex justify-end mt-2">
+                              <button 
+                                type="button" 
+                                onClick={() => removeRow('contactPersons', index)}
+                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="flex justify-end mt-2">
+                          <button 
+                            type="button" 
+                            onClick={() => addRow('contactPersons', { name: '', position: '', mobile: '', nationalId: '', email: '' })}
+                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                     
-                    {/* Navigation Button */}
+                    {/* Company Market Information Section */}
+                    <div className="mb-8">
+                      <h3 className="text-xl font-semibold mb-4">Company Market Information</h3>
+                      <p className="text-gray-600 mb-4">Some description about this section</p>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Parent <span className="text-red-500">*</span></label>
+                          <input 
+                            type="text" 
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Parent"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Child <span className="text-red-500">*</span></label>
+                          <input 
+                            type="text" 
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Child"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Grand Child <span className="text-red-500">*</span></label>
+                          <input 
+                            type="text" 
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Grand Child"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Industry Sectors</label>
+                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select Industry Sector</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      {/* Products Section */}
+                      <div className="mb-6">
+                        <h4 className="font-medium mb-3">Products</h4>
+                        {formData.products.map((product: { name: string; description: string }, index: number) => (
+                          <div key={`product-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                                <input 
+                                  type="text" 
+                                  value={product.name}
+                                  onChange={(e) => handleDynamicInputChange('products', index, 'name', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Product Name"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Product Description</label>
+                                <input 
+                                  type="text" 
+                                  value={product.description}
+                                  onChange={(e) => handleDynamicInputChange('products', index, 'description', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Product Description"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex justify-end mt-2">
+                              <button 
+                                type="button" 
+                                onClick={() => removeRow('products', index)}
+                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="flex justify-end mt-2">
+                          <button 
+                            type="button" 
+                            onClick={() => addRow('products', { name: '', description: '' })}
+                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Services Section */}
+                      <div className="mb-6">
+                        <h4 className="font-medium mb-3">Services</h4>
+                        {formData.services.map((service: { name: string; description: string }, index: number) => (
+                          <div key={`service-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
+                                <input 
+                                  type="text" 
+                                  value={service.name}
+                                  onChange={(e) => handleDynamicInputChange('services', index, 'name', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Service Name"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Service Description</label>
+                                <input 
+                                  type="text" 
+                                  value={service.description}
+                                  onChange={(e) => handleDynamicInputChange('services', index, 'description', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Service Description"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex justify-end mt-2">
+                              <button 
+                                type="button" 
+                                onClick={() => removeRow('services', index)}
+                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="flex justify-end mt-2">
+                          <button 
+                            type="button" 
+                            onClick={() => addRow('services', { name: '', description: '' })}
+                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Key Technologies, Certificates, Affiliations */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Key Technologies</label>
+                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select Technology</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Certificates</label>
+                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select Certificate</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      {/* Affiliations, Memberships, Partnerships */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Affiliation</label>
+                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select Affiliation</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Memberships</label>
+                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select Membership</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Partnerships</label>
+                          <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select Partnership</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      {/* Customer Reference */}
+                      <div className="mb-6">
+                        <h4 className="font-medium mb-3">Customer Reference</h4>
+                        {formData.customerReferences.map((reference: { name: string; country: string; projectSize: string; scope: string; description: string }, index: number) => (
+                          <div key={`reference-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
+                                <input 
+                                  type="text" 
+                                  value={reference.name}
+                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'name', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Customer Name"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                                <select 
+                                  value={reference.country}
+                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'country', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                >
+                                  <option value="">Select Country</option>
+                                  <option value="option1">Option 1</option>
+                                </select>
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Project Size</label>
+                                <input 
+                                  type="text" 
+                                  value={reference.projectSize}
+                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'projectSize', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Project Size"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Scope</label>
+                                <input 
+                                  type="text" 
+                                  value={reference.scope}
+                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'scope', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Scope"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Project Description</label>
+                                <input 
+                                  type="text" 
+                                  value={reference.description}
+                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'description', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Project Description"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex justify-end mt-2">
+                              <button 
+                                type="button" 
+                                onClick={() => removeRow('customerReferences', index)}
+                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="flex justify-end mt-2">
+                          <button 
+                            type="button" 
+                            onClick={() => addRow('customerReferences', { name: '', country: '', projectSize: '', scope: '', description: '' })}
+                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Company Overview */}
+                      <div>
+                        <h4 className="font-medium mb-3">Company overview</h4>
+                        <div className="border border-gray-300 rounded-md overflow-hidden">
+                          <div className="bg-gray-100 border-b border-gray-300 p-2 flex items-center space-x-2">
+                            <select className="text-sm border border-gray-300 rounded p-1">
+                              <option>Paragraph</option>
+                            </select>
+                            <button className="p-1 hover:bg-gray-200 rounded">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                              </svg>
+                            </button>
+                            <button className="p-1 hover:bg-gray-200 rounded font-bold">B</button>
+                            <button className="p-1 hover:bg-gray-200 rounded italic">I</button>
+                            <button className="p-1 hover:bg-gray-200 rounded underline">U</button>
+                            <button className="p-1 hover:bg-gray-200 rounded">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                              </svg>
+                            </button>
+                            <button className="p-1 hover:bg-gray-200 rounded">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                              </svg>
+                            </button>
+                          </div>
+                          <textarea className="w-full p-3 h-32 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter company overview..."></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Submit Button */}
                     <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
                       <button
-                        type="button"
+                        type="submit"
                         className="px-8 py-3 rounded-lg font-medium transition-all duration-300 bg-itida-blue hover:bg-itida-dark text-white"
                       >
-                        {t.next}
+                        Submit
                       </button>
                     </div>
-                  </div>
+                  </form>
                 )}
                 
                 {/* Financial Information Tab Content */}
                 {activeSidebarTab === 3 && (
-                  <div className="py-4">
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    console.log('Financial Information form submitted');
+                  }} className="py-4">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.financialInformation}</h2>
-                    <p className="text-gray-600 mb-8">This section will contain the company's financial information.</p>
-                    <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-                      <p className="text-blue-700">Content for the Financial Information tab will be implemented here.</p>
+                    
+                    <h3 className="text-xl font-semibold text-center mb-6">{t.financialInformation}</h3>
+                    
+                    {/* Fiscal Capital Section */}
+                    <div className="mb-8">
+                      <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Fiscal Capital <span className="text-red-500">*</span></label>
+                          <input 
+                            type="text" 
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Enter fiscal capital"
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Domestic Sales Details */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Domestic Sales Details <span className="text-red-500">*</span></label>
+                          <input 
+                            type="text" 
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Enter domestic sales details"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Domestic Sales Value <span className="text-red-500">*</span></label>
+                          <div className="relative">
+                            <input 
+                              type="text" 
+                              className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                              placeholder="Enter domestic sales value"
+                            />
+                            <div className="absolute right-2 top-2">
+                              <button type="button" className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Total Revenue and Annual Revenue */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Total Revenue Year <span className="text-red-500">*</span></label>
+                          <input 
+                            type="text" 
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Enter total revenue year"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Annual Revenue <span className="text-red-500">*</span></label>
+                          <input 
+                            type="text" 
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Enter annual revenue"
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Audited Balance Sheet */}
+                      <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Audited Balance Sheet/P&L/Tax return + Certificate of Chartered Accountant <span className="text-red-500">*</span></label>
+                        <div className="flex items-center gap-2">
+                          <button 
+                            type="button" 
+                            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-all"
+                          >
+                            Choose File
+                          </button>
+                          <span className="text-sm text-gray-500">No file chosen</span>
+                        </div>
+                      </div>
+                      
+                      {/* Do You Export Section */}
+                      <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Do You Export? <span className="text-red-500">*</span></label>
+                        <div className="flex items-center gap-4">
+                          <label className="inline-flex items-center">
+                            <input type="radio" name="export" className="form-radio h-4 w-4 text-blue-600" />
+                            <span className="ml-2">Yes</span>
+                          </label>
+                          <label className="inline-flex items-center">
+                            <input type="radio" name="export" className="form-radio h-4 w-4 text-blue-600" />
+                            <span className="ml-2">No</span>
+                          </label>
+                        </div>
+                      </div>
+                      
+                      {/* Export Information */}
+                      <div className="mb-6">
+                        <h4 className="font-medium mb-3">Export Information</h4>
+                        {formData.exportInformation.map((exportInfo: { year: string; marketRegion: string; country: string; valueExported: string }, index: number) => (
+                          <div key={`export-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
+                                <input 
+                                  type="text" 
+                                  value={exportInfo.year}
+                                  onChange={(e) => handleDynamicInputChange('exportInformation', index, 'year', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Year"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Market (Region)</label>
+                                <input 
+                                  type="text" 
+                                  value={exportInfo.marketRegion}
+                                  onChange={(e) => handleDynamicInputChange('exportInformation', index, 'marketRegion', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Market region"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                                <input 
+                                  type="text" 
+                                  value={exportInfo.country}
+                                  onChange={(e) => handleDynamicInputChange('exportInformation', index, 'country', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Country"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Value Exported</label>
+                                <div className="relative">
+                                  <input 
+                                    type="text" 
+                                    value={exportInfo.valueExported}
+                                    onChange={(e) => handleDynamicInputChange('exportInformation', index, 'valueExported', e.target.value)}
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                    placeholder="Value exported"
+                                  />
+                                  <div className="absolute right-2 top-2">
+                                    <button type="button" className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300">
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex justify-end mt-2">
+                              <button 
+                                type="button" 
+                                onClick={() => removeRow('exportInformation', index)}
+                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="flex justify-end mt-2">
+                          <button 
+                            type="button" 
+                            onClick={() => addRow('exportInformation', { year: '', marketRegion: '', country: '', valueExported: '' })}
+                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Total No of Employees and Year of Establishment */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Total No of Employees</label>
+                          <input 
+                            type="text" 
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Enter total number of employees"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Year of Establishment</label>
+                          <input 
+                            type="text" 
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Enter year of establishment"
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Type of Ownership */}
+                      <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Type of Ownership</label>
+                        <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                          <option value="">Select type of ownership</option>
+                          <option value="private">Private</option>
+                          <option value="public">Public</option>
+                          <option value="government">Government</option>
+                        </select>
+                      </div>
+                      
+                      {/* Name (Owner(s) / Shareholder(s)) */}
+                      <div className="mb-6">
+                        <h4 className="font-medium mb-3">Name (Owner(s) / Shareholder(s)) <span className="text-gray-500 text-sm">يرجى كتابة الاسم باللغة العربية</span></h4>
+                        {formData.owners.map((owner: { name: string; mobile: string; telephone: string; email: string }, index: number) => (
+                          <div key={`owner-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <input 
+                                  type="text" 
+                                  value={owner.name}
+                                  onChange={(e) => handleDynamicInputChange('owners', index, 'name', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Owner name"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile</label>
+                                <input 
+                                  type="text" 
+                                  value={owner.mobile}
+                                  onChange={(e) => handleDynamicInputChange('owners', index, 'mobile', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Mobile number"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Telephone</label>
+                                <input 
+                                  type="text" 
+                                  value={owner.telephone}
+                                  onChange={(e) => handleDynamicInputChange('owners', index, 'telephone', e.target.value)}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                  placeholder="Telephone number"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                                <div className="relative">
+                                  <input 
+                                    type="email" 
+                                    value={owner.email}
+                                    onChange={(e) => handleDynamicInputChange('owners', index, 'email', e.target.value)}
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+                                    placeholder="Email address"
+                                  />
+                                  <div className="absolute right-2 top-2">
+                                    <button type="button" className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300">
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex justify-end mt-2">
+                              <button 
+                                type="button" 
+                                onClick={() => removeRow('owners', index)}
+                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="flex justify-end mt-2">
+                          <button 
+                            type="button" 
+                            onClick={() => addRow('owners', { name: '', mobile: '', telephone: '', email: '' })}
+                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Company Data */}
+                      <div className="mb-6">
+                        <h4 className="font-medium mb-3">Company Data</h4>
+                        <textarea 
+                          className="w-full p-3 border border-gray-300 rounded-md h-32 focus:ring-blue-500 focus:border-blue-500" 
+                          placeholder="Enter company data..."
+                        ></textarea>
+                      </div>
                     </div>
                     
-                    {/* Navigation Button */}
+                    {/* Submit Button */}
                     <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
                       <button
-                        type="button"
+                        type="submit"
                         className="px-8 py-3 rounded-lg font-medium transition-all duration-300 bg-itida-blue hover:bg-itida-dark text-white"
                       >
-                        {t.next}
+                        Submit
                       </button>
                     </div>
-                  </div>
+                  </form>
                 )}
-              </form>
             </div>
           </div>
         </div>
