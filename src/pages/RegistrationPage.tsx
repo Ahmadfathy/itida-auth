@@ -338,7 +338,6 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       <Tab1CompanyLegal 
                         formData={formData} 
                         onInputChange={handleInputChange}
-                        language={language}
                       />
                     )}
                     
@@ -346,7 +345,6 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       <Tab2ContactInfo 
                         formData={formData} 
                         onInputChange={handleInputChange}
-                        language={language}
                       />
                     )}
                     
@@ -355,7 +353,6 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                         formData={formData} 
                         onInputChange={handleInputChange}
                         onFileChange={handleFileChange}
-                        language={language}
                       />
                     )}
 

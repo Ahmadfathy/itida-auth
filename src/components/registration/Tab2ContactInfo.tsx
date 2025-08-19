@@ -5,7 +5,6 @@ import { translations } from '../../contexts/LanguageContext'
 interface Tab2ContactInfoProps {
   formData: any
   onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
-  language: 'en' | 'ar'
 }
 
 const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChange }) => {

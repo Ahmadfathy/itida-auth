@@ -5,7 +5,6 @@ import { translations } from '../../contexts/LanguageContext'
 interface Tab1CompanyLegalProps {
   formData: any
   onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
-  language: 'en' | 'ar'
 }
 
 const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputChange }) => {
