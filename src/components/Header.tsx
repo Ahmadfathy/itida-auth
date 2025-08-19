@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../contexts/LanguageContext'
+import { Link } from 'react-router-dom'
 import Logo from './Logo'
 
 interface HeaderProps {
@@ -22,9 +23,9 @@ const Header: React.FC<HeaderProps> = ({ onLogoClick }) => {
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
-            <a href="#" className="text-gray-700 hover:text-itida-blue transition-colors duration-300">
+            <Link to="/" className="text-gray-700 hover:text-itida-blue transition-colors duration-300">
               {t.home}
-            </a>
+            </Link>
             <a href="#" className="text-gray-700 hover:text-itida-blue transition-colors duration-300">
               {t.benefits}
             </a>
