@@ -128,6 +128,7 @@ export const translations = {
      previous: 'Previous',
      next: 'Next',
      submitRegistration: 'Submit Registration',
+     activityLicenseRequestTitle: 'Information Technology Activity License - Request',
      
      // Tab 1: Company Legal Information
      companyLegalInfoTitle: 'Company Legal Information',
@@ -287,10 +288,6 @@ export const translations = {
      pleaseEnterValidEmail: 'يرجى إدخال عنوان بريد إلكتروني صحيح',
      somethingWentWrong: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
      
-     // Footer
-     poweredBy: 'مدعوم بفخر من إيتيدا',
-     itidaDb: 'قاعدة بيانات إيتيدا',
-     
      // Registration Page
      companiesRegistrationForm: 'نموذج تسجيل الشركات',
      completeCompanyRegistration: 'أكمل تسجيل شركتك مع إيتيدا',
@@ -300,6 +297,7 @@ export const translations = {
      previous: 'السابق',
      next: 'التالي',
      submitRegistration: 'إرسال التسجيل',
+     activityLicenseRequestTitle: 'طلب ترخيص نشاط تكنولوجيا المعلومات',
      
      // Tab 1: Company Legal Information
      companyLegalInfoTitle: 'البيانات القانونية للشركة',

@@ -4,6 +4,7 @@ import { LanguageContext, getInitialLanguage, saveLanguageToStorage } from './co
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import RegistrationPage from './pages/RegistrationPage';
+import CompanyLegalPage from './pages/CompanyLegalPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 export type Language = 'en' | 'ar';
@@ -31,7 +32,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path="registration" element={<RegistrationPage onBackToHome={() => window.location.href = '/'} />} />
+            <Route path="registration" element={<CompanyLegalPage />} />
+            <Route path="registration/details" element={<RegistrationPage onBackToHome={() => window.location.href = '/'} />} />
             <Route path="forgot-password" element={<ForgotPasswordPage />} />
           </Route>
         </Routes>

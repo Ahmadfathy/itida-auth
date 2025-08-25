@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../contexts/LanguageContext'
 
-import Tab1CompanyLegal from '../components/registration/Tab1CompanyLegal'
 import Tab2ContactInfo from '../components/registration/Tab2ContactInfo'
 import Tab3ActivitiesAttachments from '../components/registration/Tab3ActivitiesAttachments'
 
@@ -153,7 +152,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
   }
 
   const nextTab = () => {
-    if (activeTab < 3) {
+    if (activeTab < 2) {
       setActiveTab(activeTab + 1)
     }
   }
@@ -167,12 +166,10 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
   const isTabValid = (tabNumber: number): boolean => {
     switch (tabNumber) {
       case 1:
-        return !!(formData.companyNameEn && formData.companyNameAr && formData.legalType)
-      case 2:
         return !!(formData.governorate && formData.district && formData.representativeName && 
                  formData.representativeTitle && formData.representativeMobile && 
                  formData.representativeNationalId && formData.representativeEmail)
-      case 3:
+      case 2:
         return formData.declarationAgreement
       default:
         return false
@@ -182,8 +179,8 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
   const isSidebarTabComplete = (tabNumber: number): boolean => {
     switch (tabNumber) {
       case 1:
-        // Check if all 3 sub-tabs are complete
-        return isTabValid(1) && isTabValid(2) && isTabValid(3)
+        // Now only two sub-tabs: Contact Info and Activities/Attachments
+        return isTabValid(1) && isTabValid(2)
       case 2:
         // Check if company heads and contact persons have required fields
         const hasValidCompanyHeads = formData.companyHeads.every((head: any) => 
@@ -293,7 +290,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                     {/* Progress Tabs */}
                     <div className="mb-8">
                       <div className="flex items-center justify-center space-x-4 rtl:space-x-reverse">
-                        {[1, 2, 3].map((tabNumber) => (
+                        {[1, 2].map((tabNumber) => (
                           <div key={tabNumber} className="flex items-center">
                             <div
                               className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-lg transition-all duration-300 ${
@@ -304,7 +301,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                             >
                               {tabNumber}
                             </div>
-                            {tabNumber < 3 && (
+                            {tabNumber < 2 && (
                               <div className={`w-16 h-1 mx-2 ${
                                 activeTab > tabNumber ? 'bg-itida-blue' : 'bg-gray-200'
                               }`} />
@@ -318,15 +315,10 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                         <span className={`text-sm font-medium ${
                           activeTab === 1 ? 'text-itida-blue' : 'text-gray-500'
                         }`}>
-                          {t.companyLegalInformation}
-                        </span>
-                        <span className={`text-sm font-medium ${
-                          activeTab === 2 ? 'text-itida-blue' : 'text-gray-500'
-                        }`}>
                           {t.contactInformation}
                         </span>
                         <span className={`text-sm font-medium ${
-                          activeTab === 3 ? 'text-itida-blue' : 'text-gray-500'
+                          activeTab === 2 ? 'text-itida-blue' : 'text-gray-500'
                         }`}>
                           {t.activitiesAttachments}
                         </span>
@@ -335,20 +327,13 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
 
                     {/* Tab Content */}
                     {activeTab === 1 && (
-                      <Tab1CompanyLegal 
-                        formData={formData} 
-                        onInputChange={handleInputChange}
-                      />
-                    )}
-                    
-                    {activeTab === 2 && (
                       <Tab2ContactInfo 
                         formData={formData} 
                         onInputChange={handleInputChange}
                       />
                     )}
                     
-                    {activeTab === 3 && (
+                    {activeTab === 2 && (
                       <Tab3ActivitiesAttachments 
                         formData={formData} 
                         onInputChange={handleInputChange}
@@ -371,7 +356,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                         {t.previous}
                       </button>
 
-                      {activeTab < 3 ? (
+                      {activeTab < 2 ? (
                         <button
                           type="button"
                           onClick={nextTab}
@@ -1231,7 +1216,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
           <div className="flex justify-center items-center space-x-4 rtl:space-x-reverse">
             <span className="text-sm text-gray-400">ITIDA DB</span>
             <span className="text-gray-600">•</span>
-            <span className="text-sm text-gray-400">{t.poweredBy}</span>
+            <span className="text-sm text-gray-400">{(t as any).poweredBy}</span>
           </div>
         </div>
       </footer>

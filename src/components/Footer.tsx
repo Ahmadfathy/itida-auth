@@ -9,7 +9,7 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ onLogoClick }) => {
   const { language } = useLanguage()
-  const t = translations[language]
+  const t = translations[language] as any
 
   return (
     <footer className="bg-gray-900 text-white">
