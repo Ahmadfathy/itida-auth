@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: itida-sql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Your_strong_password_123!
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Your_strong_password_123!' -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+  api:
+    build:
+      context: .
+      dockerfile: src/Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - SQL__CONNECTION_STRING=Server=sqlserver;Database=itida_udb;User Id=sa;Password=Your_strong_password_123!;TrustServerCertificate=True
+      - JWT__ISSUER=https://itida.udb.local
+      - JWT__AUDIENCE=https://itida.udb.local
+      - JWT__SIGNING_KEY=dev_signing_key_change_me
+      - ALLOWED_ORIGINS=http://localhost:5173
+      - LOCALIZATION__SUPPORTED_CULTURES=en-US,ar-EG
+      - LOCALIZATION__DEFAULT_CULTURE=en-US
+    ports:
+      - "8080:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+volumes:
+  mssql-data:

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="RegistrationFailed" xml:space="preserve"><value>Registration failed</value></data>
+  <data name="InvalidCredentials" xml:space="preserve"><value>Invalid credentials</value></data>
+</root>

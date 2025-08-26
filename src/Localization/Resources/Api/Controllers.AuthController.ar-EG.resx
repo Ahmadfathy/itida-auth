@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="RegistrationFailed" xml:space="preserve"><value>فشل التسجيل</value></data>
+  <data name="InvalidCredentials" xml:space="preserve"><value>بيانات الاعتماد غير صحيحة</value></data>
+</root>

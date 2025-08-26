@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Frontend install and build
+        run: |
+          cd webapp
+          npm ci
+          npm run build
+      - name: Build API docker image
+        run: |
+          docker build -f src/Api/Dockerfile -t itida-udb-api:ci .

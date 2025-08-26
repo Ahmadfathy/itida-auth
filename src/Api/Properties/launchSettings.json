@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Api": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:8080",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SQL__CONNECTION_STRING": "Server=localhost;Database=itida_udb;User Id=sa;Password=Your_strong_password_123!;TrustServerCertificate=True",
+        "ALLOWED_ORIGINS": "http://localhost:5173",
+        "LOCALIZATION__SUPPORTED_CULTURES": "en-US,ar-EG",
+        "LOCALIZATION__DEFAULT_CULTURE": "en-US",
+        "JWT__ISSUER": "https://itida.udb.local",
+        "JWT__AUDIENCE": "https://itida.udb.local",
+        "JWT__SIGNING_KEY": "dev_signing_key_change_me"
+      }
+    }
+  }
+}
