@@ -1,15 +1,26 @@
-# ITIDA Authentication Landing Page
+# ITIDA UDB Web App
 
-A modern, responsive landing page for the Information Technology Industry Development Agency (ITIDA) built with React, TypeScript, and Tailwind CSS.
+Production-grade bilingual web app for company registration, login, CRM profile management via Dynamics 365 (on-prem), and dashboard.
 
-## Features
+## Quick Start (Local Dev)
 
-- 🌐 **Bilingual Support**: English (LTR) and Arabic (RTL) language support
-- 🔐 **Login Form**: Modern authentication form with 3 user role types
-- 📱 **Responsive Design**: Mobile-first approach with modern UI/UX
-- 🎨 **Modern Design**: Clean, professional design with animations and gradients
-- ⚡ **Fast Performance**: Built with Vite for optimal development experience
-- 🎯 **Accessibility**: WCAG compliant with proper semantic HTML
+1) Start SQL Server and API (Docker):
+
+```bash
+docker compose up --build -d
+```
+
+2) Frontend dev server:
+
+```bash
+cd webapp
+cp .env.example .env
+npm install
+npm run dev
+```
+
+API: http://localhost:8080
+Web: http://localhost:5173
 
 ## User Roles
 
@@ -21,114 +32,46 @@ The login form includes three distinct user types:
 
 ## Tech Stack
 
-- **Frontend**: React 18 + TypeScript
-- **Styling**: Tailwind CSS
-- **Build Tool**: Vite
-- **Language Support**: Context API for internationalization
-- **Animations**: CSS animations and Tailwind utilities
+- Backend: .NET 8, ASP.NET Core (BFF), Identity, EF Core SQL Server, Serilog, FluentValidation
+- Frontend: React (Vite + TS), i18next, React Router, TailwindCSS
 
-## Getting Started
+## Environment Variables
 
-### Prerequisites
-
-- Node.js (v16 or higher)
-- npm or yarn package manager
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd itida-auth
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the development server:
-```bash
-npm run dev
-```
-
-4. Open your browser and navigate to `http://localhost:3000`
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
+See `src/Api/.env.example` and `webapp/.env.example`.
 
 ## Project Structure
 
 ```
-src/
-├── components/          # React components
-│   ├── Header.tsx      # Navigation header
-│   ├── Hero.tsx        # Hero section
-│   ├── LoginForm.tsx   # Authentication form
-│   ├── Features.tsx    # Features section
-│   └── Footer.tsx      # Footer component
-├── contexts/            # React contexts
-│   └── LanguageContext.tsx  # Language management
-├── App.tsx             # Main application component
-├── main.tsx            # Application entry point
-└── index.css           # Global styles and Tailwind imports
+/src
+  /Api
+  /Application
+  /Domain
+  /Infrastructure
+  /Localization
+/webapp
+  /src
+    /i18n
 ```
+
+## CI/CD
+
+Add GitHub Actions to build, test, and dockerize on PRs.
 
 ## Language Support
 
-The application supports two languages:
-
-- **English (LTR)**: Default language with left-to-right text direction
-- **Arabic (RTL)**: Right-to-left text direction with proper font support
-
-### Switching Languages
-
-Click the language toggle button in the header to switch between English and Arabic. The entire interface will automatically adjust for RTL layout and display appropriate translations.
+This app supports English (en-US) and Arabic (ar-EG) with dynamic LTR/RTL switching.
 
 ## Customization
 
-### Colors
-
-Custom colors are defined in `tailwind.config.js`:
-
-```javascript
-colors: {
-  'itida-blue': '#1e40af',
-  'itida-dark': '#0f172a',
-  'itida-light': '#3b82f6',
-}
-```
-
-### Animations
-
-Custom animations are available:
-
-- `animate-glow`: Pulsing glow effect
-- `animate-float`: Floating animation for elements
+Adjust Tailwind and i18n locales as needed.
 
 ### Adding New Languages
 
-To add a new language:
-
-1. Add the language code to the `Language` type in `LanguageContext.tsx`
-2. Add translations to the `translations` object
-3. Update the language toggle logic in `App.tsx`
+Add a new namespace JSON to `webapp/src/i18n` and include the culture code.
 
 ## Browser Support
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+Modern evergreen browsers.
 
 ## Contributing
 
@@ -140,7 +83,7 @@ To add a new language:
 
 ## License
 
-This project is licensed under the MIT License.
+Internal use.
 
 ## Contact
 
