@@ -62,6 +62,9 @@ export const translations = {
      joinNow: 'Join ITIDA Now',
      dontHaveAccount: 'Don\'t have an account?',
      registerHere: 'Register here',
+     username: 'UserName/Email',
+     crn: 'CRN',
+     licenseNo: 'License No.',
     
     // User Roles
     userRole: 'User Role',
@@ -251,6 +254,9 @@ export const translations = {
      joinNow: 'انضم إلى إيتيدا الآن',
      dontHaveAccount: 'ليس لديك حساب؟',
      registerHere: 'سجل هنا',
+     username: 'إسم المستخدم/البريد الإلكتروني',
+     crn: 'CRN',
+     licenseNo: 'رقم الترخيص',
     
     // User Roles
     userRole: 'دور المستخدم',
