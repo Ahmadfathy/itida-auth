@@ -80,80 +80,26 @@ const Features: React.FC = () => {
             {/* Left Content */}
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-center">
-                Regulation of Information Technology Activity Licenses
+                {t.additionalBenefitsTitle}
               </h2>
               <p className="text-blue-100 text-lg leading-relaxed">
-                The Information Technology Industry Development Agency (ITIDA) issues licenses for practicing specialized activities within the information and communication technology sector to regulate the IT sector and encourage investment in this vital field. This initiative aims to support market growth and foster a vibrant digital business environment.
+                {t.additionalBenefitsDesc}
               </p>
               <h4 className="text-3xl font-bold mt-10">
-                Activities Eligible for Licensing:
+                {t.activitiesEligible}
               </h4>
               {/* Benefits List */}
               <div className="space-y-4">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
+                {t.eligibleActivities.map((activity, index) => (
+                  <div key={index} className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span>{activity}</span>
                   </div>
-                  <span>Software design, production, and development services.</span>
-                </div>
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Information technology systems design, development, production, supply, and operation services.</span>
-                </div>
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Website, platform, and e-transaction services utilizing the internet.</span>
-                </div>
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Electronics and embedded systems design and development, and electronics manufacturing in the ICT field.</span>
-                </div>
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Traditional content digitization services using information technology.</span>
-                </div>
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Call center and business process management services using information and communication technology.</span>
-                </div>
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Consultancy, research and development, and entrepreneurship services in information and communication technology.</span>
-                </div>
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Training and education services in information and communication technology.</span>
-                </div>
+                ))}
               </div>
 
               <button className="btn-secondary text-lg px-8 py-4">

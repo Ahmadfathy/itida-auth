@@ -206,7 +206,22 @@ export const translations = {
      declarationAgreement: 'Declaration & Agreement',
      declarationText: 'I declare and undertake the accuracy of the submitted documents and my commitment to the relevant Egyptian laws, including those concerning electronic signatures, intellectual property rights, personal data protection, and cybercrime. I also undertake to practice licensed activities safely, ethically, responsibly, and transparently.',
      iAgree: 'I agree',
-     noteDeclarationAgreement: 'Note: Declaration agreement must be accepted before submitting the request'
+     noteDeclarationAgreement: 'Note: Declaration agreement must be accepted before submitting the request',
+
+     // Additional Benefits
+     additionalBenefitsTitle: 'Regulation of Information Technology Activity Licenses',
+     additionalBenefitsDesc: 'The Information Technology Industry Development Agency (ITIDA) issues licenses for practicing specialized activities within the information and communication technology sector to regulate the IT sector and encourage investment in this vital field. This initiative aims to support market growth and foster a vibrant digital business environment.',
+     activitiesEligible: 'Activities Eligible for Licensing:',
+     eligibleActivities: [
+       'Software design, production, and development services.',
+       'Information technology systems design, development, production, supply, and operation services.',
+       'Website, platform, and e-transaction services utilizing the internet.',
+       'Electronics and embedded systems design and development, and electronics manufacturing in the ICT field.',
+       'Traditional content digitization services using information technology.',
+       'Call center and business process management services using information and communication technology.',
+       'Consultancy, research and development, and entrepreneurship services in information and communication technology.',
+       'Training and education services in information and communication technology.'
+     ]
   },
   ar: {
     // Header
@@ -380,6 +395,21 @@ export const translations = {
      declarationAgreement: 'الإقرار والموافقة',
      declarationText: 'أقر وأتعهد بصحة المستندات المقدمة والتزامي بالقوانين المصرية ذات الصلة، بما في ذلك قوانين التوقيع الإلكتروني وحقوق الملكية الفكرية وحماية البيانات الشخصية ومكافحة الجرائم الإلكترونية. كما أتعهد بمزاولة الأنشطة المرخصة بأمان وأخلاقيات ومسؤولية وشفافية.',
      iAgree: 'أوافق',
-     noteDeclarationAgreement: 'ملاحظة: يجب الموافقة على الإقرار والموافقة قبل إرسال الطلب'
+     noteDeclarationAgreement: 'ملاحظة: يجب الموافقة على الإقرار والموافقة قبل إرسال الطلب',
+
+     // Additional Benefits
+     additionalBenefitsTitle: 'تنظيم تراخيص أنشطة تكنولوجيا المعلومات',
+     additionalBenefitsDesc: 'تصدر وكالة تنمية صناعة تكنولوجيا المعلومات (إيتيدا) تراخيص لممارسة الأنشطة المتخصصة في قطاع تكنولوجيا المعلومات والاتصالات لتنظيم قطاع تكنولوجيا المعلومات وتشجيع الاستثمار في هذا المجال الحيوي. تهدف هذه المبادرة إلى دعم نمو السوق وتعزيز بيئة أعمال رقمية حيوية.',
+     activitiesEligible: 'الأنشطة المؤهلة للترخيص:',
+     eligibleActivities: [
+       'خدمات تصميم وإنتاج وتطوير البرمجيات.',
+       'خدمات تصميم وتطوير وإنتاج وتوريد وتشغيل أنظمة تكنولوجيا المعلومات.',
+       'خدمات المواقع والمنصات والمعاملات الإلكترونية باستخدام الإنترنت.',
+       'تصميم وتطوير الإلكترونيات والأنظمة المدمجة، وتصنيع الإلكترونيات في مجال تكنولوجيا المعلومات والاتصالات.',
+       'خدمات رقمنة المحتوى التقليدي باستخدام تكنولوجيا المعلومات.',
+       'خدمات مراكز الاتصال وإدارة العمليات التجارية باستخدام تكنولوجيا المعلومات والاتصالات.',
+       'خدمات الاستشارات والبحوث والتطوير وريادة الأعمال في تكنولوجيا المعلومات والاتصالات.',
+       'خدمات التدريب والتعليم في تكنولوجيا المعلومات والاتصالات.'
+     ]
   }
 }
