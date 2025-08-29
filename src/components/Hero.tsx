@@ -4,10 +4,11 @@ import { translations } from '../contexts/LanguageContext'
 import { useCounter } from '../hooks/useCounter'
 
 interface HeroProps {
-  onRegister?: () => void
+  onRegister?: () => void,
+  onLogin?: () => void
 }
 
-const Hero: React.FC<HeroProps> = ({ onRegister }) => {
+const Hero: React.FC<HeroProps> = ({ onRegister, onLogin }) => {
   const { language } = useLanguage()
   const t = translations[language]
   
@@ -47,8 +48,10 @@ const Hero: React.FC<HeroProps> = ({ onRegister }) => {
                      >
                        {t.joinNow}
                      </button>
-                     <button className="btn-secondary text-lg px-8 py-4">
-                       {t.learnMore}
+                     <button
+                        onClick={onLogin}
+                        className="btn-secondary text-lg px-8 py-4">
+                       {t.login}
                      </button>
                    </div>
 
