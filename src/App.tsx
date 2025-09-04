@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import RegistrationPage from './pages/RegistrationPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ProfilePage from './pages/ProfilePage';
 
 export type Language = 'en' | 'ar';
 
@@ -33,6 +34,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="registration" element={<RegistrationPage onBackToHome={() => window.location.href = '/'} />} />
             <Route path="forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="profile" element={<ProfilePage />} />
           </Route>
         </Routes>
       </Router>
