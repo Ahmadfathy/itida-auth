@@ -13,8 +13,8 @@ interface RegistrationPageProps {
 const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => {
   const { language } = useLanguage()
   const t = translations[language]
+  const [activeTab, setActiveTab] = useState(1)
   const [activeSidebarTab, setActiveSidebarTab] = useState(1)
-  const [openAccordions, setOpenAccordions] = useState<Record<number, boolean>>({1: true, 2: false, 3: false})
   const [formData, setFormData] = useState<any>({
     // Dynamic arrays for repeatable sections
     companyHeads: [{ name: '', position: '', mobile: '', nationalId: '', email: '', email2: '' }],
@@ -74,20 +74,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
       declarationUndertaking: null
     },
     licenseReceiptMethod: '',
-    declarationAgreement: false,
-
-    // Financial Information
-    fiscalCapital: '',
-    domesticSalesDetails: '',
-    domesticSalesValue: '',
-    totalRevenueYear: '',
-    annualRevenue: '',
-    auditedBalanceSheet: null,
-    export: '',
-    totalNoOfEmployees: '',
-    yearOfEstablishment: '',
-    typeOfOwnership: '',
-    companyData: ''
+    declarationAgreement: false
   })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -165,7 +152,17 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     // Handle form submission here
   }
 
+  const nextTab = () => {
+    if (activeTab < 3) {
+      setActiveTab(activeTab + 1)
+    }
+  }
 
+  const previousTab = () => {
+    if (activeTab > 1) {
+      setActiveTab(activeTab - 1)
+    }
+  }
 
   const isTabValid = (tabNumber: number): boolean => {
     switch (tabNumber) {
@@ -293,67 +290,114 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                 {/* Only show the wizard form in the first sidebar tab */}
                 {activeSidebarTab === 1 && (
                   <form onSubmit={handleSubmit}>
-                {/* Accordion Sections */}
-                <div className="space-y-4">
-                  {[1, 2, 3].map((section) => {
-                    const isOpen = openAccordions[section]
-                    const arrowIcon = isOpen ? (
-                      <svg className="w-5 h-5 transform rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    ) : (
-                      <svg className="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    )
-                    return (
-                      <div key={section} className="border border-gray-300 rounded-lg">
-                        <button
-                          type="button"
-                          onClick={() => setOpenAccordions((prev) => ({ ...prev, [section]: !prev[section] }))}
-                          className="w-full flex justify-between items-center px-4 py-3 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-itida-blue"
-                          aria-expanded={isOpen}
-                          aria-controls={`accordion-section-${section}`}
-                        >
-                          <span className="font-semibold text-lg">
-                            {section === 1 && t.companyLegalInformation}
-                            {section === 2 && t.contactInformation}
-                            {section === 3 && t.activitiesAttachments}
-                          </span>
-                          {arrowIcon}
-                        </button>
-                        {isOpen && (
-                          <div id={`accordion-section-${section}`} className="p-6 bg-white">
-                            {section === 1 && (
-                              <Tab1CompanyLegal formData={formData} onInputChange={handleInputChange} />
-                            )}
-                            {section === 2 && (
-                              <Tab2ContactInfo formData={formData} onInputChange={handleInputChange} />
-                            )}
-                            {section === 3 && (
-                              <Tab3ActivitiesAttachments formData={formData} onInputChange={handleInputChange} onFileChange={handleFileChange} />
+                    {/* Progress Tabs */}
+                    <div className="mb-8">
+                      <div className="flex items-center justify-center space-x-4 rtl:space-x-reverse">
+                        {[1, 2, 3].map((tabNumber) => (
+                          <div key={tabNumber} className="flex items-center">
+                            <div
+                              className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-lg transition-all duration-300 ${
+                                activeTab === tabNumber
+                                  ? 'bg-itida-blue text-white'
+                                  : 'bg-gray-200 text-gray-600'
+                              }`}
+                            >
+                              {tabNumber}
+                            </div>
+                            {tabNumber < 3 && (
+                              <div className={`w-16 h-1 mx-2 ${
+                                activeTab > tabNumber ? 'bg-itida-blue' : 'bg-gray-200'
+                              }`} />
                             )}
                           </div>
-                        )}
+                        ))}
                       </div>
-                    )
-                  })}
-                </div>
+                      
+                      {/* Tab Labels */}
+                      <div className="flex justify-center mt-4 space-x-8 rtl:space-x-reverse">
+                        <span className={`text-sm font-medium ${
+                          activeTab === 1 ? 'text-itida-blue' : 'text-gray-500'
+                        }`}>
+                          {t.companyLegalInformation}
+                        </span>
+                        <span className={`text-sm font-medium ${
+                          activeTab === 2 ? 'text-itida-blue' : 'text-gray-500'
+                        }`}>
+                          {t.contactInformation}
+                        </span>
+                        <span className={`text-sm font-medium ${
+                          activeTab === 3 ? 'text-itida-blue' : 'text-gray-500'
+                        }`}>
+                          {t.activitiesAttachments}
+                        </span>
+                      </div>
+                    </div>
 
-                {/* Submit Button */}
-                <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
-                  <button
-                    type="submit"
-                    disabled={!isTabValid(1) || !isTabValid(2) || !isTabValid(3)}
-                    className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 ${
-                      isTabValid(1) && isTabValid(2) && isTabValid(3)
-                        ? 'bg-itida-blue hover:bg-itida-dark text-white'
-                        : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                    }`}
-                  >
-                    {t.submitRegistration}
-                  </button>
-                </div>
+                    {/* Tab Content */}
+                    {activeTab === 1 && (
+                      <Tab1CompanyLegal 
+                        formData={formData} 
+                        onInputChange={handleInputChange}
+                      />
+                    )}
+                    
+                    {activeTab === 2 && (
+                      <Tab2ContactInfo 
+                        formData={formData} 
+                        onInputChange={handleInputChange}
+                      />
+                    )}
+                    
+                    {activeTab === 3 && (
+                      <Tab3ActivitiesAttachments 
+                        formData={formData} 
+                        onInputChange={handleInputChange}
+                        onFileChange={handleFileChange}
+                      />
+                    )}
+
+                    {/* Navigation Buttons */}
+                    <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
+                      <button
+                        type="button"
+                        onClick={previousTab}
+                        disabled={activeTab === 1}
+                        className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                          activeTab === 1
+                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            : 'bg-green-500 hover:bg-green-600 text-white'
+                        }`}
+                      >
+                        {t.previous}
+                      </button>
+
+                      {activeTab < 3 ? (
+                        <button
+                          type="button"
+                          onClick={nextTab}
+                          disabled={!isTabValid(activeTab)}
+                          className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                            isTabValid(activeTab)
+                              ? 'bg-itida-blue hover:bg-itida-dark text-white'
+                              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                          }`}
+                        >
+                          {t.next}
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          disabled={!isTabValid(activeTab)}
+                          className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 ${
+                            isTabValid(activeTab)
+                              ? 'bg-itida-blue hover:bg-itida-dark text-white'
+                              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                          }`}
+                        >
+                          {t.submitRegistration}
+                        </button>
+                      )}
+                    </div>
                   </form>
                 )}
                 
@@ -871,13 +915,10 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Fiscal Capital <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            className="input-field"
+                          <input 
+                            type="text" 
+                            className="input-field" 
                             placeholder="Enter fiscal capital"
-                            value={formData.fiscalCapital}
-                            onChange={handleInputChange}
-                            name="fiscalCapital"
                           />
                         </div>
                       </div>
@@ -886,25 +927,19 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Domestic Sales Details <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            className="input-field"
+                          <input 
+                            type="text" 
+                            className="input-field" 
                             placeholder="Enter domestic sales details"
-                            value={formData.domesticSalesDetails}
-                            onChange={handleInputChange}
-                            name="domesticSalesDetails"
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Domestic Sales Value <span className="text-red-500">*</span></label>
                           <div className="relative">
-                            <input
-                              type="text"
-                              className="input-field"
+                            <input 
+                              type="text" 
+                              className="input-field" 
                               placeholder="Enter domestic sales value"
-                              value={formData.domesticSalesValue}
-                              onChange={handleInputChange}
-                              name="domesticSalesValue"
                             />
                             <div className="absolute right-2 top-2">
                               <button type="button" className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300">
@@ -921,24 +956,18 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Total Revenue Year <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            className="input-field"
+                          <input 
+                            type="text" 
+                            className="input-field" 
                             placeholder="Enter total revenue year"
-                            value={formData.totalRevenueYear}
-                            onChange={handleInputChange}
-                            name="totalRevenueYear"
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Annual Revenue <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            className="input-field"
+                          <input 
+                            type="text" 
+                            className="input-field" 
                             placeholder="Enter annual revenue"
-                            value={formData.annualRevenue}
-                            onChange={handleInputChange}
-                            name="annualRevenue"
                           />
                         </div>
                       </div>
@@ -1058,24 +1087,18 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Total No of Employees</label>
-                          <input
-                            type="text"
-                            className="input-field"
+                          <input 
+                            type="text" 
+                            className="input-field" 
                             placeholder="Enter total number of employees"
-                            value={formData.totalNoOfEmployees}
-                            onChange={handleInputChange}
-                            name="totalNoOfEmployees"
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Year of Establishment</label>
-                          <input
-                            type="text"
-                            className="input-field"
+                          <input 
+                            type="text" 
+                            className="input-field" 
                             placeholder="Enter year of establishment"
-                            value={formData.yearOfEstablishment}
-                            onChange={handleInputChange}
-                            name="yearOfEstablishment"
                           />
                         </div>
                       </div>
@@ -1203,7 +1226,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
       </main>
 
       {/* Footer */}
-      {/* <footer className="bg-gray-900 text-white py-8">
+      <footer className="bg-gray-900 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center items-center space-x-4 rtl:space-x-reverse">
             <span className="text-sm text-gray-400">ITIDA DB</span>
@@ -1211,7 +1234,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
             <span className="text-sm text-gray-400">{t.poweredBy}</span>
           </div>
         </div>
-      </footer> */}
+      </footer>
     </div>
   )
 }
