@@ -5,6 +5,9 @@ import { translations } from '../contexts/LanguageContext'
 import Tab1CompanyLegal from '../components/registration/registrationCompany/Tab1CompanyLegal'
 import Tab2ContactInfo from '../components/registration/registrationCompany/Tab2ContactInfo'
 import Tab3ActivitiesAttachments from '../components/registration/registrationCompany/Tab3ActivitiesAttachments'
+import CompanyHeadInformation from '../components/registration/CompanyHeadInformation'
+// import CompanyHeadInformation from '../components/registration/registrationCompany/CompanyHeadInformation'
+import FinancialInformation from '../components/registration/FinancialInformation'
 
 interface RegistrationPageProps {
   onBackToHome?: () => void
@@ -293,906 +296,94 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                 {/* Only show the wizard form in the first sidebar tab */}
                 {activeSidebarTab === 1 && (
                   <form onSubmit={handleSubmit}>
-                {/* Accordion Sections */}
-                <div className="space-y-4">
-                  {[1, 2, 3].map((section) => {
-                    const isOpen = openAccordions[section]
-                    const arrowIcon = isOpen ? (
-                      <svg className="w-5 h-5 transform rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    ) : (
-                      <svg className="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    )
-                    return (
-                      <div key={section} className="border border-gray-300 rounded-lg">
-                        <button
-                          type="button"
-                          onClick={() => setOpenAccordions((prev) => ({ ...prev, [section]: !prev[section] }))}
-                          className="w-full flex justify-between items-center px-4 py-3 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-itida-blue"
-                          aria-expanded={isOpen}
-                          aria-controls={`accordion-section-${section}`}
-                        >
-                          <span className="font-semibold text-lg">
-                            {section === 1 && t.companyLegalInformation}
-                            {section === 2 && t.contactInformation}
-                            {section === 3 && t.activitiesAttachments}
-                          </span>
-                          {arrowIcon}
-                        </button>
-                        {isOpen && (
-                          <div id={`accordion-section-${section}`} className="p-6 bg-white">
-                            {section === 1 && (
-                              <Tab1CompanyLegal formData={formData} onInputChange={handleInputChange} />
-                            )}
-                            {section === 2 && (
-                              <Tab2ContactInfo formData={formData} onInputChange={handleInputChange} />
-                            )}
-                            {section === 3 && (
-                              <Tab3ActivitiesAttachments formData={formData} onInputChange={handleInputChange} onFileChange={handleFileChange} />
+                    {/* Accordion Sections */}
+                    <div className="space-y-4">
+                      {[1, 2, 3].map((section) => {
+                        const isOpen = openAccordions[section]
+                        const arrowIcon = isOpen ? (
+                          <svg className="w-5 h-5 transform rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        )
+                        return (
+                          <div key={section} className="border border-gray-300 rounded-lg">
+                            <button
+                              type="button"
+                              onClick={() => setOpenAccordions((prev) => ({ ...prev, [section]: !prev[section] }))}
+                              className="w-full flex justify-between items-center px-4 py-3 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-itida-blue"
+                              aria-expanded={isOpen}
+                              aria-controls={`accordion-section-${section}`}
+                            >
+                              <span className="font-semibold text-lg">
+                                {section === 1 && t.companyLegalInformation}
+                                {section === 2 && t.contactInformation}
+                                {section === 3 && t.activitiesAttachments}
+                              </span>
+                              {arrowIcon}
+                            </button>
+                            {isOpen && (
+                              <div id={`accordion-section-${section}`} className="p-6 bg-white">
+                                {section === 1 && (
+                                  <Tab1CompanyLegal formData={formData} onInputChange={handleInputChange} />
+                                )}
+                                {section === 2 && (
+                                  <Tab2ContactInfo formData={formData} onInputChange={handleInputChange} />
+                                )}
+                                {section === 3 && (
+                                  <Tab3ActivitiesAttachments formData={formData} onInputChange={handleInputChange} onFileChange={handleFileChange} />
+                                )}
+                              </div>
                             )}
                           </div>
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
+                        )
+                      })}
+                    </div>
 
-                {/* Submit Button */}
-                <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
-                  <button
-                    type="submit"
-                    disabled={!isTabValid(1) || !isTabValid(2) || !isTabValid(3)}
-                    className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 ${
-                      isTabValid(1) && isTabValid(2) && isTabValid(3)
-                        ? 'bg-itida-blue hover:bg-itida-dark text-white'
-                        : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                    }`}
-                  >
-                    {t.submitRegistration}
-                  </button>
-                </div>
+                    {/* Submit Button */}
+                    <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
+                      <button
+                        type="submit"
+                        disabled={!isTabValid(1) || !isTabValid(2) || !isTabValid(3)}
+                        className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 ${
+                          isTabValid(1) && isTabValid(2) && isTabValid(3)
+                            ? 'bg-itida-blue hover:bg-itida-dark text-white'
+                            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                        }`}
+                      >
+                        {t.submitRegistration}
+                      </button>
+                    </div>
                   </form>
                 )}
                 
                 {/* Company's Head & Contacts Tab Content */}
                 {activeSidebarTab === 2 && (
-                  <form onSubmit={(e) => {
-                    e.preventDefault();
-                    console.log('Company Head & Contacts form submitted');
-                  }} className="py-4">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.companyHeadContacts}</h2>
-                    
-                    {/* Company's Head & Contact Persons Section */}
-                    <div className="mb-8">
-                      <h3 className="text-xl font-semibold text-center mb-6">{t.companyHeadContacts}</h3>
-                      
-                      {/* Company's Head Section */}
-                      <div className="mb-8">
-                        <h4 className="font-medium mb-4">Company's Head</h4>
-                        {formData.companyHeads.map((head: any, index: number) => (
-                          <div key={`company-head-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="text" 
-                                  value={head.name}
-                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'name', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="اسمك"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Position <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="text" 
-                                  value={head.position}
-                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'position', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="المنصب"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="text" 
-                                  value={head.mobile}
-                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'mobile', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="رقم المحمول"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">National ID <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="text" 
-                                  value={head.nationalId}
-                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'nationalId', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="الرقم القومي"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="email" 
-                                  value={head.email}
-                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'email', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="البريد الإلكتروني"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Email 2</label>
-                                <input 
-                                  type="email" 
-                                  value={head.email2}
-                                  onChange={(e) => handleDynamicInputChange('companyHeads', index, 'email2', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="البريد الإلكتروني 2"
-                                />
-                              </div>
-                            </div>
-                            <div className="flex justify-end mt-2">
-                              <button 
-                                type="button" 
-                                onClick={() => removeRow('companyHeads', index)}
-                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                              >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                        <div className="flex justify-end mt-2">
-                          <button 
-                            type="button" 
-                            onClick={() => addRow('companyHeads', { name: '', position: '', mobile: '', nationalId: '', email: '', email2: '' })}
-                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Contact Persons Section */}
-                      <div className="mb-8">
-                        <h4 className="font-medium mb-4">Contact Persons</h4>
-                        {formData.contactPersons.map((person: { name: string; position: string; mobile: string; nationalId: string; email: string; }, index: number) => (
-                          <div key={`contact-person-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="text" 
-                                  value={person.name}
-                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'name', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="اسمك"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Position <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="text" 
-                                  value={person.position}
-                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'position', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="المنصب"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="text" 
-                                  value={person.mobile}
-                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'mobile', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="رقم المحمول"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">National ID <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="text" 
-                                  value={person.nationalId}
-                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'nationalId', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="الرقم القومي"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail <span className="text-red-500">*</span></label>
-                                <input 
-                                  type="email" 
-                                  value={person.email}
-                                  onChange={(e) => handleDynamicInputChange('contactPersons', index, 'email', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="البريد الإلكتروني"
-                                />
-                              </div>
-                            </div>
-                            <div className="flex justify-end mt-2">
-                              <button 
-                                type="button" 
-                                onClick={() => removeRow('contactPersons', index)}
-                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                              >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                        <div className="flex justify-end mt-2">
-                          <button 
-                            type="button" 
-                            onClick={() => addRow('contactPersons', { name: '', position: '', mobile: '', nationalId: '', email: '' })}
-                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Company Market Information Section */}
-                    <div className="mb-8">
-                      <h3 className="text-xl font-semibold mb-4">Company Market Information</h3>
-                      <p className="text-gray-600 mb-4">Some description about this section</p>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Parent <span className="text-red-500">*</span></label>
-                          <input 
-                            type="text" 
-                            className="input-field" 
-                            placeholder="Parent"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Child <span className="text-red-500">*</span></label>
-                          <input 
-                            type="text" 
-                            className="input-field" 
-                            placeholder="Child"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Grand Child <span className="text-red-500">*</span></label>
-                          <input 
-                            type="text" 
-                            className="input-field" 
-                            placeholder="Grand Child"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Industry Sectors</label>
-                          <select className="input-field">
-                            <option value="">Select Industry Sector</option>
-                          </select>
-                        </div>
-                      </div>
-                      
-                      {/* Products Section */}
-                      <div className="mb-6">
-                        <h4 className="font-medium mb-3">Products</h4>
-                        {formData.products.map((product: { name: string; description: string }, index: number) => (
-                          <div key={`product-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
-                                <input 
-                                  type="text" 
-                                  value={product.name}
-                                  onChange={(e) => handleDynamicInputChange('products', index, 'name', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Product Name"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Product Description</label>
-                                <input 
-                                  type="text" 
-                                  value={product.description}
-                                  onChange={(e) => handleDynamicInputChange('products', index, 'description', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Product Description"
-                                />
-                              </div>
-                            </div>
-                            <div className="flex justify-end mt-2">
-                              <button 
-                                type="button" 
-                                onClick={() => removeRow('products', index)}
-                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                              >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                        <div className="flex justify-end mt-2">
-                          <button 
-                            type="button" 
-                            onClick={() => addRow('products', { name: '', description: '' })}
-                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Services Section */}
-                      <div className="mb-6">
-                        <h4 className="font-medium mb-3">Services</h4>
-                        {formData.services.map((service: { name: string; description: string }, index: number) => (
-                          <div key={`service-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
-                                <input 
-                                  type="text" 
-                                  value={service.name}
-                                  onChange={(e) => handleDynamicInputChange('services', index, 'name', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Service Name"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Service Description</label>
-                                <input 
-                                  type="text" 
-                                  value={service.description}
-                                  onChange={(e) => handleDynamicInputChange('services', index, 'description', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Service Description"
-                                />
-                              </div>
-                            </div>
-                            <div className="flex justify-end mt-2">
-                              <button 
-                                type="button" 
-                                onClick={() => removeRow('services', index)}
-                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                              >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                        <div className="flex justify-end mt-2">
-                          <button 
-                            type="button" 
-                            onClick={() => addRow('services', { name: '', description: '' })}
-                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Key Technologies, Certificates, Affiliations */}
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Key Technologies</label>
-                          <select className="input-field">
-                            <option value="">Select Technology</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Certificates</label>
-                          <select className="input-field">
-                            <option value="">Select Certificate</option>
-                          </select>
-                        </div>
-                      </div>
-                      
-                      {/* Affiliations, Memberships, Partnerships */}
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Affiliation</label>
-                          <select className="input-field">
-                            <option value="">Select Affiliation</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Memberships</label>
-                          <select className="input-field">
-                            <option value="">Select Membership</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Partnerships</label>
-                          <select className="input-field">
-                            <option value="">Select Partnership</option>
-                          </select>
-                        </div>
-                      </div>
-                      
-                      {/* Customer Reference */}
-                      <div className="mb-6">
-                        <h4 className="font-medium mb-3">Customer Reference</h4>
-                        {formData.customerReferences.map((reference: { name: string; country: string; projectSize: string; scope: string; description: string }, index: number) => (
-                          <div key={`reference-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
-                            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
-                                <input 
-                                  type="text" 
-                                  value={reference.name}
-                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'name', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Customer Name"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
-                                <select 
-                                  value={reference.country}
-                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'country', e.target.value)}
-                                  className="input-field"
-                                >
-                                  <option value="">Select Country</option>
-                                  <option value="option1">Option 1</option>
-                                </select>
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Project Size</label>
-                                <input 
-                                  type="text" 
-                                  value={reference.projectSize}
-                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'projectSize', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Project Size"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Scope</label>
-                                <input 
-                                  type="text" 
-                                  value={reference.scope}
-                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'scope', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Scope"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Project Description</label>
-                                <input 
-                                  type="text" 
-                                  value={reference.description}
-                                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'description', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Project Description"
-                                />
-                              </div>
-                            </div>
-                            <div className="flex justify-end mt-2">
-                              <button 
-                                type="button" 
-                                onClick={() => removeRow('customerReferences', index)}
-                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                              >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                        <div className="flex justify-end mt-2">
-                          <button 
-                            type="button" 
-                            onClick={() => addRow('customerReferences', { name: '', country: '', projectSize: '', scope: '', description: '' })}
-                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Company Overview */}
-                      <div>
-                        <h4 className="font-medium mb-3">Company overview</h4>
-                        <div className="border border-gray-300 rounded-md overflow-hidden">
-                          <div className="bg-gray-100 border-b border-gray-300 p-2 flex items-center space-x-2">
-                            <select className="text-sm border border-gray-300 rounded p-1">
-                              <option>Paragraph</option>
-                            </select>
-                            <button className="p-1 hover:bg-gray-200 rounded">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                              </svg>
-                            </button>
-                            <button className="p-1 hover:bg-gray-200 rounded font-bold">B</button>
-                            <button className="p-1 hover:bg-gray-200 rounded italic">I</button>
-                            <button className="p-1 hover:bg-gray-200 rounded underline">U</button>
-                            <button className="p-1 hover:bg-gray-200 rounded">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                              </svg>
-                            </button>
-                            <button className="p-1 hover:bg-gray-200 rounded">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                              </svg>
-                            </button>
-                          </div>
-                          <textarea className="w-full p-3 h-32 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter company overview..."></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Submit Button */}
-                    <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
-                      <button
-                        type="submit"
-                        className="px-8 py-3 rounded-lg font-medium transition-all duration-300 bg-itida-blue hover:bg-itida-dark text-white"
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </form>
+                  <CompanyHeadInformation
+                    formData={formData}
+                    onInputChange={handleInputChange}
+                    onDynamicInputChange={handleDynamicInputChange}
+                    handleDynamicInputChange={handleDynamicInputChange}
+                    addRow={addRow}
+                    removeRow={removeRow}
+                    t={t}
+                    onSubmit={handleSubmit}
+                  /> 
                 )}
                 
                 {/* Financial Information Tab Content */}
                 {activeSidebarTab === 3 && (
-                  <form onSubmit={(e) => {
-                    e.preventDefault();
-                    console.log('Financial Information form submitted');
-                  }} className="py-4">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.financialInformation}</h2>
-                    
-                    <h3 className="text-xl font-semibold text-center mb-6">{t.financialInformation}</h3>
-                    
-                    {/* Fiscal Capital Section */}
-                    <div className="mb-8">
-                      <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Fiscal Capital <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            className="input-field"
-                            placeholder="Enter fiscal capital"
-                            value={formData.fiscalCapital}
-                            onChange={handleInputChange}
-                            name="fiscalCapital"
-                          />
-                        </div>
-                      </div>
-                      
-                      {/* Domestic Sales Details */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Domestic Sales Details <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            className="input-field"
-                            placeholder="Enter domestic sales details"
-                            value={formData.domesticSalesDetails}
-                            onChange={handleInputChange}
-                            name="domesticSalesDetails"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Domestic Sales Value <span className="text-red-500">*</span></label>
-                          <div className="relative">
-                            <input
-                              type="text"
-                              className="input-field"
-                              placeholder="Enter domestic sales value"
-                              value={formData.domesticSalesValue}
-                              onChange={handleInputChange}
-                              name="domesticSalesValue"
-                            />
-                            <div className="absolute right-2 top-2">
-                              <button type="button" className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Total Revenue and Annual Revenue */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Total Revenue Year <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            className="input-field"
-                            placeholder="Enter total revenue year"
-                            value={formData.totalRevenueYear}
-                            onChange={handleInputChange}
-                            name="totalRevenueYear"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Annual Revenue <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            className="input-field"
-                            placeholder="Enter annual revenue"
-                            value={formData.annualRevenue}
-                            onChange={handleInputChange}
-                            name="annualRevenue"
-                          />
-                        </div>
-                      </div>
-                      
-                      {/* Audited Balance Sheet */}
-                      <div className="mb-6">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Audited Balance Sheet/P&L/Tax return + Certificate of Chartered Accountant <span className="text-red-500">*</span></label>
-                        <div className="flex items-center gap-2">
-                          <button 
-                            type="button" 
-                            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-all"
-                          >
-                            Choose File
-                          </button>
-                          <span className="text-sm text-gray-500">No file chosen</span>
-                        </div>
-                      </div>
-                      
-                      {/* Do You Export Section */}
-                      <div className="mb-6">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Do You Export? <span className="text-red-500">*</span></label>
-                        <div className="flex items-center gap-4">
-                          <label className="inline-flex items-center">
-                            <input type="radio" name="export" className="form-radio h-4 w-4 text-blue-600" />
-                            <span className="ml-2">Yes</span>
-                          </label>
-                          <label className="inline-flex items-center">
-                            <input type="radio" name="export" className="form-radio h-4 w-4 text-blue-600" />
-                            <span className="ml-2">No</span>
-                          </label>
-                        </div>
-                      </div>
-                      
-                      {/* Export Information */}
-                      <div className="mb-6">
-                        <h4 className="font-medium mb-3">Export Information</h4>
-                        {formData.exportInformation.map((exportInfo: { year: string; marketRegion: string; country: string; valueExported: string }, index: number) => (
-                          <div key={`export-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
-                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
-                                <input 
-                                  type="text" 
-                                  value={exportInfo.year}
-                                  onChange={(e) => handleDynamicInputChange('exportInformation', index, 'year', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Year"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Market (Region)</label>
-                                <input 
-                                  type="text" 
-                                  value={exportInfo.marketRegion}
-                                  onChange={(e) => handleDynamicInputChange('exportInformation', index, 'marketRegion', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Market region"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
-                                <input 
-                                  type="text" 
-                                  value={exportInfo.country}
-                                  onChange={(e) => handleDynamicInputChange('exportInformation', index, 'country', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Country"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Value Exported</label>
-                                <div className="relative">
-                                  <input 
-                                    type="text" 
-                                    value={exportInfo.valueExported}
-                                    onChange={(e) => handleDynamicInputChange('exportInformation', index, 'valueExported', e.target.value)}
-                                    className="input-field" 
-                                    placeholder="Value exported"
-                                  />
-                                  <div className="absolute right-2 top-2">
-                                    <button type="button" className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300">
-                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                                      </svg>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex justify-end mt-2">
-                              <button 
-                                type="button" 
-                                onClick={() => removeRow('exportInformation', index)}
-                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                              >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                        <div className="flex justify-end mt-2">
-                          <button 
-                            type="button" 
-                            onClick={() => addRow('exportInformation', { year: '', marketRegion: '', country: '', valueExported: '' })}
-                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Total No of Employees and Year of Establishment */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Total No of Employees</label>
-                          <input
-                            type="text"
-                            className="input-field"
-                            placeholder="Enter total number of employees"
-                            value={formData.totalNoOfEmployees}
-                            onChange={handleInputChange}
-                            name="totalNoOfEmployees"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Year of Establishment</label>
-                          <input
-                            type="text"
-                            className="input-field"
-                            placeholder="Enter year of establishment"
-                            value={formData.yearOfEstablishment}
-                            onChange={handleInputChange}
-                            name="yearOfEstablishment"
-                          />
-                        </div>
-                      </div>
-                      
-                      {/* Type of Ownership */}
-                      <div className="mb-6">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Type of Ownership</label>
-                        <select className="input-field">
-                          <option value="">Select type of ownership</option>
-                          <option value="private">Private</option>
-                          <option value="public">Public</option>
-                          <option value="government">Government</option>
-                        </select>
-                      </div>
-                      
-                      {/* Name (Owner(s) / Shareholder(s)) */}
-                      <div className="mb-6">
-                        <h4 className="font-medium mb-3">Name (Owner(s) / Shareholder(s)) <span className="text-gray-500 text-sm">يرجى كتابة الاسم باللغة العربية</span></h4>
-                        {formData.owners.map((owner: { name: string; mobile: string; telephone: string; email: string }, index: number) => (
-                          <div key={`owner-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                                <input 
-                                  type="text" 
-                                  value={owner.name}
-                                  onChange={(e) => handleDynamicInputChange('owners', index, 'name', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Owner name"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile</label>
-                                <input 
-                                  type="text" 
-                                  value={owner.mobile}
-                                  onChange={(e) => handleDynamicInputChange('owners', index, 'mobile', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Mobile number"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Telephone</label>
-                                <input 
-                                  type="text" 
-                                  value={owner.telephone}
-                                  onChange={(e) => handleDynamicInputChange('owners', index, 'telephone', e.target.value)}
-                                  className="input-field" 
-                                  placeholder="Telephone number"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
-                                <div className="relative">
-                                  <input 
-                                    type="email" 
-                                    value={owner.email}
-                                    onChange={(e) => handleDynamicInputChange('owners', index, 'email', e.target.value)}
-                                    className="input-field" 
-                                    placeholder="Email address"
-                                  />
-                                  <div className="absolute right-2 top-2">
-                                    <button type="button" className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300">
-                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                                      </svg>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex justify-end mt-2">
-                              <button 
-                                type="button" 
-                                onClick={() => removeRow('owners', index)}
-                                className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                              >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                        <div className="flex justify-end mt-2">
-                          <button 
-                            type="button" 
-                            onClick={() => addRow('owners', { name: '', mobile: '', telephone: '', email: '' })}
-                            className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Company Data */}
-                      <div className="mb-6">
-                        <h4 className="font-medium mb-3">Company Data</h4>
-                        <textarea 
-                          className="w-full p-3 border border-gray-300 rounded-md h-32 focus:ring-blue-500 focus:border-blue-500" 
-                          placeholder="Enter company data..."
-                        ></textarea>
-                      </div>
-                    </div>
-                    
-                    {/* Submit Button */}
-                    <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
-                      <button
-                        type="submit"
-                        className="px-8 py-3 rounded-lg font-medium transition-all duration-300 bg-itida-blue hover:bg-itida-dark text-white"
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </form>
+                  <FinancialInformation
+                    formData={formData}
+                    handleInputChange={handleInputChange}
+                    handleDynamicInputChange={handleDynamicInputChange}
+                    addRow={addRow}
+                    removeRow={removeRow}
+                    t={t}
+                    onSubmit={handleSubmit} />
                 )}
               </div>
             </div>
