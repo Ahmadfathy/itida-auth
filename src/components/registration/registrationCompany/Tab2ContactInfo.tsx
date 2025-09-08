@@ -1,6 +1,6 @@
 import React from 'react'
-import { useLanguage } from '../../contexts/LanguageContext'
-import { translations } from '../../contexts/LanguageContext'
+import { useLanguage } from '../../../contexts/LanguageContext'
+import { translations } from '../../../contexts/LanguageContext'
 
 interface Tab2ContactInfoProps {
   formData: any

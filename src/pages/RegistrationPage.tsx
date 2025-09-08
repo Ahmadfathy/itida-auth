@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../contexts/LanguageContext'
 
-import Tab1CompanyLegal from '../components/registration/Tab1CompanyLegal'
-import Tab2ContactInfo from '../components/registration/Tab2ContactInfo'
-import Tab3ActivitiesAttachments from '../components/registration/Tab3ActivitiesAttachments'
+import Tab1CompanyLegal from '../components/registration/registrationCompany/Tab1CompanyLegal'
+import Tab2ContactInfo from '../components/registration/registrationCompany/Tab2ContactInfo'
+import Tab3ActivitiesAttachments from '../components/registration/registrationCompany/Tab3ActivitiesAttachments'
 
 interface RegistrationPageProps {
   onBackToHome?: () => void
