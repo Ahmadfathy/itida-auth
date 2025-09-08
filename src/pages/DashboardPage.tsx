@@ -1,12 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { translations } from '../contexts/LanguageContext';
 
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
-  const t = translations[language];
 
   const dashboardStats = [
     {

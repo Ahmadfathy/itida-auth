@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { translations } from '../contexts/LanguageContext';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 
 const ProfilePage: React.FC = () => {
   const { language } = useLanguage();
-  const t = translations[language];
 
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);

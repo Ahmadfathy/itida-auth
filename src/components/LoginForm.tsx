@@ -20,7 +20,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
     rememberMe: true
   })
   const [showPassword, setShowPassword] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
@@ -39,11 +38,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
     const fakePassword = 'password123'
 
     if (formData.username === fakeUsername && formData.password === fakePassword) {
-      setErrorMessage('')
       // Redirect to profile page
       navigate('/profile')
     } else {
-      setErrorMessage('Invalid username or password')
+      // Invalid credentials - could add error handling here
+      console.log('Invalid username or password')
     }
   }
 
