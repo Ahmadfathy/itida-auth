@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 // import Header from '../components/Header';
 import Hero from '../components/Hero';
 import LoginForm from '../components/LoginForm';
-import Features from '../components/Features';
+import Services from '../components/Services';
+import AdditionalBenefits from '../components/AdditionalBenefits'
 // import Footer from '../components/Footer';
 
 const HomePage: React.FC = () => {
@@ -16,6 +17,10 @@ const HomePage: React.FC = () => {
     }
   };
 
+  const handleRegister = () => {
+    navigate('/registration')
+  }
+
   return (
     <>
       {/* <Header onLogoClick={() => navigate('/')} /> */}
@@ -27,7 +32,8 @@ const HomePage: React.FC = () => {
             onRegister={() => navigate('/registration')}
           />
         </div>
-        <Features />
+        <AdditionalBenefits onRegister={handleRegister} />
+        <Services />
       </main>
       {/* <Footer onLogoClick={() => navigate('/')} /> */}
     </>

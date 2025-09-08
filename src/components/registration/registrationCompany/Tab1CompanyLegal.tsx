@@ -32,8 +32,8 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
           </label>
           <input
             type="text"
-            name="companyNameEn"
-            value={formData.companyNameEn}
+            name="ldv_englishname"
+            value={formData.ldv_englishname}
             onChange={onInputChange}
             className="input-field"
             placeholder={t.name}
@@ -48,8 +48,8 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
           </label>
           <input
             type="text"
-            name="companyNameAr"
-            value={formData.companyNameAr}
+            name="ldv_arabicname"
+            value={formData.ldv_arabicname}
             onChange={onInputChange}
             className="input-field"
             placeholder={t.name}
@@ -58,6 +58,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
         </div>
       </div>
 
+      <div className="grid md:grid-cols-2 gap-6">
       {/* Commercial Denomination */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -65,8 +66,8 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
         </label>
         <input
           type="text"
-          name="commercialDenomination"
-          value={formData.commercialDenomination}
+          name="ldv_commercialdenomination"
+          value={formData.ldv_commercialdenomination}
           onChange={onInputChange}
           className="input-field"
           placeholder={t.commercialDenomination}
@@ -80,8 +81,8 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
           <span className="text-red-500 ml-1">*</span>
         </label>
         <select
-          name="legalType"
-          value={formData.legalType}
+          name="ldv_legaltypecode"
+          value={formData.ldv_legaltypecode}
           onChange={onInputChange}
           className="input-field"
           required
@@ -94,6 +95,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
           <option value="branch">{t.branch}</option>
           <option value="other">{t.other}</option>
         </select>
+      </div>
       </div>
 
       {/* Register Using Section */}

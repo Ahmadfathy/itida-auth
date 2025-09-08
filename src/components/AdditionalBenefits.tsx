@@ -2,7 +2,11 @@ import React from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../contexts/LanguageContext'
 
-const AdditionalBenefits: React.FC = () => {
+interface AdditionalBenefitsProps {
+  onRegister: () => void
+}
+
+const AdditionalBenefits: React.FC<AdditionalBenefitsProps> = ({ onRegister }) => {
   const { language } = useLanguage()
   const t = translations[language]
 
@@ -36,8 +40,8 @@ const AdditionalBenefits: React.FC = () => {
                 ))}
               </div>
 
-              <button className="btn-secondary text-lg px-8 py-4">
-                {t.exploreAllServices}
+              <button onClick={onRegister} className="btn-secondary text-lg px-8 py-4">
+                Request License
               </button>
             </div>
           </div>
