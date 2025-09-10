@@ -4,7 +4,7 @@ import { translations } from '../contexts/LanguageContext'
 
 import Tab1CompanyLegal from '../components/registration/registrationCompany/Tab1CompanyLegal'
 import Tab2ContactInfo from '../components/registration/registrationCompany/Tab2ContactInfo'
-import Tab3ActivitiesAttachments from '../components/registration/registrationCompany/Tab3ActivitiesAttachments'
+import Tab3ActivitiesAttachments from '../components/registration/registrationCompany/Tab4ActivitiesAttachments'
 
 interface RegistrationPageProps {
   onBackToHome?: () => void

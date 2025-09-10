@@ -1,15 +1,127 @@
-import React from 'react'
-import { useLanguage } from '../../../contexts/LanguageContext'
-import { translations } from '../../../contexts/LanguageContext'
+import React, { useState } from 'react'
+import Select from 'react-select'
+import { useLanguage, translations } from '../../../contexts/LanguageContext'
 
 interface Tab2ContactInfoProps {
   formData: any
   onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
+  onDateChange?: (name: string, value: string) => void
 }
 
-const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChange }) => {
+const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChange, onDateChange }) => {
   const { language: currentLanguage } = useLanguage()
   const t = translations[currentLanguage]
+
+  const [contactError, setContactError] = useState<string>('')
+  const [representativeError, setRepresentativeError] = useState<string>('')
+
+  const validateDate = (value: string): string => {
+    if (!value) {
+      return t.dateIsRequired
+    }
+    const regex = /^(0[1-9]|1[0-2])\/\d{4}$/
+    if (!regex.test(value)) {
+      return t.invalidFormatUseMMYYYY
+    }
+    const [month, year] = value.split('/').map(Number)
+    const currentYear = new Date().getFullYear()
+    if (year > currentYear - 15) {
+      return t.yearMustBeAtLeast15YearsAgo.replace('{year}', (currentYear - 15).toString())
+    }
+    return ''
+  }
+
+  // Job title options for React Select
+  const jobTitleOptions = [
+    { value: 'ceo', label: 'Chief Executive Officer (CEO)' },
+    { value: 'cfo', label: 'Chief Financial Officer (CFO)' },
+    { value: 'coo', label: 'Chief Operating Officer (COO)' },
+    { value: 'cto', label: 'Chief Technology Officer (CTO)' },
+    { value: 'cmo', label: 'Chief Marketing Officer (CMO)' },
+    { value: 'chro', label: 'Chief Human Resources Officer (CHRO)' },
+    { value: 'cio', label: 'Chief Information Officer (CIO)' },
+    { value: 'cso', label: 'Chief Security Officer (CSO)' },
+    { value: 'president', label: 'President' },
+    { value: 'vice_president', label: 'Vice President' },
+    { value: 'director', label: 'Director' },
+    { value: 'manager', label: 'Manager' },
+    { value: 'senior_manager', label: 'Senior Manager' },
+    { value: 'assistant_manager', label: 'Assistant Manager' },
+    { value: 'supervisor', label: 'Supervisor' },
+    { value: 'coordinator', label: 'Coordinator' },
+    { value: 'specialist', label: 'Specialist' },
+    { value: 'analyst', label: 'Analyst' },
+    { value: 'consultant', label: 'Consultant' },
+    { value: 'executive', label: 'Executive' },
+    { value: 'partner', label: 'Partner' },
+    { value: 'owner', label: 'Owner' },
+    { value: 'founder', label: 'Founder' },
+    { value: 'chairman', label: 'Chairman' },
+    { value: 'board_member', label: 'Board Member' },
+    { value: 'general_manager', label: 'General Manager' },
+    { value: 'operations_manager', label: 'Operations Manager' },
+    { value: 'sales_manager', label: 'Sales Manager' },
+    { value: 'marketing_manager', label: 'Marketing Manager' },
+    { value: 'hr_manager', label: 'HR Manager' },
+    { value: 'finance_manager', label: 'Finance Manager' },
+    { value: 'it_manager', label: 'IT Manager' },
+    { value: 'project_manager', label: 'Project Manager' },
+    { value: 'business_development_manager', label: 'Business Development Manager' },
+    { value: 'account_manager', label: 'Account Manager' },
+    { value: 'team_lead', label: 'Team Lead' },
+    { value: 'senior_developer', label: 'Senior Developer' },
+    { value: 'developer', label: 'Developer' },
+    { value: 'junior_developer', label: 'Junior Developer' },
+    { value: 'designer', label: 'Designer' },
+    { value: 'ui_ux_designer', label: 'UI/UX Designer' },
+    { value: 'graphic_designer', label: 'Graphic Designer' },
+    { value: 'other', label: 'Other' }
+  ]
+
+  // Custom handler for React Select
+  const handleSelectChange = (selectedOption: any, fieldName: string) => {
+    const syntheticEvent = {
+      target: {
+        name: fieldName,
+        value: selectedOption ? selectedOption.value : ''
+      }
+    } as React.ChangeEvent<HTMLInputElement>
+    onInputChange(syntheticEvent)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let { value, name } = e.target
+
+    // Remove any non-numeric characters
+    value = value.replace(/[^0-9]/g, '')
+
+    // Auto-format: add leading zero for month if needed
+    if (value.length === 1 && parseInt(value) >= 1 && parseInt(value) <= 9) {
+      value = '0' + value
+    }
+
+    // Insert slash after month if not present
+    if (value.length >= 2 && !value.includes('/')) {
+      value = value.slice(0, 2) + '/' + value.slice(2)
+    }
+
+    // Limit to MM/YYYY format (7 characters: MM/YYYY)
+    if (value.length > 7) {
+      value = value.substring(0, 7)
+    }
+
+    // Validate the formatted value
+    const validationError = validateDate(value)
+    if (name === 'contact_ldv_nidissuedate') {
+      setContactError(validationError)
+    } else if (name === 'representative_nidissuedate') {
+      setRepresentativeError(validationError)
+    }
+
+    if (onDateChange) {
+      onDateChange(name, value)
+    }
+  }
   
   return (
     <div className="space-y-8">
@@ -23,158 +135,10 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
         </p>
       </div>
 
-      {/* Company Address Information */}
+      {/* Company's Head Section */}
       <div className="space-y-6">
         <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-          {t.companyAddress}
-        </h3>
-        
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t.governorate}
-              <span className="text-red-500 ml-1">*</span>
-            </label>
-            <select
-              name="governorate"
-              value={formData.governorate}
-              onChange={onInputChange}
-              className="input-field"
-              required
-            >
-              <option value="">{t.selectGovernorate}</option>
-              <option value="cairo">{currentLanguage === 'ar' ? 'القاهرة' : 'Cairo'}</option>
-              <option value="giza">{currentLanguage === 'ar' ? 'الجيزة' : 'Giza'}</option>
-              <option value="alexandria">{currentLanguage === 'ar' ? 'الإسكندرية' : 'Alexandria'}</option>
-              <option value="sharqia">{currentLanguage === 'ar' ? 'الشرقية' : 'Sharqia'}</option>
-              <option value="gharbia">{currentLanguage === 'ar' ? 'الغربية' : 'Gharbia'}</option>
-              <option value="menoufia">{currentLanguage === 'ar' ? 'المنوفية' : 'Menoufia'}</option>
-              <option value="qalyubia">{currentLanguage === 'ar' ? 'القليوبية' : 'Qalyubia'}</option>
-              <option value="port-said">{currentLanguage === 'ar' ? 'بورسعيد' : 'Port Said'}</option>
-              <option value="suez">{currentLanguage === 'ar' ? 'السويس' : 'Suez'}</option>
-              <option value="ismailia">{currentLanguage === 'ar' ? 'الإسماعيلية' : 'Ismailia'}</option>
-              <option value="kafr-el-sheikh">{currentLanguage === 'ar' ? 'كفر الشيخ' : 'Kafr El Sheikh'}</option>
-              <option value="beheira">{currentLanguage === 'ar' ? 'البحيرة' : 'Beheira'}</option>
-              <option value="assiut">{currentLanguage === 'ar' ? 'أسيوط' : 'Assiut'}</option>
-              <option value="sohag">{currentLanguage === 'ar' ? 'سوهاج' : 'Sohag'}</option>
-              <option value="qena">{currentLanguage === 'ar' ? 'قنا' : 'Qena'}</option>
-              <option value="luxor">{currentLanguage === 'ar' ? 'الأقصر' : 'Luxor'}</option>
-              <option value="aswan">{currentLanguage === 'ar' ? 'أسوان' : 'Aswan'}</option>
-              <option value="red-sea">{currentLanguage === 'ar' ? 'البحر الأحمر' : 'Red Sea'}</option>
-              <option value="new-valley">{currentLanguage === 'ar' ? 'الوادي الجديد' : 'New Valley'}</option>
-              <option value="matruh">{currentLanguage === 'ar' ? 'مطروح' : 'Matruh'}</option>
-              <option value="north-sinai">{currentLanguage === 'ar' ? 'شمال سيناء' : 'North Sinai'}</option>
-              <option value="south-sinai">{currentLanguage === 'ar' ? 'جنوب سيناء' : 'South Sinai'}</option>
-              <option value="beni-suef">{currentLanguage === 'ar' ? 'بني سويف' : 'Beni Suef'}</option>
-              <option value="fayoum">{currentLanguage === 'ar' ? 'الفيوم' : 'Fayoum'}</option>
-              <option value="minya">{currentLanguage === 'ar' ? 'المنيا' : 'Minya'}</option>
-              <option value="dakahlia">{currentLanguage === 'ar' ? 'الدقهلية' : 'Dakahlia'}</option>
-              <option value="damietta">{currentLanguage === 'ar' ? 'دمياط' : 'Damietta'}</option>
-              <option value="other">{currentLanguage === 'ar' ? 'أخرى' : 'Other'}</option>
-            </select>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t.districtCity}
-              <span className="text-red-500 ml-1">*</span>
-            </label>
-            <input
-              type="text"
-              name="district"
-              value={formData.district}
-              onChange={onInputChange}
-              className="input-field"
-              placeholder={t.districtCity}
-              required
-            />
-          </div>
-        </div>
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            {t.streetAddress}
-          </label>
-          <input
-            type="text"
-            name="streetAddress"
-            value={formData.streetAddress}
-            onChange={onInputChange}
-            className="input-field"
-            placeholder={t.streetAddress}
-          />
-        </div>
-      </div>
-
-      {/* Company Contact Information */}
-      <div className="space-y-6">
-        <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-          {t.companyContactInfo}
-        </h3>
-        
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t.companyWebsiteUrl}
-            </label>
-            <input
-              type="url"
-              name="companyWebsite"
-              value={formData.companyWebsite}
-              onChange={onInputChange}
-              className="input-field"
-              placeholder="http://companywebsite.com"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t.officialEmail}
-            </label>
-            <input
-              type="email"
-              name="officialEmail"
-              value={formData.officialEmail}
-              onChange={onInputChange}
-              className="input-field"
-              placeholder={t.email}
-            />
-          </div>
-        </div>
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            {t.phoneMobile}
-          </label>
-          <input
-            type="tel"
-            name="phoneMobile"
-            value={formData.phoneMobile}
-            onChange={onInputChange}
-            className="input-field"
-            placeholder={t.mobile}
-          />
-        </div>
-
-        {/* Company Branches */}
-        <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          <input
-            type="checkbox"
-            name="hasBranches"
-            checked={formData.hasBranches}
-            onChange={onInputChange}
-            className="h-4 w-4 text-itida-blue focus:ring-itida-blue border-gray-300 rounded"
-          />
-          <label className="text-sm font-medium text-gray-700">
-            {t.companyHasBranches}
-          </label>
-        </div>
-      </div>
-
-      {/* Company Representative Section */}
-      <div className="space-y-6">
-        <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-          {t.companyRepresentative}
+          {t.companyHead}
         </h3>
         <p className="text-sm text-gray-600">
           {t.representativeSubtitle}
@@ -188,8 +152,8 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
             </label>
             <input
               type="text"
-              name="representativeName"
-              value={formData.representativeName}
+              name="fullName"
+              value={formData.fullName}
               onChange={onInputChange}
               className="input-field"
               placeholder={t.name}
@@ -202,14 +166,14 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
               {t.title}
               <span className="text-red-500 ml-1">*</span>
             </label>
-            <input
-              type="text"
-              name="representativeTitle"
-              value={formData.representativeTitle}
-              onChange={onInputChange}
-              className="input-field"
+            <Select
+              options={jobTitleOptions}
+              value={jobTitleOptions.find(option => option.value === formData.contact_jobtitle) || null}
+              onChange={(selectedOption) => handleSelectChange(selectedOption, 'contact_jobtitle')}
               placeholder={t.title}
-              required
+              className="react-select-container"
+              classNamePrefix="react-select"
+              isClearable
             />
           </div>
         </div>
@@ -222,8 +186,8 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
             </label>
             <input
               type="tel"
-              name="representativeMobile"
-              value={formData.representativeMobile}
+              name="contact_mobilephone"
+              value={formData.contact_mobilephone}
               onChange={onInputChange}
               className="input-field"
               placeholder={t.mobile}
@@ -233,36 +197,79 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t.email}
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="email"
+              name="contact_mail"
+              value={formData.contact_mail}
+              onChange={onInputChange}
+              className="input-field"
+              placeholder={t.email}
+              required
+            />
+          </div>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               {t.nationalId}
               <span className="text-red-500 ml-1">*</span>
             </label>
             <input
               type="text"
-              name="representativeNationalId"
-              value={formData.representativeNationalId}
+              name="contact_ldv_nationalid"
+              value={formData.contact_ldv_nationalid}
               onChange={onInputChange}
               className="input-field"
               placeholder={t.nationalId}
               required
             />
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t.nidIssuedFrom}
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="text"
+              name="contact_ldv_nidissuedfrom"
+              value={formData.contact_ldv_nidissuedfrom}
+              onChange={onInputChange}
+              className="input-field"
+              placeholder="e.g., Cairo"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t.nidIssueDate}
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="text"
+              name="contact_ldv_nidissuedate"
+              value={formData.contact_ldv_nidissuedate}
+              onChange={handleInputChange}
+              onBlur={() => {
+                const validationError = validateDate(formData.contact_ldv_nidissuedate)
+                setContactError(validationError)
+              }}
+              className={`input-field ${contactError ? 'border-red-500' : ''}`}
+              placeholder="MM/YYYY"
+              required
+            />
+            {contactError && <p className="text-red-500 text-sm mt-1">{contactError}</p>}
+          </div>
+
         </div>
+
         
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            {t.email}
-            <span className="text-red-500 ml-1">*</span>
-          </label>
-          <input
-            type="email"
-            name="representativeEmail"
-            value={formData.representativeEmail}
-            onChange={onInputChange}
-            className="input-field"
-            placeholder={t.email}
-            required
-          />
-        </div>
       </div>
 
       {/* Request Applicant Section */}
@@ -301,6 +308,142 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
           </label>
         </div>
       </div>
+
+      {/* Company Representative */}
+      {formData.requestApplicant === 'representative' && (
+        <div className="space-y-6 representative_section">
+        <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
+          Representative Informations
+        </h3>
+        
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t.name}
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="text"
+              name="representative_fullName"
+              value={formData.representative_fullName}
+              onChange={onInputChange}
+              className="input-field"
+              placeholder={t.name}
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t.title}
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <Select
+              options={jobTitleOptions}
+              value={jobTitleOptions.find(option => option.value === formData.representative_jobtitle) || null}
+              onChange={(selectedOption) => handleSelectChange(selectedOption, 'representative_jobtitle')}
+              placeholder={t.title}
+              className="react-select-container"
+              classNamePrefix="react-select"
+              isClearable
+            />
+          </div>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t.mobile}
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="tel"
+              name="representative_mobilephone"
+              value={formData.representative_mobilephone}
+              onChange={onInputChange}
+              className="input-field"
+              placeholder={t.mobile}
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t.email}
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="email"
+              name="representative_mail"
+              value={formData.representative_mail}
+              onChange={onInputChange}
+              className="input-field"
+              placeholder={t.email}
+              required
+            />
+          </div>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t.nationalId}
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="text"
+              name="representative_nationalid"
+              value={formData.representative_nationalid}
+              onChange={onInputChange}
+              className="input-field"
+              placeholder={t.nationalId}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              NID Issued from
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="text"
+              name="representative_nidissuedfrom"
+              value={formData.representative_nidissuedfrom}
+              onChange={onInputChange}
+              className="input-field"
+              placeholder="e.g., Cairo"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              NID Issue Date
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="text"
+              name="representative_nidissuedate"
+              value={formData.representative_nidissuedate}
+              onChange={handleInputChange}
+              onBlur={() => {
+                const validationError = validateDate(formData.representative_nidissuedate)
+                setRepresentativeError(validationError)
+              }}
+              className={`input-field ${representativeError ? 'border-red-500' : ''}`}
+              placeholder="MM/YYYY"
+              required
+            />
+            {representativeError && <p className="text-red-500 text-sm mt-1">{representativeError}</p>}
+          </div>
+
+        </div>
+
+        
+      </div>
+      )}
 
       {/* Note */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">

@@ -4,7 +4,8 @@ import { translations } from '../contexts/LanguageContext'
 
 import Tab1CompanyLegal from '../components/registration/registrationCompany/Tab1CompanyLegal'
 import Tab2ContactInfo from '../components/registration/registrationCompany/Tab2ContactInfo'
-import Tab3ActivitiesAttachments from '../components/registration/registrationCompany/Tab3ActivitiesAttachments'
+import Tab3CompanyBranches from '../components/registration/registrationCompany/Tab3CompanyBranches'
+import Tab4ActivitiesAttachments from '../components/registration/registrationCompany/Tab4ActivitiesAttachments'
 import CompanyHeadInformation from '../components/registration/CompanyHeadInformation'
 // import CompanyHeadInformation from '../components/registration/registrationCompany/CompanyHeadInformation'
 import FinancialInformation from '../components/registration/FinancialInformation'
@@ -17,7 +18,21 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
   const { language } = useLanguage()
   const t = translations[language]
   const [activeSidebarTab, setActiveSidebarTab] = useState(1)
-  const [openAccordions, setOpenAccordions] = useState<Record<number, boolean>>({1: true, 2: false, 3: false})
+  const [openAccordions, setOpenAccordions] = useState<Record<number, boolean>>({ 1: true, 2: false, 3: false, 4: false })
+
+  const multipleTypes = [
+    'Sole Corporation',
+    'General Partnership',
+    'Limited Liability Company',
+    'Joint',
+    'Special Limited Partnership',
+    'Inherited Company',
+    'Limited Partnership by Shares',
+    'Cooperative Associations',
+    'De Facto Company',
+    'Branch of Foreign Company'
+  ]
+
   const [formData, setFormData] = useState<any>({
     // Dynamic arrays for repeatable sections
     companyHeads: [{ name: '', position: '', mobile: '', nationalId: '', email: '', email2: '' }],
@@ -32,6 +47,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     companyNameAr: '',
     commercialDenomination: '',
     legalType: '',
+    companyClassification: [],
     registerUsing: {
       commercialRegistry: false,
       unifiedCommercialRegistry: false,
@@ -41,7 +57,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     unifiedCommercialRegistryNumber: '',
     taxRegistryNumber: '',
     commercialRegistrationDate: '',
-    
+
     // Tab 2: Contact Information & Company Representative
     governorate: '',
     district: '',
@@ -49,14 +65,14 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     companyWebsite: '',
     officialEmail: '',
     phoneMobile: '',
-    hasBranches: false,
+    branches: [{ branchName: '', branchCountry: '', branchGovernorate: '', branchCity: '', branchDistrict: '', branchEmail: '', mobilePhone: '' }],
     representativeName: '',
     representativeTitle: '',
     representativeMobile: '',
     representativeNationalId: '',
     representativeEmail: '',
     requestApplicant: 'company-in-charge',
-    
+
     // Tab 3: Activities, Attachments & Declaration
     activities: {
       softwareDesign: false,
@@ -74,7 +90,9 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
       taxCard: null,
       nationalId: null,
       investmentGazette: null,
-      declarationUndertaking: null
+      declarationUndertaking: null,
+      representativeAuthorization: null,
+      representativeNationalId: null
     },
     licenseReceiptMethod: '',
     declarationAgreement: false,
@@ -96,22 +114,59 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target
     const checked = (e.target as HTMLInputElement).checked
-    
+
+    let newFormData: any
+
     if (name.includes('.')) {
       const [parent, child] = name.split('.')
-      setFormData((prev: typeof formData) => ({
-        ...prev,
+      newFormData = {
+        ...formData,
         [parent]: {
-          ...prev[parent as keyof typeof prev],
+          ...formData[parent as keyof typeof formData],
           [child]: type === 'checkbox' ? checked : value
         }
-      }))
+      }
     } else {
-      setFormData((prev: typeof formData) => ({
-        ...prev,
+      newFormData = {
+        ...formData,
         [name]: type === 'checkbox' ? checked : value
-      }))
+      }
     }
+
+    // Adjust companyHeads based on legal type
+    if (name === 'ldv_legaltypecode') {
+      const isMultiple = multipleTypes.includes(value)
+      const minRows = isMultiple ? 2 : 1
+      let newCompanyHeads = [...newFormData.companyHeads]
+      while (newCompanyHeads.length < minRows) {
+        newCompanyHeads.push({ name: '', position: '', mobile: '', nationalId: '', email: '', email2: '' })
+      }
+      while (newCompanyHeads.length > minRows) {
+        newCompanyHeads.pop()
+      }
+      newFormData.companyHeads = newCompanyHeads
+    }
+
+    setFormData(newFormData)
+  }
+
+  const handleDateChange = (name: string, value: string) => {
+    // Validate MM/YYYY format and year >= currentYear - 15
+    const regex = /^(0[1-9]|1[0-2])\/\d{4}$/
+    if (!regex.test(value)) {
+      // Invalid format, do not update formData
+      return
+    }
+    const [month, year] = value.split('/').map(Number)
+    const currentYear = new Date().getFullYear()
+    if (year > currentYear - 15) {
+      // Year too recent, do not update formData
+      return
+    }
+    setFormData((prev: typeof formData) => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
   // Handle input change for dynamic array fields
@@ -133,16 +188,19 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
 
   // Remove a row from a dynamic section
   const removeRow = (section: string, index: number) => {
-    if (index === 0 && formData[section].length === 1) {
-      // Don't remove the last row, just clear it
+    const isMultiple = multipleTypes.includes(formData.ldv_legaltypecode)
+    const minRows = isMultiple ? 2 : 1
+
+    if (formData[section].length <= minRows) {
+      // Don't remove below minimum, just clear the row
       const emptyRow = Object.keys(formData[section][0]).reduce((acc, key) => {
         acc[key] = ''
         return acc
       }, {} as any)
-      
+
       setFormData((prev: typeof formData) => ({
         ...prev,
-        [section]: [emptyRow]
+        [section]: formData[section].map((row: any, i: number) => i === index ? emptyRow : row)
       }))
     } else {
       setFormData((prev: typeof formData) => ({
@@ -175,10 +233,12 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
       case 1:
         return !!(formData.companyNameEn && formData.companyNameAr && formData.legalType)
       case 2:
-        return !!(formData.governorate && formData.district && formData.representativeName && 
-                 formData.representativeTitle && formData.representativeMobile && 
-                 formData.representativeNationalId && formData.representativeEmail)
+        return !!(formData.governorate && formData.district && formData.representativeName &&
+          formData.representativeTitle && formData.representativeMobile &&
+          formData.representativeNationalId && formData.representativeEmail)
       case 3:
+        return formData.declarationAgreement
+      case 4:
         return formData.declarationAgreement
       default:
         return false
@@ -188,26 +248,32 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
   const isSidebarTabComplete = (tabNumber: number): boolean => {
     switch (tabNumber) {
       case 1:
-        // Check if all 3 sub-tabs are complete
-        return isTabValid(1) && isTabValid(2) && isTabValid(3)
+        // Check if all 4 sub-tabs are complete
+        return isTabValid(1) && isTabValid(2) && isTabValid(3) && isTabValid(4)
       case 2:
         // Check if company heads and contact persons have required fields
-        const hasValidCompanyHeads = formData.companyHeads.every((head: any) => 
+        const hasValidCompanyHeads = formData.companyHeads.every((head: any) =>
           head.name && head.position && head.mobile && head.nationalId && head.email
         )
-        const hasValidContactPersons = formData.contactPersons.every((person: any) => 
+        const hasValidContactPersons = formData.contactPersons.every((person: any) =>
           person.name && person.position && person.mobile && person.nationalId && person.email
         )
         return hasValidCompanyHeads && hasValidContactPersons
       case 3:
         // Check financial information completeness
-        return !!(formData.fiscalCapital && formData.domesticSalesDetails && 
-                 formData.domesticSalesValue && formData.totalRevenueYear && 
-                 formData.annualRevenue && formData.auditedBalanceSheet)
+        return !!(formData.fiscalCapital && formData.domesticSalesDetails &&
+          formData.domesticSalesValue && formData.totalRevenueYear &&
+          formData.annualRevenue && formData.auditedBalanceSheet)
+      case 4:
+        // Check if at least one activity is selected and required attachments are uploaded
+        const hasSelectedActivity = Object.values(formData.activities).some((activity: any) => activity)
+        const hasRequiredAttachments = formData.attachments.commercialRegister && formData.attachments.taxCard
+        return hasSelectedActivity && hasRequiredAttachments
       default:
         return false
     }
   }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
@@ -226,15 +292,15 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
               <span>{t.backToHome}</span>
             </button>
           </div>
-          
+
           {/* Page Title */}
           <div className="text-center mb-8">
-             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-               {t.companiesRegistrationForm}
-             </h1>
-             <p className="text-lg text-gray-600">
-               {t.completeCompanyRegistration}
-             </p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              {t.companiesRegistrationForm}
+            </h1>
+            <p className="text-lg text-gray-600">
+              {t.completeCompanyRegistration}
+            </p>
           </div>
 
           {/* Form Container with Sidebar */}
@@ -289,7 +355,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                 </ul>
               </div>
             </div>
-            
+
             {/* Main Content Area */}
             <div className="flex-1">
               <div className="p-8">
@@ -298,7 +364,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                   <form onSubmit={handleSubmit}>
                     {/* Accordion Sections */}
                     <div className="space-y-4">
-                      {[1, 2, 3].map((section) => {
+                      {[1, 2, 3, 4].map((section) => {
                         const isOpen = openAccordions[section]
                         const arrowIcon = isOpen ? (
                           <svg className="w-5 h-5 transform rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -314,27 +380,31 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                             <button
                               type="button"
                               onClick={() => setOpenAccordions((prev) => ({ ...prev, [section]: !prev[section] }))}
-                              className="w-full flex justify-between items-center px-4 py-3 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-itida-blue"
+                              className="w-full flex justify-between items-center px-4 py-3 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-itida-blue rounded-lg"
                               aria-expanded={isOpen}
                               aria-controls={`accordion-section-${section}`}
                             >
                               <span className="font-semibold text-lg">
                                 {section === 1 && t.companyLegalInformation}
                                 {section === 2 && t.contactInformation}
-                                {section === 3 && t.activitiesAttachments}
+                                {section === 3 && t.companyBranchesTitle}
+                                {section === 4 && t.activitiesAttachments}
                               </span>
                               {arrowIcon}
                             </button>
                             {isOpen && (
                               <div id={`accordion-section-${section}`} className="p-6 bg-white">
                                 {section === 1 && (
-                                  <Tab1CompanyLegal formData={formData} onInputChange={handleInputChange} />
+                                  <Tab1CompanyLegal formData={formData} onInputChange={handleInputChange} setFormData={setFormData} />
                                 )}
                                 {section === 2 && (
-                                  <Tab2ContactInfo formData={formData} onInputChange={handleInputChange} />
+                                  <Tab2ContactInfo formData={formData} onInputChange={handleInputChange} onDateChange={handleDateChange} />
                                 )}
                                 {section === 3 && (
-                                  <Tab3ActivitiesAttachments formData={formData} onInputChange={handleInputChange} onFileChange={handleFileChange} />
+                                  <Tab3CompanyBranches formData={formData} onInputChange={handleInputChange} setFormData={setFormData} handleDynamicInputChange={handleDynamicInputChange} addRow={addRow} removeRow={removeRow} />
+                                )}
+                                {section === 4 && (
+                                  <Tab4ActivitiesAttachments formData={formData} onInputChange={handleInputChange} onFileChange={handleFileChange} />
                                 )}
                               </div>
                             )}
@@ -343,23 +413,91 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       })}
                     </div>
 
+                    {/* Company OverView */}
+                    <div className='mt-6'>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Company overview
+                        <span className="text-red-500 ml-1">*</span>
+                      </label>
+                      <textarea
+                        name="companyOverView"
+                        id="companyOverView"
+                        className="input-field"
+                        placeholder="Briefly describe your company's background, core competencies, and key achievements."
+                        value={formData.companyData}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+
+
+
+                    {/* License Receipt Method */}
+                    <div className="space-y-4 mt-6">
+                      <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                        {t.licenseReceipt}
+                      </h3>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          {t.methodOfLicenseReceipt}
+                        </label>
+                        <select
+                          name="licenseReceiptMethod"
+                          value={formData.licenseReceiptMethod}
+                          onChange={handleInputChange}
+                          className="input-field"
+                        >
+                          <option value="">{t.selectReceiptMethod}</option>
+                          <option value="email">{language === 'ar' ? 'بريد إلكتروني' : 'Email'}</option>
+                          <option value="postal">{t.postalMail}</option>
+                          <option value="pickup">{t.personalPickup}</option>
+                          <option value="courier">{t.courier}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Declaration Agreement */}
+                    <div className="space-y-4 mt-6">
+                      <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                        {t.declarationAgreement}
+                      </h3>
+
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <p className="text-sm text-gray-700 leading-relaxed mb-4">
+                          {t.declarationText}
+                        </p>
+
+                        <label className="flex items-start space-x-3 rtl:space-x-reverse">
+                          <input
+                            type="checkbox"
+                            name="declarationAgreement"
+                            checked={formData.declarationAgreement}
+                            className="mt-1 h-4 w-4 text-itida-blue focus:ring-itida-blue border-gray-300 rounded"
+                            required
+                          />
+                          <span className="text-sm text-gray-700">
+                            {t.iAgree}
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+
                     {/* Submit Button */}
                     <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
                       <button
                         type="submit"
-                        disabled={!isTabValid(1) || !isTabValid(2) || !isTabValid(3)}
-                        className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 ${
-                          isTabValid(1) && isTabValid(2) && isTabValid(3)
-                            ? 'bg-itida-blue hover:bg-itida-dark text-white'
-                            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                        }`}
+                        disabled={!isTabValid(1) || !isTabValid(2) || !isTabValid(3) || !isTabValid(4)}
+                        className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 ${isTabValid(1) && isTabValid(2) && isTabValid(3) && isTabValid(4)
+                          ? 'bg-itida-blue hover:bg-itida-dark text-white'
+                          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                          }`}
                       >
                         {t.submitRegistration}
                       </button>
                     </div>
                   </form>
                 )}
-                
+
                 {/* Company's Head & Contacts Tab Content */}
                 {activeSidebarTab === 2 && (
                   <CompanyHeadInformation
@@ -371,9 +509,9 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                     removeRow={removeRow}
                     t={t}
                     onSubmit={handleSubmit}
-                  /> 
+                  />
                 )}
-                
+
                 {/* Financial Information Tab Content */}
                 {activeSidebarTab === 3 && (
                   <FinancialInformation
