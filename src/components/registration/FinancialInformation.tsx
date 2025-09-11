@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useMemo } from 'react'
 import Select, { MultiValue } from 'react-select'
 
 interface OptionType {
@@ -157,6 +157,71 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
       ...prev,
       [fieldName]: values
     }))
+  }
+
+  const companyClassificationOptions: OptionType[] = [
+    { value: 'Technology', label: 'Technology' },
+    { value: 'Manufacturing', label: 'Manufacturing' },
+    { value: 'Services', label: 'Services' },
+    { value: 'Retail', label: 'Retail' },
+    { value: 'Others', label: 'Others' }
+  ]
+
+  const subClassificationMapping: { [key: string]: OptionType[] } = {
+    Technology: [
+      { value: 'Software Development', label: 'Software Development' },
+      { value: 'Hardware', label: 'Hardware' },
+      { value: 'Consulting', label: 'Consulting' },
+      { value: 'Others', label: 'Others' }
+    ],
+    Manufacturing: [
+      { value: 'Production', label: 'Production' },
+      { value: 'Assembly', label: 'Assembly' },
+      { value: 'Others', label: 'Others' }
+    ],
+    Services: [
+      { value: 'Consulting', label: 'Consulting' },
+      { value: 'Outsourcing', label: 'Outsourcing' },
+      { value: 'Others', label: 'Others' }
+    ],
+    Retail: [
+      { value: 'E-commerce', label: 'E-commerce' },
+      { value: 'Physical Stores', label: 'Physical Stores' },
+      { value: 'Others', label: 'Others' }
+    ],
+    Others: [
+      { value: 'Others', label: 'Others' }
+    ]
+  }
+
+  const subClassificationOptions = useMemo(() => {
+    if (!formData.companyClassification || typeof formData.companyClassification !== 'string') return []
+    return subClassificationMapping[formData.companyClassification] || []
+  }, [formData.companyClassification])
+
+  const industrySectorsOptions: OptionType[] = [
+    { value: 'IT', label: 'IT' },
+    { value: 'Finance', label: 'Finance' },
+    { value: 'Healthcare', label: 'Healthcare' },
+    { value: 'Education', label: 'Education' },
+    { value: 'Others', label: 'Others' }
+  ]
+
+  const handleCompanyClassificationChange = (selectedOption: any) => {
+    const newValue = selectedOption ? selectedOption.value : ''
+    setFormData((prev: any) => ({
+      ...prev,
+      companyClassification: newValue,
+      subClassification: ''
+    }))
+  }
+
+  const handleSubClassificationChange = (selectedOption: any) => {
+    handleInputChange({ target: { name: 'subClassification', value: selectedOption ? selectedOption.value : '' } } as React.ChangeEvent<HTMLInputElement>)
+  }
+
+  const handleIndustrySectorsChange = (selectedOption: any) => {
+    handleInputChange({ target: { name: 'industrySectors', value: selectedOption ? selectedOption.value : '' } } as React.ChangeEvent<HTMLInputElement>)
   }
 
   return (
@@ -615,47 +680,43 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Company Classifications <span className="text-red-500">*</span>
               </label>
-              <select
-                className="input-field"
-                value={formData.companyClassification}
-                onChange={handleInputChange}
-                name="companyClassification"
-                >
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                </select>
+              <Select
+                options={companyClassificationOptions}
+                value={companyClassificationOptions.find(option => option.value === formData.companyClassification)}
+                onChange={handleCompanyClassificationChange}
+                placeholder="Select Company Classification"
+                className="basic-single"
+                classNamePrefix="select"
+                isClearable
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Company's Sub Classification <span className="text-red-500">*</span>
               </label>
-              <select
-                className="input-field"
-                value={formData.subClassification}
-                onChange={handleInputChange}
-                name="subClassification"
-              >
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-              </select>
+              <Select
+                options={subClassificationOptions}
+                value={subClassificationOptions.find(option => option.value === formData.subClassification)}
+                onChange={handleSubClassificationChange}
+                placeholder="Select Sub Classification"
+                className="basic-single"
+                classNamePrefix="select"
+                isClearable
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Industry Sectors
               </label>
-              <select
-                className="input-field"
-                value={formData.industrySectors}
-                onChange={handleInputChange}
-                name="industrySectors"
-              >
-                <option value="">Select Industry Sector</option>
-              </select>
+              <Select
+                options={industrySectorsOptions}
+                value={industrySectorsOptions.find(option => option.value === formData.industrySectors)}
+                onChange={handleIndustrySectorsChange}
+                placeholder="Select Industry Sector"
+                className="basic-single"
+                classNamePrefix="select"
+                isClearable
+              />
             </div>
           </div>
         </div>
