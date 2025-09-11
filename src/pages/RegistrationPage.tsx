@@ -39,7 +39,7 @@ const [formData, setFormData] = useState<any>({
     contactPersons: [{ name: '', position: '', mobile: '', nationalId: '', email: '' }],
     products: [{ name: '', description: '' }],
     services: [{ name: '', description: '' }],
-    customerReferences: [{ name: '', country: '', projectSize: '', scope: '', description: '' }],
+    customerReferences: [{ name: '', country: '', projectSize: '', scope: '',industriesSector: '', description: '' }],
     exportInformation: [{ year: '', marketRegion: '', country: '', valueExported: '' }],
     owners: [{ name: '', mobile: '', telephone: '', email: '' }],
     domesticSalesDetails: [{ year: '', value: '', totalRevenueYear: '' }],

@@ -610,7 +610,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         {/* Company Classifications */}
         <div className="mb-6">
           <h4 className="font-medium mb-3">Company Classifications</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Company Classifications <span className="text-red-500">*</span>
