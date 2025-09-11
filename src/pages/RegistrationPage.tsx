@@ -169,7 +169,7 @@ const [formData, setFormData] = useState<any>({
       // Invalid format, do not update formData
       return
     }
-    const [month, year] = value.split('/').map(Number)
+    const [_month, year] = value.split('/').map(Number)
     const currentYear = new Date().getFullYear()
     if (year > currentYear - 15) {
       // Year too recent, do not update formData
@@ -413,7 +413,7 @@ const [formData, setFormData] = useState<any>({
                                   <Tab2ContactInfo formData={formData} onInputChange={handleInputChange} onDateChange={handleDateChange} />
                                 )}
                                 {section === 3 && (
-                                  <Tab3CompanyBranches formData={formData} onInputChange={handleInputChange} setFormData={setFormData} handleDynamicInputChange={handleDynamicInputChange} addRow={addRow} removeRow={removeRow} />
+                                  <Tab3CompanyBranches formData={formData} setFormData={setFormData} handleDynamicInputChange={handleDynamicInputChange} addRow={addRow} removeRow={removeRow} />
                                 )}
                                 {section === 4 && (
                                   <Tab4ActivitiesAttachments formData={formData} onInputChange={handleInputChange} onFileChange={handleFileChange} />
@@ -528,9 +528,11 @@ const [formData, setFormData] = useState<any>({
                     addRow={addRow}
                     removeRow={removeRow}
                     t={t}
-                    onSubmit={handleSubmit} handleFileChange={function (file: File | null): void {
+                    onSubmit={handleSubmit}
+                    handleFileChange={function (_file: File | null): void {
                       throw new Error('Function not implemented.')
-                    } } />
+                    } }
+                />
                 )}
 
               </div>

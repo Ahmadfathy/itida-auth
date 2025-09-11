@@ -3,16 +3,15 @@ import { useTranslation } from '../../../hooks/useTranslation'
 
 interface Tab3CompanyBranchesProps {
   formData: any
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
   setFormData: React.Dispatch<React.SetStateAction<any>>
   handleDynamicInputChange: (section: string, index: number, field: string, value: string) => void
   addRow: (section: string, emptyRow: any) => void
   removeRow: (section: string, index: number) => void
 }
 
-const Tab3CompanyBranches: React.FC<Tab3CompanyBranchesProps> = ({ formData, onInputChange, setFormData, handleDynamicInputChange, addRow, removeRow }) => {
+const Tab3CompanyBranches: React.FC<Tab3CompanyBranchesProps> = ({ formData, setFormData, handleDynamicInputChange, addRow, removeRow }) => {
   const t = useTranslation()
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false)
+  const [_isAccordionOpen, _setIsAccordionOpen] = useState(false)
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target
@@ -21,16 +20,6 @@ const Tab3CompanyBranches: React.FC<Tab3CompanyBranchesProps> = ({ formData, onI
       hasBranches: checked
     }))
   }
-
-  const arrowIcon = isAccordionOpen ? (
-    <svg className="w-5 h-5 transform rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-  ) : (
-    <svg className="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-  )
 
   return (
     <div className="space-y-8">
