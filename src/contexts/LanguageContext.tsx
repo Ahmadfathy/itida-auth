@@ -44,7 +44,7 @@ export const translations = {
     // Registration Sidebar
     registrationCompany: 'Registration Company',
     companyHeadContacts: 'Company\'s Head & Contacts',
-    financialInformation: 'Financial Information',
+    financialInformation: 'Financial & Market Information',
     
          // Hero
      heroTitle: 'Join Egypt\'s Official ICT Sector Registry',

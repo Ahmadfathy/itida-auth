@@ -40,11 +40,11 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
 
   return (
     <form onSubmit={onSubmit} className="py-4">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.companyHeadContacts}</h2>
+      <h2 className="text-xl font-bold text-gray-800 text-center mb-6">{t.companyHeadContacts}</h2>
 
       {/* Company's Head & Contact Persons Section */}
       <div className="mb-8">
-        <h3 className="text-xl font-semibold text-center mb-6">{t.companyHeadContacts}</h3>
+        {/* <h3 className="text-xl font-semibold text-center mb-6">{t.companyHeadContacts}</h3> */}
 
         {/* Company Address Information */}
         <div className="space-y-6 mb-10">
@@ -176,9 +176,9 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
         {/* Company's Head Section */}
         <div className="space-y-6 mb-8">
           <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-            {t.companyContactInfo}
+            Company's Head
           </h3>
-          <h4 className="font-medium mb-4">Company's Head</h4>
+          {/* <h4 className="font-medium mb-4">Company's Head</h4> */}
 
           {formData.companyHeads.map((head: any, index: number) => {
             // For single head types, show only one form without add/remove buttons

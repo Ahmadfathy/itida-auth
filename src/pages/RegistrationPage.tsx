@@ -33,7 +33,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     'Branch of Foreign Company'
   ]
 
-  const [formData, setFormData] = useState<any>({
+const [formData, setFormData] = useState<any>({
     // Dynamic arrays for repeatable sections
     companyHeads: [{ name: '', position: '', mobile: '', nationalId: '', email: '', email2: '' }],
     contactPersons: [{ name: '', position: '', mobile: '', nationalId: '', email: '' }],
@@ -42,6 +42,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     customerReferences: [{ name: '', country: '', projectSize: '', scope: '', description: '' }],
     exportInformation: [{ year: '', marketRegion: '', country: '', valueExported: '' }],
     owners: [{ name: '', mobile: '', telephone: '', email: '' }],
+    domesticSalesDetails: [{ year: '', value: '', totalRevenueYear: '' }],
     // Tab 1: Company Legal Information
     companyNameEn: '',
     companyNameAr: '',
@@ -99,7 +100,6 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
 
     // Financial Information
     fiscalCapital: '',
-    domesticSalesDetails: '',
     domesticSalesValue: '',
     totalRevenueYear: '',
     annualRevenue: '',
@@ -107,8 +107,16 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
     export: '',
     totalNoOfEmployees: '',
     yearOfEstablishment: '',
+    companySize: '',
     typeOfOwnership: '',
-    companyData: ''
+    companyData: '',
+
+    // Updated fields to arrays for multi-select
+    keyTechnologies: [],
+    certificates: [],
+    affiliation: [],
+    memberships: [],
+    partnerships: []
   })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -429,14 +437,8 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                       />
                     </div>
 
-
-
                     {/* License Receipt Method */}
                     <div className="space-y-4 mt-6">
-                      <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-                        {t.licenseReceipt}
-                      </h3>
-
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           {t.methodOfLicenseReceipt}
@@ -514,15 +516,19 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
 
                 {/* Financial Information Tab Content */}
                 {activeSidebarTab === 3 && (
-                  <FinancialInformation
+                <FinancialInformation
                     formData={formData}
+                    setFormData={setFormData}
                     handleInputChange={handleInputChange}
                     handleDynamicInputChange={handleDynamicInputChange}
                     addRow={addRow}
                     removeRow={removeRow}
                     t={t}
-                    onSubmit={handleSubmit} />
+                    onSubmit={handleSubmit} handleFileChange={function (file: File | null): void {
+                      throw new Error('Function not implemented.')
+                    } } />
                 )}
+
               </div>
             </div>
           </div>
