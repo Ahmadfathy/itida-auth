@@ -24,7 +24,7 @@ interface FinancialInformationProps {
     companyData: string
     products: { name: string; description: string }[]
     services: { name: string; description: string }[]
-    customerReferences: { name: string; country: string; projectSize: string; scope: string; description: string }[]
+    customerReferences: { name: string; country: string; projectSize: string; scope: string; industriesSector: string; description: string }[]
     parent: string
     child: string
     grandChild: string
@@ -327,83 +327,283 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         </h3>
 
         {/* Key Technologies, Affiliations, Memberships */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Key Technologies</label>
-              <Select
-                isMulti
-                options={keyTechnologiesOptions}
-                value={keyTechnologiesOptions.filter(option => formData.keyTechnologies.includes(option.value))}
-                onChange={(selectedOptions) => handleMultiSelectChange('keyTechnologies', selectedOptions)}
-                placeholder="Select Key Technologies"
-                className="basic-multi-select"
-                classNamePrefix="select"
-                components={{ Option: CheckboxOption }}
-                closeMenuOnSelect={false}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Affiliation</label>
-              <Select
-                isMulti
-                options={affiliationOptions}
-                value={affiliationOptions.filter(option => formData.affiliation.includes(option.value))}
-                onChange={(selectedOptions) => handleMultiSelectChange('affiliation', selectedOptions)}
-                placeholder="Select Affiliations"
-                className="basic-multi-select"
-                classNamePrefix="select"
-                components={{ Option: CheckboxOption }}
-                closeMenuOnSelect={false}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Memberships</label>
-              <Select
-                isMulti
-                options={membershipsOptions}
-                value={membershipsOptions.filter(option => formData.memberships.includes(option.value))}
-                onChange={(selectedOptions) => handleMultiSelectChange('memberships', selectedOptions)}
-                placeholder="Select Memberships"
-                className="basic-multi-select"
-                classNamePrefix="select"
-                components={{ Option: CheckboxOption }}
-                closeMenuOnSelect={false}
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Key Technologies</label>
+            <Select
+              isMulti
+              options={keyTechnologiesOptions}
+              value={keyTechnologiesOptions.filter(option => formData.keyTechnologies.includes(option.value))}
+              onChange={(selectedOptions) => handleMultiSelectChange('keyTechnologies', selectedOptions)}
+              placeholder="Select Key Technologies"
+              className="basic-multi-select"
+              classNamePrefix="select"
+              components={{ Option: CheckboxOption }}
+              closeMenuOnSelect={false}
+            />
           </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Affiliation</label>
+            <Select
+              isMulti
+              options={affiliationOptions}
+              value={affiliationOptions.filter(option => formData.affiliation.includes(option.value))}
+              onChange={(selectedOptions) => handleMultiSelectChange('affiliation', selectedOptions)}
+              placeholder="Select Affiliations"
+              className="basic-multi-select"
+              classNamePrefix="select"
+              components={{ Option: CheckboxOption }}
+              closeMenuOnSelect={false}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Memberships</label>
+            <Select
+              isMulti
+              options={membershipsOptions}
+              value={membershipsOptions.filter(option => formData.memberships.includes(option.value))}
+              onChange={(selectedOptions) => handleMultiSelectChange('memberships', selectedOptions)}
+              placeholder="Select Memberships"
+              className="basic-multi-select"
+              classNamePrefix="select"
+              components={{ Option: CheckboxOption }}
+              closeMenuOnSelect={false}
+            />
+          </div>
+        </div>
 
-          {/* Certificates, Partnerships */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Certificates</label>
-              <Select
-                isMulti
-                options={certificatesOptions}
-                value={certificatesOptions.filter(option => formData.certificates.includes(option.value))}
-                onChange={(selectedOptions) => handleMultiSelectChange('certificates', selectedOptions)}
-                placeholder="Select Certificates"
-                className="basic-multi-select"
-                classNamePrefix="select"
-                components={{ Option: CheckboxOption }}
-                closeMenuOnSelect={false}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Partnerships</label>
-              <Select
-                isMulti
-                options={partnershipsOptions}
-                value={partnershipsOptions.filter(option => formData.partnerships.includes(option.value))}
-                onChange={(selectedOptions) => handleMultiSelectChange('partnerships', selectedOptions)}
-                placeholder="Select Partnerships"
-                className="basic-multi-select"
-                classNamePrefix="select"
-                components={{ Option: CheckboxOption }}
-                closeMenuOnSelect={false}
-              />
-            </div>
+        {/* Certificates, Partnerships */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Certificates</label>
+            <Select
+              isMulti
+              options={certificatesOptions}
+              value={certificatesOptions.filter(option => formData.certificates.includes(option.value))}
+              onChange={(selectedOptions) => handleMultiSelectChange('certificates', selectedOptions)}
+              placeholder="Select Certificates"
+              className="basic-multi-select"
+              classNamePrefix="select"
+              components={{ Option: CheckboxOption }}
+              closeMenuOnSelect={false}
+            />
           </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Partnerships</label>
+            <Select
+              isMulti
+              options={partnershipsOptions}
+              value={partnershipsOptions.filter(option => formData.partnerships.includes(option.value))}
+              onChange={(selectedOptions) => handleMultiSelectChange('partnerships', selectedOptions)}
+              placeholder="Select Partnerships"
+              className="basic-multi-select"
+              classNamePrefix="select"
+              components={{ Option: CheckboxOption }}
+              closeMenuOnSelect={false}
+            />
+          </div>
+        </div>
+
+        {/* Products Section */}
+        <div className="mb-6">
+          <h4 className="font-medium mb-3">Products</h4>
+          {formData.products.map((product: { name: string; description: string }, index: number) => (
+            <div key={`product-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                  <input
+                    type="text"
+                    value={product.name}
+                    onChange={(e) => handleDynamicInputChange('products', index, 'name', e.target.value)}
+                    className="input-field"
+                    placeholder="Product Name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Product Description</label>
+                  <input
+                    type="text"
+                    value={product.description}
+                    onChange={(e) => handleDynamicInputChange('products', index, 'description', e.target.value)}
+                    className="input-field"
+                    placeholder="Product Description"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end mt-2">
+                <button
+                  type="button"
+                  onClick={() => removeRow('products', index)}
+                  className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="flex justify-end mt-2">
+            <button
+              type="button"
+              onClick={() => addRow('products', { name: '', description: '' })}
+              className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Services Section */}
+        <div className="mb-6">
+          <h4 className="font-medium mb-3">Services</h4>
+          {formData.services.map((service: { name: string; description: string }, index: number) => (
+            <div key={`service-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
+                  <input
+                    type="text"
+                    value={service.name}
+                    onChange={(e) => handleDynamicInputChange('services', index, 'name', e.target.value)}
+                    className="input-field"
+                    placeholder="Service Name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Service Description</label>
+                  <input
+                    type="text"
+                    value={service.description}
+                    onChange={(e) => handleDynamicInputChange('services', index, 'description', e.target.value)}
+                    className="input-field"
+                    placeholder="Service Description"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end mt-2">
+                <button
+                  type="button"
+                  onClick={() => removeRow('services', index)}
+                  className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="flex justify-end mt-2">
+            <button
+              type="button"
+              onClick={() => addRow('services', { name: '', description: '' })}
+              className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Customer Reference */}
+        <div className="mb-6">
+          <h4 className="font-medium mb-3">Customer Reference</h4>
+          {formData.customerReferences.map((reference: { name: string; country: string; projectSize: string; scope: string; industriesSector: string; description: string }, index: number) => (
+            <div key={`reference-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
+                  <input
+                    type="text"
+                    value={reference.name}
+                    onChange={(e) => handleDynamicInputChange('customerReferences', index, 'name', e.target.value)}
+                    className="input-field"
+                    placeholder="Customer Name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                  <select
+                    value={reference.country}
+                    onChange={(e) => handleDynamicInputChange('customerReferences', index, 'country', e.target.value)}
+                    className="input-field"
+                  >
+                    <option value="">Select Country</option>
+                    <option value="option1">Option 1</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Project Size</label>
+                  <input
+                    type="text"
+                    value={reference.projectSize}
+                    onChange={(e) => handleDynamicInputChange('customerReferences', index, 'projectSize', e.target.value)}
+                    className="input-field"
+                    placeholder="Project Size"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Scope</label>
+                  <input
+                    type="text"
+                    value={reference.scope}
+                    onChange={(e) => handleDynamicInputChange('customerReferences', index, 'scope', e.target.value)}
+                    className="input-field"
+                    placeholder="Scope"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Industries Sector</label>
+                  <input
+                    type="text"
+                    value={reference.industriesSector}
+                    onChange={(e) => handleDynamicInputChange('customerReferences', index, 'industriesSector', e.target.value)}
+                    className="input-field"
+                    placeholder="Industries Sector"
+                  />
+                </div>
+              </div>
+              <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Project Description</label>
+                  <input
+                    type="text"
+                    value={reference.description}
+                    onChange={(e) => handleDynamicInputChange('customerReferences', index, 'description', e.target.value)}
+                    className="input-field"
+                    placeholder="Project Description"
+                  />
+                </div>
+              <div className="flex justify-end mt-2">
+                <button
+                  type="button"
+                  onClick={() => removeRow('customerReferences', index)}
+                  className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="flex justify-end mt-2">
+            <button
+              type="button"
+              onClick={() => addRow('customerReferences', { name: '', country: '', projectSize: '', scope: '', industriesSector: '',  description: '' })}
+              className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
 
       </div>
 
@@ -414,7 +614,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
 
       {/* Fiscal Capital Section */}
       <div className="mb-8">
-        
+
 
         {/* Audited Balance Sheet */}
         <div className="mb-6">
@@ -549,7 +749,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
           </div>
         </div>
 
-        
+
 
         {/* Type of Ownership */}
         <div className="mb-6">
@@ -715,197 +915,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
             </div>
           </div>
 
-          {/* Products Section */}
-          <div className="mb-6">
-            <h4 className="font-medium mb-3">Products</h4>
-            {formData.products.map((product: { name: string; description: string }, index: number) => (
-              <div key={`product-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
-                    <input
-                      type="text"
-                      value={product.name}
-                      onChange={(e) => handleDynamicInputChange('products', index, 'name', e.target.value)}
-                      className="input-field"
-                      placeholder="Product Name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Product Description</label>
-                    <input
-                      type="text"
-                      value={product.description}
-                      onChange={(e) => handleDynamicInputChange('products', index, 'description', e.target.value)}
-                      className="input-field"
-                      placeholder="Product Description"
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-end mt-2">
-                  <button
-                    type="button"
-                    onClick={() => removeRow('products', index)}
-                    className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-            <div className="flex justify-end mt-2">
-              <button
-                type="button"
-                onClick={() => addRow('products', { name: '', description: '' })}
-                className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                </svg>
-              </button>
-            </div>
-          </div>
 
-          {/* Services Section */}
-          <div className="mb-6">
-            <h4 className="font-medium mb-3">Services</h4>
-            {formData.services.map((service: { name: string; description: string }, index: number) => (
-              <div key={`service-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
-                    <input
-                      type="text"
-                      value={service.name}
-                      onChange={(e) => handleDynamicInputChange('services', index, 'name', e.target.value)}
-                      className="input-field"
-                      placeholder="Service Name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Service Description</label>
-                    <input
-                      type="text"
-                      value={service.description}
-                      onChange={(e) => handleDynamicInputChange('services', index, 'description', e.target.value)}
-                      className="input-field"
-                      placeholder="Service Description"
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-end mt-2">
-                  <button
-                    type="button"
-                    onClick={() => removeRow('services', index)}
-                    className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-            <div className="flex justify-end mt-2">
-              <button
-                type="button"
-                onClick={() => addRow('services', { name: '', description: '' })}
-                className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          
-
-          {/* Customer Reference */}
-          <div className="mb-6">
-            <h4 className="font-medium mb-3">Customer Reference</h4>
-            {formData.customerReferences.map((reference: { name: string; country: string; projectSize: string; scope: string; description: string }, index: number) => (
-              <div key={`reference-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
-                    <input
-                      type="text"
-                      value={reference.name}
-                      onChange={(e) => handleDynamicInputChange('customerReferences', index, 'name', e.target.value)}
-                      className="input-field"
-                      placeholder="Customer Name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
-                    <select
-                      value={reference.country}
-                      onChange={(e) => handleDynamicInputChange('customerReferences', index, 'country', e.target.value)}
-                      className="input-field"
-                    >
-                      <option value="">Select Country</option>
-                      <option value="option1">Option 1</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Project Size</label>
-                    <input
-                      type="text"
-                      value={reference.projectSize}
-                      onChange={(e) => handleDynamicInputChange('customerReferences', index, 'projectSize', e.target.value)}
-                      className="input-field"
-                      placeholder="Project Size"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Scope</label>
-                    <input
-                      type="text"
-                      value={reference.scope}
-                      onChange={(e) => handleDynamicInputChange('customerReferences', index, 'scope', e.target.value)}
-                      className="input-field"
-                      placeholder="Scope"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Project Description</label>
-                    <input
-                      type="text"
-                      value={reference.description}
-                      onChange={(e) => handleDynamicInputChange('customerReferences', index, 'description', e.target.value)}
-                      className="input-field"
-                      placeholder="Project Description"
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-end mt-2">
-                  <button
-                    type="button"
-                    onClick={() => removeRow('customerReferences', index)}
-                    className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-            <div className="flex justify-end mt-2">
-              <button
-                type="button"
-                onClick={() => addRow('customerReferences', { name: '', country: '', projectSize: '', scope: '', description: '' })}
-                className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                </svg>
-              </button>
-            </div>
-          </div>
 
           {/* Company Overview */}
           <div>
