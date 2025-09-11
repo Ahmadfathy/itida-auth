@@ -8,6 +8,8 @@ interface OptionType {
 
 interface FinancialInformationProps {
   formData: {
+    subClassification: string | number | readonly string[] | undefined
+    companyClassification: string | number | readonly string[] | undefined
     fiscalCapital: string
     domesticSalesDetails: { year: string; value: string; totalRevenueYear: string }[]
     domesticSalesValue: string
@@ -605,6 +607,59 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
           </div>
         </div>
 
+        {/* Company Classifications */}
+        <div className="mb-6">
+          <h4 className="font-medium mb-3">Company Classifications</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Company Classifications <span className="text-red-500">*</span>
+              </label>
+              <select
+                className="input-field"
+                value={formData.companyClassification}
+                onChange={handleInputChange}
+                name="companyClassification"
+                >
+                  <option value=""></option>
+                  <option value=""></option>
+                  <option value=""></option>
+                  <option value=""></option>
+                </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Company's Sub Classification <span className="text-red-500">*</span>
+              </label>
+              <select
+                className="input-field"
+                value={formData.subClassification}
+                onChange={handleInputChange}
+                name="subClassification"
+              >
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Industry Sectors
+              </label>
+              <select
+                className="input-field"
+                value={formData.industrySectors}
+                onChange={handleInputChange}
+                name="industrySectors"
+              >
+                <option value="">Select Industry Sector</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
       </div>
 
 
@@ -868,52 +923,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
           <h3 className="text-xl font-semibold mb-4">Company Market Information</h3>
           <p className="text-gray-600 mb-4">Some description about this section</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Parent <span className="text-red-500">*</span></label>
-              <input
-                type="text"
-                className="input-field"
-                placeholder="Parent"
-                value={formData.parent}
-                onChange={handleInputChange}
-                name="parent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Child <span className="text-red-500">*</span></label>
-              <input
-                type="text"
-                className="input-field"
-                placeholder="Child"
-                value={formData.child}
-                onChange={handleInputChange}
-                name="child"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Grand Child <span className="text-red-500">*</span></label>
-              <input
-                type="text"
-                className="input-field"
-                placeholder="Grand Child"
-                value={formData.grandChild}
-                onChange={handleInputChange}
-                name="grandChild"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Industry Sectors</label>
-              <select
-                className="input-field"
-                value={formData.industrySectors}
-                onChange={handleInputChange}
-                name="industrySectors"
-              >
-                <option value="">Select Industry Sector</option>
-              </select>
-            </div>
-          </div>
+          
 
 
 
