@@ -3,6 +3,33 @@ import { useLanguage, translations } from '../contexts/LanguageContext';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+interface FinancialData {
+  fiscalCapital: string;
+  domesticSalesDetails: { year: string; value: string; totalRevenueYear: string }[];
+  annualRevenue: string;
+  auditedBalanceSheet: File | null;
+  export: string;
+  exportInformation: { year: string; marketRegion: string; country: string; valueExported: string; totalAmountExported: number }[];
+  ownershipNationality: string;
+  percentageEgyptianOwnership: string;
+  percentageNonEgyptianOwnership: string;
+  partnersNationalities: string;
+  totalNoOfEmployees: string;
+  yearOfEstablishment: string;
+  companySize: string;
+  typeOfOwnership: string;
+  companyData: string;
+  keyTechnologies: string[];
+  affiliation: string[];
+  memberships: string[];
+  certificates: string[];
+  partnerships: string[];
+  products: { name: string; description: string }[];
+  services: { name: string; description: string }[];
+  customerReferences: { name: string; country: string; projectSize: string; scope: string; industriesSector: string; description: string }[];
+  companyClassification: { companyClassification: string; subClassification: string }[];
+  owners: { name: string; mobile: string; telephone: string; email: string }[];
+}
 
 const ProfilePage: React.FC = () => {
   const { language } = useLanguage();
@@ -10,6 +37,34 @@ const ProfilePage: React.FC = () => {
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);
   const [showInfo, setShowInfo] = useState(true);
+
+  const [financialData, setFinancialData] = useState<FinancialData>({
+    fiscalCapital: '',
+    domesticSalesDetails: [{ year: '', value: '', totalRevenueYear: '' }],
+    annualRevenue: '',
+    auditedBalanceSheet: null,
+    export: '',
+    exportInformation: [{ year: '', marketRegion: '', country: '', valueExported: '', totalAmountExported: 0 }],
+    ownershipNationality: '',
+    percentageEgyptianOwnership: '',
+    percentageNonEgyptianOwnership: '',
+    partnersNationalities: '',
+    totalNoOfEmployees: '',
+    yearOfEstablishment: '',
+    companySize: '',
+    typeOfOwnership: '',
+    companyData: '',
+    keyTechnologies: [],
+    affiliation: [],
+    memberships: [],
+    certificates: [],
+    partnerships: [],
+    products: [{ name: '', description: '' }],
+    services: [{ name: '', description: '' }],
+    customerReferences: [{ name: '', country: '', projectSize: '', scope: '', industriesSector: '', description: '' }],
+    companyClassification: [{ companyClassification: '', subClassification: '' }],
+    owners: [{ name: '', mobile: '', telephone: '', email: '' }]
+  });
 
   const exportPDF = () => {
     const input = document.getElementById('profile-details-section');
@@ -27,10 +82,11 @@ const ProfilePage: React.FC = () => {
     html2canvas(input, {
       scale: 2,
       useCORS: true,
-      scrollY: -window.scrollY,
-      scrollX: -window.scrollX,
+      scrollY: 0,
+      scrollX: 0,
       windowWidth: document.documentElement.offsetWidth,
-      windowHeight: document.documentElement.offsetHeight,
+      windowHeight: input.scrollHeight,
+      height: input.scrollHeight,
       backgroundColor: '#ffffff',
       // Set direction based on language
       onclone: (clonedDoc) => {
@@ -41,8 +97,23 @@ const ProfilePage: React.FC = () => {
       const imgProps = pdf.getImageProperties(imgData);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      const pageHeight = pdf.internal.pageSize.getHeight();
 
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      let heightLeft = pdfHeight;
+      let position = 0;
+
+      // Add first page
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, Math.min(heightLeft, pageHeight));
+      heightLeft -= pageHeight;
+
+      // Add additional pages if needed
+      while (heightLeft > 0) {
+        pdf.addPage();
+        position -= pageHeight;
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, Math.min(heightLeft, pageHeight));
+        heightLeft -= pageHeight;
+      }
+
       pdf.save('profile-details.pdf');
     });
   };
@@ -490,14 +561,23 @@ const ProfilePage: React.FC = () => {
             <div>
               <h3 className="text-md font-semibold mb-4">Products</h3>
               <div className="grid md:grid-cols-4 gap-6">
-                <div>
-                  <p className="text-sm text-gray-400">Product Name</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Description</p>
-                  <p className="font-semibold">-</p>
-                </div>
+                {financialData.products.length > 0 ? (
+                  financialData.products.map((product, index) => (
+                    <div key={index}>
+                      <p className="text-sm text-gray-400">Product Name</p>
+                      <p className="font-semibold">{product.name || '-'}</p>
+                      <p className="text-sm text-gray-400">Description</p>
+                      <p className="font-semibold">{product.description || '-'}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div>
+                    <p className="text-sm text-gray-400">Product Name</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Description</p>
+                    <p className="font-semibold">-</p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -505,14 +585,23 @@ const ProfilePage: React.FC = () => {
             <div>
               <h3 className="text-md font-semibold mb-4">Services</h3>
               <div className="grid md:grid-cols-4 gap-6">
-                <div>
-                  <p className="text-sm text-gray-400">Service Name</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Description</p>
-                  <p className="font-semibold">-</p>
-                </div>
+                {financialData.services.length > 0 ? (
+                  financialData.services.map((service, index) => (
+                    <div key={index}>
+                      <p className="text-sm text-gray-400">Service Name</p>
+                      <p className="font-semibold">{service.name || '-'}</p>
+                      <p className="text-sm text-gray-400">Description</p>
+                      <p className="font-semibold">{service.description || '-'}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div>
+                    <p className="text-sm text-gray-400">Service Name</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Description</p>
+                    <p className="font-semibold">-</p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -520,30 +609,39 @@ const ProfilePage: React.FC = () => {
             <div>
               <h3 className="text-md font-semibold mb-4">Customer References</h3>
               <div className="grid md:grid-cols-4 gap-6">
-                <div>
-                  <p className="text-sm text-gray-400">Name</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Country</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Project Size</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Scope</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Industries Sector</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Description</p>
-                  <p className="font-semibold">-</p>
-                </div>
+                {financialData.customerReferences.length > 0 ? (
+                  financialData.customerReferences.map((ref, index) => (
+                    <div key={index}>
+                      <p className="text-sm text-gray-400">Name</p>
+                      <p className="font-semibold">{ref.name || '-'}</p>
+                      <p className="text-sm text-gray-400">Country</p>
+                      <p className="font-semibold">{ref.country || '-'}</p>
+                      <p className="text-sm text-gray-400">Project Size</p>
+                      <p className="font-semibold">{ref.projectSize || '-'}</p>
+                      <p className="text-sm text-gray-400">Scope</p>
+                      <p className="font-semibold">{ref.scope || '-'}</p>
+                      <p className="text-sm text-gray-400">Industries Sector</p>
+                      <p className="font-semibold">{ref.industriesSector || '-'}</p>
+                      <p className="text-sm text-gray-400">Description</p>
+                      <p className="font-semibold">{ref.description || '-'}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div>
+                    <p className="text-sm text-gray-400">Name</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Country</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Project Size</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Scope</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Industries Sector</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Description</p>
+                    <p className="font-semibold">-</p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -551,22 +649,31 @@ const ProfilePage: React.FC = () => {
             <div>
               <h3 className="text-md font-semibold mb-4">Export Information</h3>
               <div className="grid md:grid-cols-4 gap-6">
-                <div>
-                  <p className="text-sm text-gray-400">Year</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Market Region</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Country</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Value Exported</p>
-                  <p className="font-semibold">-</p>
-                </div>
+                {financialData.exportInformation.length > 0 ? (
+                  financialData.exportInformation.map((exportInfo, index) => (
+                    <div key={index}>
+                      <p className="text-sm text-gray-400">Year</p>
+                      <p className="font-semibold">{exportInfo.year || '-'}</p>
+                      <p className="text-sm text-gray-400">Market Region</p>
+                      <p className="font-semibold">{exportInfo.marketRegion || '-'}</p>
+                      <p className="text-sm text-gray-400">Country</p>
+                      <p className="font-semibold">{exportInfo.country || '-'}</p>
+                      <p className="text-sm text-gray-400">Value Exported</p>
+                      <p className="font-semibold">{exportInfo.valueExported || '-'}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div>
+                    <p className="text-sm text-gray-400">Year</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Market Region</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Country</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Value Exported</p>
+                    <p className="font-semibold">-</p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -574,22 +681,47 @@ const ProfilePage: React.FC = () => {
             <div>
               <h3 className="text-md font-semibold mb-4">Owners</h3>
               <div className="grid md:grid-cols-4 gap-6">
-                <div>
-                  <p className="text-sm text-gray-400">Name</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Mobile</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Telephone</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Email</p>
-                  <p className="font-semibold">-</p>
-                </div>
+                {financialData.owners.length > 0 ? (
+                  financialData.owners.map((owner, index) => (
+                    <React.Fragment key={index}>
+                      <div>
+                        <p className="text-sm text-gray-400">Name</p>
+                        <p className="font-semibold">{owner.name || '-'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400">Mobile</p>
+                        <p className="font-semibold">{owner.mobile || '-'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400">Telephone</p>
+                        <p className="font-semibold">{owner.telephone || '-'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400">Email</p>
+                        <p className="font-semibold">{owner.email || '-'}</p>
+                      </div>
+                    </React.Fragment>
+                  ))
+                ) : (
+                  <>
+                    <div>
+                      <p className="text-sm text-gray-400">Name</p>
+                      <p className="font-semibold">-</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400">Mobile</p>
+                      <p className="font-semibold">-</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400">Telephone</p>
+                      <p className="font-semibold">-</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400">Email</p>
+                      <p className="font-semibold">-</p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
@@ -597,18 +729,27 @@ const ProfilePage: React.FC = () => {
             <div>
               <h3 className="text-md font-semibold mb-4">Domestic Sales Details</h3>
               <div className="grid md:grid-cols-4 gap-6">
-                <div>
-                  <p className="text-sm text-gray-400">Year</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Value</p>
-                  <p className="font-semibold">-</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Total Revenue Year</p>
-                  <p className="font-semibold">-</p>
-                </div>
+                {financialData.domesticSalesDetails.length > 0 ? (
+                  financialData.domesticSalesDetails.map((salesDetail, index) => (
+                    <div key={index}>
+                      <p className="text-sm text-gray-400">Year</p>
+                      <p className="font-semibold">{salesDetail.year || '-'}</p>
+                      <p className="text-sm text-gray-400">Value</p>
+                      <p className="font-semibold">{salesDetail.value || '-'}</p>
+                      <p className="text-sm text-gray-400">Total Revenue Year</p>
+                      <p className="font-semibold">{salesDetail.totalRevenueYear || '-'}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div>
+                    <p className="text-sm text-gray-400">Year</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Value</p>
+                    <p className="font-semibold">-</p>
+                    <p className="text-sm text-gray-400">Total Revenue Year</p>
+                    <p className="font-semibold">-</p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -618,63 +759,71 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">Fiscal Capital</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.fiscalCapital || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Domestic Sales Value</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">
+                    {financialData.domesticSalesDetails.length > 0
+                      ? financialData.domesticSalesDetails.reduce((acc, cur) => acc + Number(cur.value || 0), 0)
+                      : '-'}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Total Revenue Year</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">
+                    {financialData.domesticSalesDetails.length > 0
+                      ? financialData.domesticSalesDetails[0].totalRevenueYear || '-'
+                      : '-'}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Annual Revenue</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.annualRevenue || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Audited Balance Sheet</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.auditedBalanceSheet ? financialData.auditedBalanceSheet.name : '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Export</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.export || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Ownership Nationality</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.ownershipNationality || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Percentage Egyptian Ownership</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.percentageEgyptianOwnership || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Percentage Non-Egyptian Ownership</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.percentageNonEgyptianOwnership || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Partners Nationalities</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.partnersNationalities || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Total Number of Employees</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.totalNoOfEmployees || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Year of Establishment</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.yearOfEstablishment || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Company Size</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.companySize || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Type of Ownership</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.typeOfOwnership || '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Company Data</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.companyData || '-'}</p>
                 </div>
               </div>
             </div>
@@ -685,23 +834,23 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">Key Technologies</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.keyTechnologies.length > 0 ? financialData.keyTechnologies.join(', ') : '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Certificates</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.certificates.length > 0 ? financialData.certificates.join(', ') : '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Affiliation</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.affiliation.length > 0 ? financialData.affiliation.join(', ') : '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Memberships</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.memberships.length > 0 ? financialData.memberships.join(', ') : '-'}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Partnerships</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">{financialData.partnerships.length > 0 ? financialData.partnerships.join(', ') : '-'}</p>
                 </div>
               </div>
             </div>
