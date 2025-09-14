@@ -23,7 +23,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
   ]
 
   const selectedClassifications = classificationOptions.filter(option =>
-    formData.companyClassification.includes(option.value)
+    formData.companyClassification.some((item: any) => item.companyClassification === option.value)
   )
 
   const customStyles = {
@@ -252,7 +252,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
           options={classificationOptions}
           value={selectedClassifications}
           onChange={(selectedOptions) => {
-            const values = selectedOptions ? selectedOptions.map(option => option.value) : []
+            const values = selectedOptions ? selectedOptions.map(option => ({ companyClassification: option.value, subClassification: '' })) : []
             setFormData((prev: any) => ({
               ...prev,
               companyClassification: values

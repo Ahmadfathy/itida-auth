@@ -186,7 +186,7 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
               return null
             }
             return (
-              <div key={`company-head-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
+              <div key={`company-head-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label>

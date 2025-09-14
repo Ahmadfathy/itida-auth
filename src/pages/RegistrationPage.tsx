@@ -48,7 +48,7 @@ const [formData, setFormData] = useState<any>({
     companyNameAr: '',
     commercialDenomination: '',
     legalType: '',
-    companyClassification: [],
+    companyClassification: [{ companyClassification: '', subClassification: '' }],
     registerUsing: {
       commercialRegistry: false,
       unifiedCommercialRegistry: false,
@@ -203,7 +203,10 @@ const [formData, setFormData] = useState<any>({
     const isMultiple = multipleTypes.includes(formData.ldv_legaltypecode)
     const minRows = isMultiple ? 2 : 1
 
-    if (formData[section].length <= minRows) {
+    // Enforce minRows=1 for all sections except companyHeads and contactPersons
+    const minRowsForSection = (section === 'companyHeads' || section === 'contactPersons') ? minRows : 1
+
+    if (formData[section].length <= minRowsForSection) {
       // Don't remove below minimum, just clear the row
       const emptyRow = Object.keys(formData[section][0]).reduce((acc, key) => {
         acc[key] = ''

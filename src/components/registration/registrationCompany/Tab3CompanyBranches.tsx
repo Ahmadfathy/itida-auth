@@ -51,7 +51,7 @@ const Tab3CompanyBranches: React.FC<Tab3CompanyBranchesProps> = ({ formData, set
       {formData.hasBranches && (
         <div className="space-y-4">
           {formData.branches.map((branch: any, index: number) => (
-            <div key={index} className="border border-gray-200 rounded-lg p-4">
+            <div key={index} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
               <h3 className="text-lg font-semibold mb-4">{t.branchNumber} {index + 1}</h3>
               <div className="grid md:grid-cols-3 gap-6">
                 <div>

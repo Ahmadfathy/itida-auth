@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react'
+import React, { useRef } from 'react'
 import Select, { MultiValue } from 'react-select'
 
 interface OptionType {
@@ -13,7 +13,7 @@ interface FinancialInformationProps {
     percentageNonEgyptianOwnership: string
     partnersNationalities: string
     subClassification: string | number | readonly string[] | undefined
-    companyClassification: string | number | readonly string[] | undefined
+    companyClassification: { companyClassification: string; subClassification: string }[]
     fiscalCapital: string
     domesticSalesDetails: { year: string; value: string; totalRevenueYear: string }[]
     domesticSalesValue: string
@@ -228,11 +228,6 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
     ]
   }
 
-  const subClassificationOptions = useMemo(() => {
-    if (!formData.companyClassification || typeof formData.companyClassification !== 'string') return []
-    return subClassificationMapping[formData.companyClassification] || []
-  }, [formData.companyClassification])
-
   const industrySectorsOptions: OptionType[] = [
     { value: 'IT', label: 'IT' },
     { value: 'Finance', label: 'Finance' },
@@ -241,17 +236,22 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
     { value: 'Others', label: 'Others' }
   ]
 
-  const handleCompanyClassificationChange = (selectedOption: any) => {
+  const handleCompanyClassificationChange = (index: number, selectedOption: any) => {
     const newValue = selectedOption ? selectedOption.value : ''
-    setFormData((prev: any) => ({
-      ...prev,
-      companyClassification: newValue,
-      subClassification: ''
-    }))
+    setFormData((prev: any) => {
+      const newClassifications = [...prev.companyClassification]
+      newClassifications[index] = { ...newClassifications[index], companyClassification: newValue, subClassification: '' }
+      return { ...prev, companyClassification: newClassifications }
+    })
   }
 
-  const handleSubClassificationChange = (selectedOption: any) => {
-    handleInputChange({ target: { name: 'subClassification', value: selectedOption ? selectedOption.value : '' } } as React.ChangeEvent<HTMLInputElement>)
+  const handleSubClassificationChange = (index: number, selectedOption: any) => {
+    const newValue = selectedOption ? selectedOption.value : ''
+    setFormData((prev: any) => {
+      const newClassifications = [...prev.companyClassification]
+      newClassifications[index] = { ...newClassifications[index], subClassification: newValue }
+      return { ...prev, companyClassification: newClassifications }
+    })
   }
 
   const handleIndustrySectorsChange = (selectedOption: any) => {
@@ -510,7 +510,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         <div className="mb-6">
           <h4 className="font-medium mb-3">Products</h4>
           {formData.products.map((product: { name: string; description: string }, index: number) => (
-            <div key={`product-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
+            <div key={`product-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
@@ -563,7 +563,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         <div className="mb-6">
           <h4 className="font-medium mb-3">Services</h4>
           {formData.services.map((service: { name: string; description: string }, index: number) => (
-            <div key={`service-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
+            <div key={`service-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
@@ -616,7 +616,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         <div className="mb-6">
           <h4 className="font-medium mb-3">Customer Reference</h4>
           {formData.customerReferences.map((reference: { name: string; country: string; projectSize: string; scope: string; industriesSector: string; description: string }, index: number) => (
-            <div key={`reference-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4">
+            <div key={`reference-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
@@ -709,49 +709,76 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         {/* Company Classifications */}
         <div className="mb-6">
           <h4 className="font-medium mb-3">Company Classifications</h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Company Classifications <span className="text-red-500">*</span>
-              </label>
-              <Select
-                options={companyClassificationOptions}
-                value={companyClassificationOptions.find(option => option.value === formData.companyClassification)}
-                onChange={handleCompanyClassificationChange}
-                placeholder="Select Company Classification"
-                className="basic-single"
-                classNamePrefix="select"
-                isClearable
-              />
+          {formData.companyClassification.map((classification, index) => (
+            <div key={`classification-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Company Classifications <span className="text-red-500">*</span>
+                  </label>
+                  <Select
+                    options={companyClassificationOptions}
+                    value={companyClassificationOptions.find(option => option.value === classification.companyClassification)}
+                    onChange={(selectedOption) => handleCompanyClassificationChange(index, selectedOption)}
+                    placeholder="Select Company Classification"
+                    className="basic-single"
+                    classNamePrefix="select"
+                    isClearable
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Company's Sub Classification <span className="text-red-500">*</span>
+                  </label>
+                  <Select
+                    options={subClassificationMapping[classification.companyClassification] || []}
+                    value={(subClassificationMapping[classification.companyClassification] || []).find(option => option.value === classification.subClassification)}
+                    onChange={(selectedOption) => handleSubClassificationChange(index, selectedOption)}
+                    placeholder="Select Sub Classification"
+                    className="basic-single"
+                    classNamePrefix="select"
+                    isClearable
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Industry Sectors
+                  </label>
+                  <Select
+                    options={industrySectorsOptions}
+                    value={industrySectorsOptions.find(option => option.value === formData.industrySectors)}
+                    onChange={handleIndustrySectorsChange}
+                    placeholder="Select Industry Sector"
+                    className="basic-single"
+                    classNamePrefix="select"
+                    isClearable
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end mt-2">
+                <button
+                  type="button"
+                  onClick={() => removeRow('companyClassification', index)}
+                  className="p-1 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Company's Sub Classification <span className="text-red-500">*</span>
-              </label>
-              <Select
-                options={subClassificationOptions}
-                value={subClassificationOptions.find(option => option.value === formData.subClassification)}
-                onChange={handleSubClassificationChange}
-                placeholder="Select Sub Classification"
-                className="basic-single"
-                classNamePrefix="select"
-                isClearable
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Industry Sectors
-              </label>
-              <Select
-                options={industrySectorsOptions}
-                value={industrySectorsOptions.find(option => option.value === formData.industrySectors)}
-                onChange={handleIndustrySectorsChange}
-                placeholder="Select Industry Sector"
-                className="basic-single"
-                classNamePrefix="select"
-                isClearable
-              />
-            </div>
+          ))}
+          <div className="flex justify-end mt-2">
+            <button
+              type="button"
+              disabled={formData.companyClassification.length >= 3}
+              onClick={() => addRow('companyClassification', { companyClassification: '', subClassification: '' })}
+              className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+              </svg>
+            </button>
           </div>
         </div>
 
