@@ -39,31 +39,31 @@ const ProfilePage: React.FC = () => {
   const [showInfo, setShowInfo] = useState(true);
 
   const [financialData, setFinancialData] = useState<FinancialData>({
-    fiscalCapital: '',
-    domesticSalesDetails: [{ year: '', value: '', totalRevenueYear: '' }],
-    annualRevenue: '',
+    fiscalCapital: '1000000 EGP',
+    domesticSalesDetails: [{ year: '2023', value: '500000', totalRevenueYear: '500000' }],
+    annualRevenue: '500000 EGP',
     auditedBalanceSheet: null,
-    export: '',
-    exportInformation: [{ year: '', marketRegion: '', country: '', valueExported: '', totalAmountExported: 0 }],
-    ownershipNationality: '',
-    percentageEgyptianOwnership: '',
-    percentageNonEgyptianOwnership: '',
-    partnersNationalities: '',
-    totalNoOfEmployees: '',
-    yearOfEstablishment: '',
-    companySize: '',
-    typeOfOwnership: '',
-    companyData: '',
-    keyTechnologies: [],
-    affiliation: [],
-    memberships: [],
-    certificates: [],
-    partnerships: [],
-    products: [{ name: '', description: '' }],
-    services: [{ name: '', description: '' }],
-    customerReferences: [{ name: '', country: '', projectSize: '', scope: '', industriesSector: '', description: '' }],
-    companyClassification: [{ companyClassification: '', subClassification: '' }],
-    owners: [{ name: '', mobile: '', telephone: '', email: '' }]
+    export: 'Yes',
+    exportInformation: [{ year: '2023', marketRegion: 'Middle East', country: 'UAE', valueExported: '100000', totalAmountExported: 100000 }],
+    ownershipNationality: 'Egyptian',
+    percentageEgyptianOwnership: '100%',
+    percentageNonEgyptianOwnership: '0%',
+    partnersNationalities: 'Egyptian',
+    totalNoOfEmployees: '50',
+    yearOfEstablishment: '2010',
+    companySize: 'Small',
+    typeOfOwnership: 'Private',
+    companyData: 'Technology Company',
+    keyTechnologies: ['React', 'Node.js', 'Python'],
+    affiliation: ['ITIDA'],
+    memberships: ['Egyptian Software Association'],
+    certificates: ['ISO 9001'],
+    partnerships: ['Microsoft', 'Google'],
+    products: [{ name: 'Dummy Product', description: 'A sample product for demonstration' }],
+    services: [{ name: 'Dummy Service', description: 'A sample service for demonstration' }],
+    customerReferences: [{ name: 'Client A', country: 'Egypt', projectSize: 'Medium', scope: 'Web Development', industriesSector: 'Technology', description: 'Successful project delivery' }],
+    companyClassification: [{ companyClassification: 'Technology', subClassification: 'Software' }],
+    owners: [{ name: 'John Doe', mobile: '01234567890', telephone: '02-12345678', email: 'john.doe@dummycompany.com' }]
   });
 
   const exportPDF = () => {
@@ -134,7 +134,7 @@ const ProfilePage: React.FC = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold flex items-center space-x-2 mb-6">
-                <span>Company Name Here</span>
+                <span>Dummy Company Name</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-blue-600"
@@ -150,13 +150,13 @@ const ProfilePage: React.FC = () => {
               </h1>
               <div className="text-gray-500 flex space-x-4 mt-1 text-sm">
                 <div className='grid grid-cols-2 gap-3'>
-                  
+
                   <div className="flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth={2} stroke="currentColor" fill="none" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 8h8M8 12h8M8 16h4" />
                     </svg>
-                    <span>45646454</span>
+                    <span>123456789</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -164,14 +164,14 @@ const ProfilePage: React.FC = () => {
                         d="M12 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm0 0c4.418 0 8 3.582 8 8 0 1.657-1.343 3-3 3H7c-1.657 0-3-1.343-3-3 0-4.418 3.582-8 8-8z"
                       />
                     </svg>
-                    <span>location here</span>
+                    <span>Cairo, Egypt</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <rect x="3" y="5" width="18" height="14" rx="2" strokeWidth={2} stroke="currentColor" fill="none" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7l9 6 9-6" />
                     </svg>
-                    <span>max@kt.com</span>
+                    <span>info@dummycompany.com</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -179,7 +179,7 @@ const ProfilePage: React.FC = () => {
                         d="M22 16.92V19a2 2 0 01-2.18 2A19.86 19.86 0 013 5.18 2 2 0 015 3h2.09a2 2 0 012 1.72c.13.81.36 1.6.68 2.34a2 2 0 01-.45 2.11l-1.27 1.27a16 16 0 006.58 6.58l1.27-1.27a2 2 0 012.11-.45c.74.32 1.53.55 2.34.68a2 2 0 011.72 2z"
                       />
                     </svg>
-                    <span>01236547890</span>
+                    <span>01234567890</span>
                   </div>
                 </div>
               </div>
@@ -281,47 +281,47 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].companyNameEnglish}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Dummy Company Name English</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].companyNameArabic}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">اسم الشركة الوهمي</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].commercialDenomination}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Dummy Commercial Denomination</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].legalType}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">LLC</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].companyClassification}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Technology</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].commercialRegistryNumber}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">123456789</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].unifiedCommercialRegistryNumber}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">987654321</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].taxRegistryNumber}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">456789123</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].commercialRegistrationDate}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">01/01/2010</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].officialCompanyEmail}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">official@dummycompany.com</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].yearOfEstablishment}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">2010</p>
                 </div>
               </div>
             </div>
@@ -332,51 +332,51 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].governorate}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Cairo</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].districtCity}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Nasr City</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].streetAddress}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">123 Dummy Street</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].companyWebsiteUrl}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">www.dummycompany.com</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].officialEmail}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">contact@dummycompany.com</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].phoneMobile}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">01234567890</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].name}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">John Doe</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].title}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">CEO</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].mobile}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">01234567890</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">12345678901234</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].email}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">john.doe@dummycompany.com</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].requestApplicant}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
               </div>
             </div>
@@ -387,31 +387,31 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchName}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Dummy Branch</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchCountry}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Egypt</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchGovernorate}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Cairo</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchCity}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Alexandria</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchDistrict}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Downtown</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchEmail}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">branch@dummycompany.com</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Mobile Phone</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">01987654321</p>
                 </div>
               </div>
             </div>
@@ -422,79 +422,79 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].softwareDesignServices}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].itSystemsServices}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].trustServices}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].websitesPlatformsServices}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].electronicsEmbeddedServices}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].contentDigitizationServices}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].callCenterBusinessServices}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].consultingResearchServices}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].trainingLearningServices}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Yes</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].commercialRegisterImage}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].taxCardImage}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].nationalIdImage}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].investmentGazetteImage}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].declarationUndertakingImage}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].representativeAuthorizationImage}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].representativeNationalIdImage}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].licenseReceipt}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].methodOfLicenseReceipt}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].declarationAgreement}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Available</p>
                 </div>
               </div>
             </div>
@@ -505,27 +505,27 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].name}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Jane Smith</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].title}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">CTO</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].mobile}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">01123456789</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">98765432109876</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].email}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">jane.smith@dummycompany.com</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Email 2</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">jane.smith2@dummycompany.com</p>
                 </div>
               </div>
             </div>
@@ -536,23 +536,23 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].name}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Alex Johnson</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].title}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">Manager</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].mobile}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">01987654321</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">12345678901234</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].email}</p>
-                  <p className="font-semibold">-</p>
+                  <p className="font-semibold">alex.johnson@dummycompany.com</p>
                 </div>
               </div>
             </div>
