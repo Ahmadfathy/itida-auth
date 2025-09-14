@@ -57,7 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
                 {t.alreadyMember}
               </h2>
               <p className="text-gray-600">
-                Access your ITIDA account and manage your ICT activities
+                {t.accessAccountDesc}
               </p>
             </div>
 
@@ -75,7 +75,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
                     value={formData.username}
                     onChange={handleInputChange}
                     className="input-field pr-10"
-                    placeholder="Enter your username or email"
+                    placeholder={t.enterUsernameEmail}
                     required
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -99,7 +99,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
                     value={formData.password}
                     onChange={handleInputChange}
                     className="input-field pr-10"
-                    placeholder="Enter your password"
+                    placeholder={t.enterPassword}
                     required
                   />
                   <button
@@ -230,7 +230,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
                     value={formData.username}
                     onChange={handleInputChange}
                     className="input-field pr-10"
-                    placeholder="Enter your username or email"
+                    placeholder={t.enterUsernameEmail}
                     required
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -244,7 +244,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
               {/* Call to Action */}
               <div className="mt-8 text-center">
                 <button className="btn-secondary w-full">
-                  Recover Now
+                  {t.recoverNow}
                 </button>
               </div>
             </div>

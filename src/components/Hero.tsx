@@ -64,7 +64,7 @@ const Hero: React.FC<HeroProps> = ({ onRegister, onLogin }) => {
                   </svg>
                 </div>
                 <div className="text-3xl font-bold text-yellow-300">{companiesCount}+</div>
-                <div className="text-sm text-blue-200">Companies</div>
+                <div className="text-sm text-blue-200">{t.companies}</div>
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center mb-2">
@@ -73,7 +73,7 @@ const Hero: React.FC<HeroProps> = ({ onRegister, onLogin }) => {
                   </svg>
                 </div>
                 <div className="text-3xl font-bold text-green-300">{licensesCount}+</div>
-                <div className="text-sm text-blue-200">Licenses</div>
+                <div className="text-sm text-blue-200">{t.licenses}</div>
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center mb-2">
@@ -82,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ onRegister, onLogin }) => {
                   </svg>
                 </div>
                 <div className="text-3xl font-bold text-purple-300">{partnersCount}+</div>
-                <div className="text-sm text-blue-200">Partners</div>
+                <div className="text-sm text-blue-200">{t.partners}</div>
               </div>
             </div>
           </div>

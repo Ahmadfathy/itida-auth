@@ -42,7 +42,7 @@ const Services: React.FC = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Itida Services
+              {t.itidaServices}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               {t.discoverBenefits}

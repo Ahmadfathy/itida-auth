@@ -24,8 +24,7 @@ const Footer: React.FC<FooterProps> = ({ onLogoClick }) => {
               />
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
-              Empowering Egypt's digital transformation through comprehensive ICT sector regulation, 
-              innovation support, and ecosystem development.
+              {t.footerDesc}
             </p>
             <div className="flex space-x-4 rtl:space-x-reverse">
               {/* <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
@@ -48,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({ onLogoClick }) => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4">{t.quickLinks}</h4>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
@@ -75,7 +74,7 @@ const Footer: React.FC<FooterProps> = ({ onLogoClick }) => {
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Services</h4>
+            <h4 className="text-lg font-semibold mb-4">{t.services}</h4>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
