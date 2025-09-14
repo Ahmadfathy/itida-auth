@@ -38,7 +38,7 @@ const ProfilePage: React.FC = () => {
   const [showWarning, setShowWarning] = useState(true);
   const [showInfo, setShowInfo] = useState(true);
 
-  const [financialData, setFinancialData] = useState<FinancialData>({
+  const [financialData] = useState<FinancialData>({
     fiscalCapital: '1000000 EGP',
     domesticSalesDetails: [{ year: '2023', value: '500000', totalRevenueYear: '500000' }],
     annualRevenue: '500000 EGP',

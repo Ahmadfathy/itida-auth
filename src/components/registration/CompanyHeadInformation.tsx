@@ -1,6 +1,5 @@
 import React from 'react'
 import Select from 'react-select'
-import { useLanguage } from '../../contexts/LanguageContext'
 
 interface CompanyHeadInformationProps {
   formData: any

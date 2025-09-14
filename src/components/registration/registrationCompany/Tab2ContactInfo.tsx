@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Select from 'react-select'
 import { useLanguage, translations } from '../../../contexts/LanguageContext'
-import * as yup from 'yup'
 
 interface Tab2ContactInfoProps {
   formData: any
@@ -44,29 +43,7 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
     return ''
   }
 
-  const validationSchema = yup.object().shape({
-    representative_fullName: yup.string().when('requestApplicant', (requestApplicant: any) => {
-      return requestApplicant === 'representative' ? yup.string().required('Representative full name is required') : yup.string()
-    }),
-    representative_jobtitle: yup.string().when('requestApplicant', (requestApplicant: any) => {
-      return requestApplicant === 'representative' ? yup.string().required('Representative job title is required') : yup.string()
-    }),
-    representative_mobilephone: yup.string().when('requestApplicant', (requestApplicant: any) => {
-      return requestApplicant === 'representative' ? yup.string().required('Representative mobile phone is required') : yup.string()
-    }),
-    representative_mail: yup.string().when('requestApplicant', (requestApplicant: any) => {
-      return requestApplicant === 'representative' ? yup.string().required('Representative email is required').email('Invalid email address') : yup.string()
-    }),
-    representative_nationalid: yup.string().when('requestApplicant', (requestApplicant: any) => {
-      return requestApplicant === 'representative' ? yup.string().required('Representative national ID is required').matches(/^\d{14}$/, 'National ID must be exactly 14 digits') : yup.string()
-    }),
-    representative_nidissuedfrom: yup.string().when('requestApplicant', (requestApplicant: any) => {
-      return requestApplicant === 'representative' ? yup.string().required('NID issued from is required') : yup.string()
-    }),
-    representative_nidissuedate: yup.string().when('requestApplicant', (requestApplicant: any) => {
-      return requestApplicant === 'representative' ? yup.string().required('NID issue date is required').matches(/^(0[1-9]|1[0-2])\/\d{4}$/, 'Invalid date format, use MM/YYYY') : yup.string()
-    })
-  })
+
 
 
 

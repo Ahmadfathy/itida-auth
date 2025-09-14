@@ -12,6 +12,10 @@ Add or enhance validation for all required fields in all inner components includ
 6. **Update FinancialInformation.tsx**: Add validation for required fields (auditedBalanceSheet, fiscalCapital, domesticSalesDetails, export, ownershipNationality, etc.).
 7. **Update RegistrationPage.tsx**: Enhance isTabValid and isSidebarTabComplete functions to check all required fields across components, and disable submit button if validation fails.
 
+## Completed Tasks
+- [x] Removed unused yup import from Tab2ContactInfo.tsx
+- [x] Removed unused setFinancialData from ProfilePage.tsx
+
 ## Dependent Files
 - src/pages/RegistrationPage.tsx
 - src/components/registration/CompanyHeadInformation.tsx
