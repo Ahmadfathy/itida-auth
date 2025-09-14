@@ -1,7 +1,8 @@
-# TODO: Replace HTML select with React Select for Governorate
+# TODO: Transfer Data Labels from RegistrationPage to ProfilePage
 
-- [ ] Import react-select and its types in CompanyHeadInformation.tsx
-- [ ] Create options array for governorate select with bilingual labels
-- [ ] Replace the HTML <select> element with react-select <Select> component
-- [ ] Update onChange handler to work with react-select
-- [ ] Test the component to ensure it works correctly
+## Tasks
+- [ ] Extract all data labels from RegistrationPage's formData
+- [ ] Organize data labels by sections (Company Legal, Contact Info, Branches, Activities, Financial, etc.)
+- [ ] Update ProfilePage.tsx to display all data labels dynamically
+- [ ] Ensure no data labels are missed
+- [ ] Test the updated ProfilePage for completeness

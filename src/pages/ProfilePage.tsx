@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLanguage } from '../contexts/LanguageContext';
+import { useLanguage, translations } from '../contexts/LanguageContext';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -204,88 +204,504 @@ const ProfilePage: React.FC = () => {
             </div>
           </div>
           <div id="profile-details-section" className="space-y-8 text-gray-600  p-6">
+            {/* Company Legal Information */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">{translations[language].companyLegalInformation}</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].companyNameEnglish}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].companyNameArabic}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].commercialDenomination}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].legalType}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].companyClassification}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].commercialRegistryNumber}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].unifiedCommercialRegistryNumber}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].taxRegistryNumber}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].commercialRegistrationDate}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].officialCompanyEmail}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].yearOfEstablishment}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Information */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">{translations[language].contactInformation}</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].governorate}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].districtCity}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].streetAddress}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].companyWebsiteUrl}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].officialEmail}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].phoneMobile}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].name}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].title}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].mobile}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].email}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].requestApplicant}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Company Branches */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">{translations[language].companyBranchesTitle}</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].branchName}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].branchCountry}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].branchGovernorate}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].branchCity}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].branchDistrict}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].branchEmail}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Mobile Phone</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Activities & Attachments */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">{translations[language].activitiesAttachments}</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].softwareDesignServices}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].itSystemsServices}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].trustServices}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].websitesPlatformsServices}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].electronicsEmbeddedServices}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].contentDigitizationServices}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].callCenterBusinessServices}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].consultingResearchServices}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].trainingLearningServices}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].commercialRegisterImage}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].taxCardImage}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].nationalIdImage}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].investmentGazetteImage}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].declarationUndertakingImage}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].representativeAuthorizationImage}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].representativeNationalIdImage}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].licenseReceipt}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].methodOfLicenseReceipt}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].declarationAgreement}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
             {/* Company Head Information */}
             <div>
-              <h3 className="text-md font-semibold mb-4">Company Head Information</h3>
-              <div className="grid md:grid-cols-6 gap-6">
+              <h3 className="text-md font-semibold mb-4">{translations[language].companyHead}</h3>
+              <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400">Full Name</p>
-                  <p className="font-semibold">Max Smith</p>
+                  <p className="text-sm text-gray-400">{translations[language].name}</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Position</p>
-                  <p className="font-semibold">CEO</p>
+                  <p className="text-sm text-gray-400">{translations[language].title}</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Nationality</p>
-                  <p className="font-semibold">Egyptian</p>
+                  <p className="text-sm text-gray-400">{translations[language].mobile}</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">ID/Passport Number</p>
-                  <p className="font-semibold">123456789</p>
+                  <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].email}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Email 2</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Persons */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">Contact Persons</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].name}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].title}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].mobile}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">{translations[language].email}</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Products */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">Products</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">Product Name</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Description</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">Services</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">Service Name</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Description</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Customer References */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">Customer References</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">Name</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Country</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Project Size</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Scope</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Industries Sector</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Description</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Export Information */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">Export Information</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">Year</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Market Region</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Country</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Value Exported</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Owners */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">Owners</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">Name</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Mobile</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Telephone</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Email</p>
-                  <p className="font-semibold">max.smith@example.com</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Domestic Sales Details */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">Domestic Sales Details</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">Year</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Phone Number</p>
-                  <p className="font-semibold">+20 123 456 7890</p>
+                  <p className="text-sm text-gray-400">Value</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Mobile Number</p>
-                  <p className="font-semibold">+20 987 654 3210</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Appointment Date</p>
-                  <p className="font-semibold">2023-01-01</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Ownership Percentage (%)</p>
-                  <p className="font-semibold">50%</p>
+                  <p className="text-sm text-gray-400">Total Revenue Year</p>
+                  <p className="font-semibold">-</p>
                 </div>
               </div>
             </div>
 
             {/* Financial Information */}
             <div>
-              <h3 className="text-md font-semibold mb-4">Financial Information</h3>
-              <div className="grid md:grid-cols-6 gap-6">
+              <h3 className="text-md font-semibold mb-4">{translations[language].financialInformation}</h3>
+              <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400">Authorized Capital (EGP)</p>
-                  <p className="font-semibold">1,000,000</p>
+                  <p className="text-sm text-gray-400">Fiscal Capital</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Issued Capital (EGP)</p>
-                  <p className="font-semibold">800,000</p>
+                  <p className="text-sm text-gray-400">Domestic Sales Value</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Paid-up Capital (EGP)</p>
-                  <p className="font-semibold">750,000</p>
+                  <p className="text-sm text-gray-400">Total Revenue Year</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Bank Name</p>
-                  <p className="font-semibold">National Bank</p>
+                  <p className="text-sm text-gray-400">Annual Revenue</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Bank Branch</p>
-                  <p className="font-semibold">Downtown</p>
+                  <p className="text-sm text-gray-400">Audited Balance Sheet</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Account Number</p>
-                  <p className="font-semibold">1234567890</p>
+                  <p className="text-sm text-gray-400">Export</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">IBAN Number</p>
-                  <p className="font-semibold">EG12345678901234567890</p>
+                  <p className="text-sm text-gray-400">Ownership Nationality</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Financial Year Start</p>
-                  <p className="font-semibold">January</p>
+                  <p className="text-sm text-gray-400">Percentage Egyptian Ownership</p>
+                  <p className="font-semibold">-</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Financial Year End</p>
-                  <p className="font-semibold">December</p>
+                  <p className="text-sm text-gray-400">Percentage Non-Egyptian Ownership</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Partners Nationalities</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Total Number of Employees</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Year of Establishment</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Company Size</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Type of Ownership</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Company Data</p>
+                  <p className="font-semibold">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Information */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">Additional Information</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm text-gray-400">Key Technologies</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Certificates</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Affiliation</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Memberships</p>
+                  <p className="font-semibold">-</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Partnerships</p>
+                  <p className="font-semibold">-</p>
                 </div>
               </div>
             </div>
