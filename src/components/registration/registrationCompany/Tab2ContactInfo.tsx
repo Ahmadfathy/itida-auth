@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Select from 'react-select'
 import { useLanguage, translations } from '../../../contexts/LanguageContext'
+import * as yup from 'yup'
 
 interface Tab2ContactInfoProps {
   formData: any
@@ -14,6 +15,9 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
 
   const [contactError, setContactError] = useState<string>('')
   const [representativeError, setRepresentativeError] = useState<string>('')
+  const [contactNationalIdError, setContactNationalIdError] = useState<string>('')
+  const [representativeNationalIdError, setRepresentativeNationalIdError] = useState<string>('')
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
 
   const validateDate = (value: string): string => {
     if (!value) {
@@ -25,10 +29,53 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
     }
     const [_month, year] = value.split('/').map(Number)
     const currentYear = new Date().getFullYear()
-    if (year > currentYear - 15) {
-      return t.yearMustBeAtLeast15YearsAgo.replace('{year}', (currentYear - 15).toString())
+    if (year < currentYear - 15) {
+      return `Year must be within the last 15 years (from ${currentYear - 15} onwards)`
     }
     return ''
+  }
+
+  const validateNationalId = (value: string): string => {
+    if (!value) {
+      return 'National ID is required'
+    }
+    if (!/^\d{14}$/.test(value)) {
+      return 'National ID must be exactly 14 digits'
+    }
+    return ''
+  }
+
+  const validationSchema = yup.object().shape({
+    representative_fullName: yup.string().when('requestApplicant', (requestApplicant: any) => {
+      return requestApplicant === 'representative' ? yup.string().required('Representative full name is required') : yup.string()
+    }),
+    representative_jobtitle: yup.string().when('requestApplicant', (requestApplicant: any) => {
+      return requestApplicant === 'representative' ? yup.string().required('Representative job title is required') : yup.string()
+    }),
+    representative_mobilephone: yup.string().when('requestApplicant', (requestApplicant: any) => {
+      return requestApplicant === 'representative' ? yup.string().required('Representative mobile phone is required') : yup.string()
+    }),
+    representative_mail: yup.string().when('requestApplicant', (requestApplicant: any) => {
+      return requestApplicant === 'representative' ? yup.string().required('Representative email is required').email('Invalid email address') : yup.string()
+    }),
+    representative_nationalid: yup.string().when('requestApplicant', (requestApplicant: any) => {
+      return requestApplicant === 'representative' ? yup.string().required('Representative national ID is required').matches(/^\d{14}$/, 'National ID must be exactly 14 digits') : yup.string()
+    }),
+    representative_nidissuedfrom: yup.string().when('requestApplicant', (requestApplicant: any) => {
+      return requestApplicant === 'representative' ? yup.string().required('NID issued from is required') : yup.string()
+    }),
+    representative_nidissuedate: yup.string().when('requestApplicant', (requestApplicant: any) => {
+      return requestApplicant === 'representative' ? yup.string().required('NID issue date is required').matches(/^(0[1-9]|1[0-2])\/\d{4}$/, 'Invalid date format, use MM/YYYY') : yup.string()
+    })
+  })
+
+  const validateField = async (fieldName: string, value: any) => {
+    try {
+      await validationSchema.validateAt(fieldName, { ...formData, [fieldName]: value })
+      setErrors((prev) => ({ ...prev, [fieldName]: '' }))
+    } catch (error: any) {
+      setErrors((prev) => ({ ...prev, [fieldName]: error.message }))
+    }
   }
 
   // Job title options for React Select
@@ -87,6 +134,7 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
       }
     } as React.ChangeEvent<HTMLInputElement>
     onInputChange(syntheticEvent)
+    validateField(fieldName, selectedOption ? selectedOption.value : '')
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,6 +169,37 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
     if (onDateChange) {
       onDateChange(name, value)
     }
+    validateField(name, value)
+  }
+
+  const handleNationalIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let { value, name } = e.target
+
+    // Remove any non-numeric characters
+    value = value.replace(/[^0-9]/g, '')
+
+    // Limit to 14 digits
+    if (value.length > 14) {
+      value = value.substring(0, 14)
+    }
+
+    // Validate
+    const validationError = validateNationalId(value)
+    if (name === 'contact_ldv_nationalid') {
+      setContactNationalIdError(validationError)
+    } else if (name === 'representative_nationalid') {
+      setRepresentativeNationalIdError(validationError)
+    }
+
+    // Create synthetic event
+    const syntheticEvent = {
+      target: {
+        name,
+        value
+      }
+    } as React.ChangeEvent<HTMLInputElement>
+    onInputChange(syntheticEvent)
+    validateField(name, value)
   }
   
   return (
@@ -223,11 +302,12 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
               type="text"
               name="contact_ldv_nationalid"
               value={formData.contact_ldv_nationalid}
-              onChange={onInputChange}
-              className="input-field"
+              onChange={handleNationalIdChange}
+              className={`input-field ${contactNationalIdError ? 'border-red-500' : ''}`}
               placeholder={t.nationalId}
               required
             />
+            {contactNationalIdError && <p className="text-red-500 text-sm mt-1">{contactNationalIdError}</p>}
           </div>
 
           <div>
@@ -395,11 +475,12 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
               type="text"
               name="representative_nationalid"
               value={formData.representative_nationalid}
-              onChange={onInputChange}
-              className="input-field"
+              onChange={handleNationalIdChange}
+              className={`input-field ${representativeNationalIdError ? 'border-red-500' : ''}`}
               placeholder={t.nationalId}
               required
             />
+            {representativeNationalIdError && <p className="text-red-500 text-sm mt-1">{representativeNationalIdError}</p>}
           </div>
 
           <div>

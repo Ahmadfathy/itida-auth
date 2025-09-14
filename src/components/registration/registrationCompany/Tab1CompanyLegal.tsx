@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Select from 'react-select'
 import { useLanguage, translations } from '../../../contexts/LanguageContext'
 import customReactSelectStyles from '../../../styles/customReactSelectStyles'
+import * as yup from 'yup'
 
 interface Tab1CompanyLegalProps {
   formData: any
@@ -12,6 +13,40 @@ interface Tab1CompanyLegalProps {
 const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputChange, setFormData }) => {
   const { language: currentLanguage } = useLanguage()
   const t = translations[currentLanguage]
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
+
+  const validationSchema = yup.object().shape({
+    ldv_englishname: yup
+      .string()
+      .required('This field is required')
+      .matches(/^[A-Za-z\s]+$/, 'Only English letters are allowed'),
+    ldv_arabicname: yup
+      .string()
+      .required('This field is required')
+      .matches(/^[\u0600-\u06FF\s]+$/, 'Only Arabic letters are allowed'),
+    ldv_commercialdenomination: yup.string().required('This field is required'),
+    ldv_legaltypecode: yup.string().required('This field is required'),
+    emailaddress1: yup.string().required('This field is required').email('Invalid email address'),
+    companyClassification: yup.array().min(1, 'At least one company classification is required'),
+    commercialRegistryNumber: yup.string().required('Commercial Registry Number is required'),
+    unifiedCommercialRegistryNumber: yup.string().required('Unified Commercial Registry Number is required'),
+    taxRegistryNumber: yup.string().required('Tax Registry Number is required')
+  })
+
+  const validateField = async (fieldName: string, value: any) => {
+    try {
+      await validationSchema.validateAt(fieldName, { [fieldName]: value })
+      setErrors((prev) => ({ ...prev, [fieldName]: '' }))
+    } catch (error: any) {
+      setErrors((prev) => ({ ...prev, [fieldName]: error.message }))
+    }
+  }
+
+  const handleInputChangeWithValidation = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    onInputChange(e)
+    validateField(e.target.name, e.target.value)
+  }
 
   const classificationOptions = [
     { value: 'technology', label: 'Technology' },
@@ -66,11 +101,12 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
             type="text"
             name="ldv_englishname"
             value={formData.ldv_englishname}
-            onChange={onInputChange}
+            onChange={handleInputChangeWithValidation}
             className="input-field"
             placeholder={t.name}
             required
           />
+          {errors.ldv_englishname && <p className="text-red-500 text-xs mt-1">{errors.ldv_englishname}</p>}
         </div>
 
         <div>
@@ -82,11 +118,12 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
             type="text"
             name="ldv_arabicname"
             value={formData.ldv_arabicname}
-            onChange={onInputChange}
+            onChange={handleInputChangeWithValidation}
             className="input-field"
             placeholder={t.name}
             required
           />
+          {errors.ldv_arabicname && <p className="text-red-500 text-xs mt-1">{errors.ldv_arabicname}</p>}
         </div>
       </div>
 
@@ -95,16 +132,19 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             {t.commercialDenomination}
+            <span className="text-red-500 ml-1">*</span>
           </label>
           {/* Validation: slash-dash-numbers */}
           <input
             type="text"
             name="ldv_commercialdenomination"
             value={formData.ldv_commercialdenomination}
-            onChange={onInputChange}
+            onChange={handleInputChangeWithValidation}
             className="input-field"
             placeholder={t.commercialDenomination}
+            required
           />
+          {errors.ldv_commercialdenomination && <p className="text-red-500 text-xs mt-1">{errors.ldv_commercialdenomination}</p>}
         </div>
 
         {/* Legal Type */}
@@ -156,12 +196,14 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                   value: value
                 }
               } as React.ChangeEvent<HTMLInputElement>);
+              validateField('ldv_legaltypecode', value)
             }}
             className="basic-single"
             classNamePrefix="select"
             styles={customReactSelectStyles}
             isClearable
           />
+          {errors.ldv_legaltypecode && <p className="text-red-500 text-xs mt-1">{errors.ldv_legaltypecode}</p>}
         </div>
 
       </div>
@@ -174,14 +216,15 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
             <span className="text-red-500 ml-1">*</span>
           </label>
           <input
-            type="mail"
+            type="email"
             name="emailaddress1"
             value={formData.emailaddress1}
-            onChange={onInputChange}
+            onChange={handleInputChangeWithValidation}
             className="input-field"
             placeholder={t.officialCompanyEmail}
             required
           />
+          {errors.emailaddress1 && <p className="text-red-500 text-xs mt-1">{errors.emailaddress1}</p>}
         </div>
         {/* Commercial Registration Date */}
         <div>
@@ -228,6 +271,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
               ...prev,
               companyClassification: values
             }))
+            validateField('companyClassification', values)
           }}
           styles={customReactSelectStyles}
           className="basic-multi-select"
@@ -278,10 +322,12 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                     type="text"
                     name="commercialRegistryNumber"
                     value={formData.commercialRegistryNumber}
-                    onChange={onInputChange}
+                    onChange={handleInputChangeWithValidation}
                     className="input-field"
                     placeholder={t.commercialRegistryNumber}
+                    required
                   />
+                  {errors.commercialRegistryNumber && <p className="text-red-500 text-xs mt-1">{errors.commercialRegistryNumber}</p>}
                 </div>
 
                 <div>
@@ -338,10 +384,12 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                 type="text"
                 name="unifiedCommercialRegistryNumber"
                 value={formData.unifiedCommercialRegistryNumber}
-                onChange={onInputChange}
+                onChange={handleInputChangeWithValidation}
                 className="input-field"
                 placeholder={t.unifiedCommercialRegistryNumber}
+                required
               />
+              {errors.unifiedCommercialRegistryNumber && <p className="text-red-500 text-xs mt-1">{errors.unifiedCommercialRegistryNumber}</p>}
             </div>
           </div>
 
@@ -362,10 +410,12 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                 type="text"
                 name="taxRegistryNumber"
                 value={formData.taxRegistryNumber}
-                onChange={onInputChange}
+                onChange={handleInputChangeWithValidation}
                 className="input-field"
                 placeholder={t.taxRegistryNumber}
+                required
               />
+              {errors.taxRegistryNumber && <p className="text-red-500 text-xs mt-1">{errors.taxRegistryNumber}</p>}
             </div>
           </div>
         </div>
