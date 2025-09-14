@@ -17,7 +17,6 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
   const [representativeError, setRepresentativeError] = useState<string>('')
   const [contactNationalIdError, setContactNationalIdError] = useState<string>('')
   const [representativeNationalIdError, setRepresentativeNationalIdError] = useState<string>('')
-  const [errors, setErrors] = useState<{ [key: string]: string }>({})
 
   const validateDate = (value: string): string => {
     if (!value) {
@@ -69,14 +68,7 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
     })
   })
 
-  const validateField = async (fieldName: string, value: any) => {
-    try {
-      await validationSchema.validateAt(fieldName, { ...formData, [fieldName]: value })
-      setErrors((prev) => ({ ...prev, [fieldName]: '' }))
-    } catch (error: any) {
-      setErrors((prev) => ({ ...prev, [fieldName]: error.message }))
-    }
-  }
+
 
   // Job title options for React Select
   const jobTitleOptions = [
@@ -134,7 +126,6 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
       }
     } as React.ChangeEvent<HTMLInputElement>
     onInputChange(syntheticEvent)
-    validateField(fieldName, selectedOption ? selectedOption.value : '')
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,7 +160,6 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
     if (onDateChange) {
       onDateChange(name, value)
     }
-    validateField(name, value)
   }
 
   const handleNationalIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -199,7 +189,6 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
       }
     } as React.ChangeEvent<HTMLInputElement>
     onInputChange(syntheticEvent)
-    validateField(name, value)
   }
   
   return (

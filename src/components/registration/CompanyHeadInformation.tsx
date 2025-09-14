@@ -22,7 +22,7 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
   onSubmit,
   onInputChange
 }) => {
-  const { language: currentLanguage } = useLanguage()
+
 
   const multipleTypes = [
     'Sole Corporation',
