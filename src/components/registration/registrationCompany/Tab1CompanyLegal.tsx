@@ -61,6 +61,16 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
     return { value: year, label: year }
   })
 
+  const classCodeOptions = [
+    { value: '', label: 'Class Code' },
+    { value: '', label: 'كود الفئة' },
+    { value: 'محل رئيسى', label: 'محل رئيسى' },
+    { value: 'رئيسى آخر', label: 'رئيسى آخر' },
+    { value: 'محل فرعى', label: 'محل فرعى' },
+    { value: 'فرعى', label: 'فرعى' },
+    { value: 'مركز عام', label: 'مركز عام' }
+  ]
+
   return (
     <div className="space-y-8">
       {/* Section Title */}
@@ -325,21 +335,25 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                 </div>
 
                 <div>
-                  <select
+                  <Select
                     name="classCode"
-                    value={formData.classCode}
-                    onChange={onInputChange}
-                    className="input-field"
-                    required
-                  >
-                    <option value="">Class Code</option>
-                    <option value="">كود الفئة</option>
-                    <option value="محل رئيسى">محل رئيسى</option>
-                    <option value="رئيسى آخر">رئيسى آخر</option>
-                    <option value="محل فرعى">محل فرعى</option>
-                    <option value="فرعى">فرعى</option>
-                    <option value="مركز عام">مركز عام</option>
-                  </select>
+                    options={classCodeOptions}
+                    value={classCodeOptions.find(option => option.value === formData.classCode) || null}
+                    onChange={(selectedOption) => {
+                      const value = selectedOption ? selectedOption.value : '';
+                      onInputChange({
+                        target: {
+                          name: 'classCode',
+                          value: value
+                        }
+                      } as React.ChangeEvent<HTMLInputElement>);
+                    }}
+                    styles={customStyles}
+                    className="basic-single"
+                    classNamePrefix="select"
+                    placeholder="Select Class Code"
+                    isClearable
+                  />
                 </div>
 
               </div>

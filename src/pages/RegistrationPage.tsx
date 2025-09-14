@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Select from 'react-select'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../contexts/LanguageContext'
 
@@ -450,18 +451,49 @@ const [formData, setFormData] = useState<any>({
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           {t.methodOfLicenseReceipt}
                         </label>
-                        <select
-                          name="licenseReceiptMethod"
-                          value={formData.licenseReceiptMethod}
-                          onChange={handleInputChange}
-                          className="input-field"
-                        >
-                          <option value="">{t.selectReceiptMethod}</option>
-                          <option value="email">{language === 'ar' ? 'بريد إلكتروني' : 'Email'}</option>
-                          <option value="postal">{t.postalMail}</option>
-                          <option value="pickup">{t.personalPickup}</option>
-                          <option value="courier">{t.courier}</option>
-                        </select>
+                    <Select
+                      name="licenseReceiptMethod"
+                      value={
+                        [
+                          { value: '', label: t.selectReceiptMethod },
+                          { value: 'email', label: language === 'ar' ? 'بريد إلكتروني' : 'Email' },
+                          { value: 'postal', label: t.postalMail },
+                          { value: 'pickup', label: t.personalPickup },
+                          { value: 'courier', label: t.courier }
+                        ].find(option => option.value === formData.licenseReceiptMethod) || null
+                      }
+                      onChange={(selectedOption) => {
+                        const value = selectedOption ? selectedOption.value : '';
+                        handleInputChange({
+                          target: {
+                            name: 'licenseReceiptMethod',
+                            value: value
+                          }
+                        } as React.ChangeEvent<HTMLInputElement>);
+                      }}
+                      options={[
+                        { value: '', label: t.selectReceiptMethod },
+                        { value: 'email', label: language === 'ar' ? 'بريد إلكتروني' : 'Email' },
+                        { value: 'postal', label: t.postalMail },
+                        { value: 'pickup', label: t.personalPickup },
+                        { value: 'courier', label: t.courier }
+                      ]}
+                      className="basic-single"
+                      classNamePrefix="select"
+                      styles={{
+                        control: (provided) => ({
+                          ...provided,
+                          border: '1px solid #d1d5db',
+                          borderRadius: '0.375rem',
+                          padding: '0.25rem',
+                          fontSize: '0.875rem',
+                          '&:hover': {
+                            borderColor: '#9ca3af'
+                          }
+                        })
+                      }}
+                      isClearable
+                    />
                       </div>
                     </div>
 
@@ -481,6 +513,7 @@ const [formData, setFormData] = useState<any>({
                             type="checkbox"
                             name="declarationAgreement"
                             checked={formData.declarationAgreement}
+                            onChange={handleInputChange}
                             className="mt-1 h-4 w-4 text-itida-blue focus:ring-itida-blue border-gray-300 rounded"
                             required
                           />

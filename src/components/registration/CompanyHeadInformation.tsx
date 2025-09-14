@@ -1,4 +1,5 @@
 import React from 'react'
+import Select from 'react-select'
 import { useLanguage } from '../../contexts/LanguageContext'
 
 interface CompanyHeadInformationProps {
@@ -38,6 +39,38 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
 
   const isSingleHeadType = !multipleTypes.includes(formData.ldv_legaltypecode)
 
+  const governorateOptions = [
+    { value: '', label: t.selectGovernorate },
+    { value: 'cairo', label: t.cairo },
+    { value: 'giza', label: t.giza },
+    { value: 'alexandria', label: t.alexandria },
+    { value: 'sharqia', label: t.sharqia },
+    { value: 'gharbia', label: t.gharbia },
+    { value: 'menoufia', label: t.menoufia },
+    { value: 'qalyubia', label: t.qalyubia },
+    { value: 'port-said', label: t.portSaid },
+    { value: 'suez', label: t.suez },
+    { value: 'ismailia', label: t.ismailia },
+    { value: 'kafr-el-sheikh', label: t.kafrElSheikh },
+    { value: 'beheira', label: t.beheira },
+    { value: 'assiut', label: t.assiut },
+    { value: 'sohag', label: t.sohag },
+    { value: 'qena', label: t.qena },
+    { value: 'luxor', label: t.luxor },
+    { value: 'aswan', label: t.aswan },
+    { value: 'red-sea', label: t.redSea },
+    { value: 'new-valley', label: t.newValley },
+    { value: 'matruh', label: t.matruh },
+    { value: 'north-sinai', label: t.northSinai },
+    { value: 'south-sinai', label: t.southSinai },
+    { value: 'beni-suef', label: t.beniSuef },
+    { value: 'fayoum', label: t.fayoum },
+    { value: 'minya', label: t.minya },
+    { value: 'dakahlia', label: t.dakahlia },
+    { value: 'damietta', label: t.damietta },
+    { value: 'other', label: t.otherGovernorate }
+  ]
+
   return (
     <form onSubmit={onSubmit} className="py-4">
       <h2 className="text-xl font-bold text-gray-800 text-center mb-6">{t.companyHeadContacts}</h2>
@@ -72,43 +105,22 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
                 {t.governorate}
                 <span className="text-red-500 ml-1">*</span>
               </label>
-              <select
+              <Select
                 name="governorate"
-                value={formData.governorate}
-                onChange={onInputChange}
-                className="input-field"
-                required
-              >
-                <option value="">{t.selectGovernorate}</option>
-                <option value="cairo">{currentLanguage === 'ar' ? 'القاهرة' : 'Cairo'}</option>
-                <option value="giza">{currentLanguage === 'ar' ? 'الجيزة' : 'Giza'}</option>
-                <option value="alexandria">{currentLanguage === 'ar' ? 'الإسكندرية' : 'Alexandria'}</option>
-                <option value="sharqia">{currentLanguage === 'ar' ? 'الشرقية' : 'Sharqia'}</option>
-                <option value="gharbia">{currentLanguage === 'ar' ? 'الغربية' : 'Gharbia'}</option>
-                <option value="menoufia">{currentLanguage === 'ar' ? 'المنوفية' : 'Menoufia'}</option>
-                <option value="qalyubia">{currentLanguage === 'ar' ? 'القليوبية' : 'Qalyubia'}</option>
-                <option value="port-said">{currentLanguage === 'ar' ? 'بورسعيد' : 'Port Said'}</option>
-                <option value="suez">{currentLanguage === 'ar' ? 'السويس' : 'Suez'}</option>
-                <option value="ismailia">{currentLanguage === 'ar' ? 'الإسماعيلية' : 'Ismailia'}</option>
-                <option value="kafr-el-sheikh">{currentLanguage === 'ar' ? 'كفر الشيخ' : 'Kafr El Sheikh'}</option>
-                <option value="beheira">{currentLanguage === 'ar' ? 'البحيرة' : 'Beheira'}</option>
-                <option value="assiut">{currentLanguage === 'ar' ? 'أسيوط' : 'Assiut'}</option>
-                <option value="sohag">{currentLanguage === 'ar' ? 'سوهاج' : 'Sohag'}</option>
-                <option value="qena">{currentLanguage === 'ar' ? 'قنا' : 'Qena'}</option>
-                <option value="luxor">{currentLanguage === 'ar' ? 'الأقصر' : 'Luxor'}</option>
-                <option value="aswan">{currentLanguage === 'ar' ? 'أسوان' : 'Aswan'}</option>
-                <option value="red-sea">{currentLanguage === 'ar' ? 'البحر الأحمر' : 'Red Sea'}</option>
-                <option value="new-valley">{currentLanguage === 'ar' ? 'الوادي الجديد' : 'New Valley'}</option>
-                <option value="matruh">{currentLanguage === 'ar' ? 'مطروح' : 'Matruh'}</option>
-                <option value="north-sinai">{currentLanguage === 'ar' ? 'شمال سيناء' : 'North Sinai'}</option>
-                <option value="south-sinai">{currentLanguage === 'ar' ? 'جنوب سيناء' : 'South Sinai'}</option>
-                <option value="beni-suef">{currentLanguage === 'ar' ? 'بني سويف' : 'Beni Suef'}</option>
-                <option value="fayoum">{currentLanguage === 'ar' ? 'الفيوم' : 'Fayoum'}</option>
-                <option value="minya">{currentLanguage === 'ar' ? 'المنيا' : 'Minya'}</option>
-                <option value="dakahlia">{currentLanguage === 'ar' ? 'الدقهلية' : 'Dakahlia'}</option>
-                <option value="damietta">{currentLanguage === 'ar' ? 'دمياط' : 'Damietta'}</option>
-                <option value="other">{currentLanguage === 'ar' ? 'أخرى' : 'Other'}</option>
-              </select>
+                options={governorateOptions}
+                value={governorateOptions.find(option => option.value === formData.governorate)}
+                onChange={(selectedOption: any) => {
+                  onInputChange({
+                    target: {
+                      name: 'governorate',
+                      value: selectedOption ? selectedOption.value : ''
+                    }
+                  } as React.ChangeEvent<HTMLInputElement>)
+                }}
+                classNamePrefix="select"
+                className="basic-single"
+                isClearable
+              />
             </div>
 
             <div>
