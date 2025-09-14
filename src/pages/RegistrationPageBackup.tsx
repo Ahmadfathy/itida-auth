@@ -334,12 +334,13 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                     </div>
 
                     {/* Tab Content */}
-                    {activeTab === 1 && (
-                      <Tab1CompanyLegal 
-                        formData={formData} 
-                        onInputChange={handleInputChange}
-                      />
-                    )}
+{activeTab === 1 && (
+  <Tab1CompanyLegal 
+    formData={formData} 
+    onInputChange={handleInputChange}
+    setFormData={setFormData}
+  />
+)}
                     
                     {activeTab === 2 && (
                       <Tab2ContactInfo 
