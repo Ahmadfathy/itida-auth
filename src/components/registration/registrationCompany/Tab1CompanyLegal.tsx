@@ -1,6 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
 import { useLanguage, translations } from '../../../contexts/LanguageContext'
+import customReactSelectStyles from '../../../styles/customReactSelectStyles'
 
 interface Tab1CompanyLegalProps {
   formData: any
@@ -25,35 +26,6 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
   const selectedClassifications = classificationOptions.filter(option =>
     formData.companyClassification.some((item: any) => item.companyClassification === option.value)
   )
-
-  const customStyles = {
-    control: (provided: any) => ({
-      ...provided,
-      border: '1px solid #d1d5db',
-      borderRadius: '0.375rem',
-      padding: '0.25rem',
-      fontSize: '0.875rem',
-      '&:hover': {
-        borderColor: '#9ca3af'
-      }
-    }),
-    multiValue: (provided: any) => ({
-      ...provided,
-      backgroundColor: '#e5e7eb'
-    }),
-    multiValueLabel: (provided: any) => ({
-      ...provided,
-      color: '#374151'
-    }),
-    multiValueRemove: (provided: any) => ({
-      ...provided,
-      color: '#6b7280',
-      '&:hover': {
-        backgroundColor: '#d1d5db',
-        color: '#374151'
-      }
-    })
-  }
 
   const currentYear = new Date().getFullYear()
   const establishmentYearOptions = Array.from({ length: 50 }, (_, i) => {
@@ -187,18 +159,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
             }}
             className="basic-single"
             classNamePrefix="select"
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                border: '1px solid #d1d5db',
-                borderRadius: '0.375rem',
-                padding: '0.25rem',
-                fontSize: '0.875rem',
-                '&:hover': {
-                  borderColor: '#9ca3af'
-                }
-              })
-            }}
+            styles={customReactSelectStyles}
             isClearable
           />
         </div>
@@ -239,7 +200,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                 }
               } as React.ChangeEvent<HTMLInputElement>);
             }}
-            styles={customStyles}
+            styles={customReactSelectStyles}
             className="basic-single"
             classNamePrefix="select"
             placeholder="Select year"
@@ -268,7 +229,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
               companyClassification: values
             }))
           }}
-          styles={customStyles}
+          styles={customReactSelectStyles}
           className="basic-multi-select"
           classNamePrefix="select"
           components={{
@@ -348,7 +309,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                         }
                       } as React.ChangeEvent<HTMLInputElement>);
                     }}
-                    styles={customStyles}
+                    styles={customReactSelectStyles}
                     className="basic-single"
                     classNamePrefix="select"
                     placeholder="Select Class Code"

@@ -98,4 +98,8 @@
   .react-select__dropdown-indicator {
     @apply text-gray-500 hover:text-gray-700;
   }
+
+  .select__indicators .select__indicator-separator{
+    @apply border-2
+  }
 }
