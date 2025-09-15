@@ -51,9 +51,9 @@ const [formData, setFormData] = useState<any>({
     legalType: '',
     companyClassification: [{ companyClassification: '', subClassification: '' }],
     registerUsing: {
-      commercialRegistry: false,
-      unifiedCommercialRegistry: false,
-      taxRegistry: false
+      commercialRegistry: true,
+      unifiedCommercialRegistry: true,
+      taxRegistry: true
     },
     commercialRegistryNumber: '',
     unifiedCommercialRegistryNumber: '',

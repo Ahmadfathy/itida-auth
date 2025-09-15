@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { useLanguage, translations } from '../../../contexts/LanguageContext'
 import customReactSelectStyles from '../../../styles/customReactSelectStyles'
@@ -29,9 +29,22 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
     ldv_legaltypecode: yup.string().required('This field is required'),
     emailaddress1: yup.string().required('This field is required').email('Invalid email address'),
     companyClassification: yup.array().min(1, 'At least one company classification is required'),
-    commercialRegistryNumber: yup.string().required('Commercial Registry Number is required'),
-    unifiedCommercialRegistryNumber: yup.string().required('Unified Commercial Registry Number is required'),
-    taxRegistryNumber: yup.string().required('Tax Registry Number is required')
+    registerUsing: yup.object().shape({
+      commercialRegistry: yup.boolean(),
+      unifiedCommercialRegistry: yup.boolean(),
+      taxRegistry: yup.boolean()
+    }).test('at-least-one', 'At least one registration method must be selected', (value) => {
+      return value.commercialRegistry || value.unifiedCommercialRegistry || value.taxRegistry
+    }),
+    commercialRegistryNumber: yup.string().when('registerUsing.commercialRegistry', (value) => {
+      return value ? yup.string().required('Commercial Registry Number is required') : yup.string()
+    }),
+    unifiedCommercialRegistryNumber: yup.string().when('registerUsing.unifiedCommercialRegistry', (value) => {
+      return value ? yup.string().required('Unified Commercial Registry Number is required') : yup.string()
+    }),
+    taxRegistryNumber: yup.string().when('registerUsing.taxRegistry', (value) => {
+      return value ? yup.string().required('Tax Registry Number is required') : yup.string()
+    })
   })
 
   const validateField = async (fieldName: string, value: any) => {
@@ -77,6 +90,23 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
     { value: 'فرعى', label: 'فرعى' },
     { value: 'مركز عام', label: 'مركز عام' }
   ]
+
+  useEffect(() => {
+    // Set default checked for the 3 checkboxes if undefined
+    setFormData((prev: any) => ({
+      ...prev,
+      registerUsing: {
+        commercialRegistry: prev.registerUsing?.commercialRegistry !== undefined ? prev.registerUsing.commercialRegistry : true,
+        unifiedCommercialRegistry: prev.registerUsing?.unifiedCommercialRegistry !== undefined ? prev.registerUsing.unifiedCommercialRegistry : true,
+        taxRegistry: prev.registerUsing?.taxRegistry !== undefined ? prev.registerUsing.taxRegistry : true
+      }
+    }))
+  }, [])
+
+  useEffect(() => {
+    // Validate registerUsing checkboxes on change
+    validateField('registerUsing', formData.registerUsing)
+  }, [formData.registerUsing])
 
   return (
     <div className="space-y-8">
@@ -308,7 +338,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
             <input
               type="checkbox"
               name="registerUsing.commercialRegistry"
-              checked
+              checked={formData.registerUsing?.commercialRegistry}
               onChange={onInputChange}
               className="mt-1 h-4 w-4 text-itida-blue focus:ring-itida-blue border-gray-300 rounded"
             />
@@ -325,7 +355,8 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                     onChange={handleInputChangeWithValidation}
                     className="input-field"
                     placeholder={t.commercialRegistryNumber}
-                    required
+                    required={formData.registerUsing?.commercialRegistry}
+                    disabled={!formData.registerUsing?.commercialRegistry}
                   />
                   {errors.commercialRegistryNumber && <p className="text-red-500 text-xs mt-1">{errors.commercialRegistryNumber}</p>}
                 </div>
@@ -338,6 +369,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                     onChange={onInputChange}
                     className="input-field"
                     placeholder="CR Office"
+                    disabled={!formData.registerUsing?.commercialRegistry}
                   />
                 </div>
 
@@ -360,6 +392,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                     classNamePrefix="select"
                     placeholder="Select Class Code"
                     isClearable
+                    isDisabled={!formData.registerUsing?.commercialRegistry}
                   />
                 </div>
 
@@ -372,7 +405,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
             <input
               type="checkbox"
               name="registerUsing.unifiedCommercialRegistry"
-              checked
+              checked={formData.registerUsing?.unifiedCommercialRegistry}
               onChange={onInputChange}
               className="mt-1 h-4 w-4 text-itida-blue focus:ring-itida-blue border-gray-300 rounded"
             />
@@ -387,7 +420,8 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                 onChange={handleInputChangeWithValidation}
                 className="input-field"
                 placeholder={t.unifiedCommercialRegistryNumber}
-                required
+                required={formData.registerUsing?.unifiedCommercialRegistry}
+                disabled={!formData.registerUsing?.unifiedCommercialRegistry}
               />
               {errors.unifiedCommercialRegistryNumber && <p className="text-red-500 text-xs mt-1">{errors.unifiedCommercialRegistryNumber}</p>}
             </div>
@@ -398,7 +432,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
             <input
               type="checkbox"
               name="registerUsing.taxRegistry"
-              checked
+              checked={formData.registerUsing?.taxRegistry}
               onChange={onInputChange}
               className="mt-1 h-4 w-4 text-itida-blue focus:ring-itida-blue border-gray-300 rounded"
             />
@@ -413,7 +447,8 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                 onChange={handleInputChangeWithValidation}
                 className="input-field"
                 placeholder={t.taxRegistryNumber}
-                required
+                required={formData.registerUsing?.taxRegistry}
+                disabled={!formData.registerUsing?.taxRegistry}
               />
               {errors.taxRegistryNumber && <p className="text-red-500 text-xs mt-1">{errors.taxRegistryNumber}</p>}
             </div>

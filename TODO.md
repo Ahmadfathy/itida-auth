@@ -1,10 +1,7 @@
-# Profile Page Editing Implementation
-
-## Tasks
-- [ ] Add edit mode toggle handler
-- [ ] Add input change handler for form data
-- [ ] Add save handler to update financialData
-- [ ] Add cancel handler to discard changes
-- [ ] Update button section for edit/view modes
-- [ ] Implement conditional rendering of form components in edit mode
-- [ ] Test editing functionality
+- [x] Add useEffect import
+- [x] Add useEffect to set default checked for checkboxes
+- [x] Update yup validationSchema for conditional required fields
+- [x] Add yup test for at least one checkbox checked
+- [x] Add useEffect to validate registerUsing on change
+- [x] Add disabled props to form fields under each checkbox
+- [x] Test the implementation
