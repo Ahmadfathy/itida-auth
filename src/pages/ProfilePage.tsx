@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { useLanguage, translations } from '../contexts/LanguageContext';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import Select from 'react-select';
+import Tab1CompanyLegal from '../components/registration/registrationCompany/Tab1CompanyLegal';
+import Tab2ContactInfo from '../components/registration/registrationCompany/Tab2ContactInfo';
+import Tab3CompanyBranches from '../components/registration/registrationCompany/Tab3CompanyBranches';
+import Tab4ActivitiesAttachments from '../components/registration/registrationCompany/Tab4ActivitiesAttachments';
+import CompanyHeadInformation from '../components/registration/CompanyHeadInformation';
+import FinancialInformation from '../components/registration/FinancialInformation';
 
 interface FinancialData {
   fiscalCapital: string;
@@ -29,16 +36,20 @@ interface FinancialData {
   customerReferences: { name: string; country: string; projectSize: string; scope: string; industriesSector: string; description: string }[];
   companyClassification: { companyClassification: string; subClassification: string }[];
   owners: { name: string; mobile: string; telephone: string; email: string }[];
+  branches: { branchName: string; branchCountry: string; branchGovernorate: string; branchCity: string; branchDistrict: string; branchEmail: string; mobilePhone: string }[];
 }
 
 const ProfilePage: React.FC = () => {
   const { language } = useLanguage();
+  const t = translations[language];
 
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);
   const [showInfo, setShowInfo] = useState(true);
 
-  const [financialData] = useState<FinancialData>({
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const [financialData, setFinancialData] = useState<FinancialData>({
     fiscalCapital: '1000000 EGP',
     domesticSalesDetails: [{ year: '2023', value: '500000', totalRevenueYear: '500000' }],
     annualRevenue: '500000 EGP',
@@ -63,8 +74,203 @@ const ProfilePage: React.FC = () => {
     services: [{ name: 'Dummy Service', description: 'A sample service for demonstration' }],
     customerReferences: [{ name: 'Client A', country: 'Egypt', projectSize: 'Medium', scope: 'Web Development', industriesSector: 'Technology', description: 'Successful project delivery' }],
     companyClassification: [{ companyClassification: 'Technology', subClassification: 'Software' }],
-    owners: [{ name: 'John Doe', mobile: '01234567890', telephone: '02-12345678', email: 'john.doe@dummycompany.com' }]
+    owners: [{ name: 'John Doe', mobile: '01234567890', telephone: '02-12345678', email: 'john.doe@dummycompany.com' }],
+    branches: [{ branchName: 'Dummy Branch', branchCountry: 'Egypt', branchGovernorate: 'Cairo', branchCity: 'Alexandria', branchDistrict: 'Downtown', branchEmail: 'branch@dummycompany.com', mobilePhone: '01987654321' }]
   });
+
+  const [formData, setFormData] = useState<any>({
+    // Dynamic arrays for repeatable sections
+    companyHeads: [{ name: '', position: '', mobile: '', nationalId: '', email: '', email2: '' }],
+    contactPersons: [{ name: '', position: '', mobile: '', nationalId: '', email: '' }],
+    products: [{ name: '', description: '' }],
+    services: [{ name: '', description: '' }],
+    customerReferences: [{ name: '', country: '', projectSize: '', scope: '', industriesSector: '', description: '' }],
+    exportInformation: [{ year: '', marketRegion: '', country: '', valueExported: '' }],
+    owners: [{ name: '', mobile: '', telephone: '', email: '' }],
+    domesticSalesDetails: [{ year: '', value: '', totalRevenueYear: '' }],
+    // Tab 1: Company Legal Information
+    companyNameEn: 'Dummy Company Name English',
+    companyNameAr: 'اسم الشركة الوهمي',
+    commercialDenomination: 'Dummy Commercial Denomination',
+    legalType: 'LLC',
+    companyClassification: [{ companyClassification: 'Technology', subClassification: 'Software' }],
+    registerUsing: {
+      commercialRegistry: true,
+      unifiedCommercialRegistry: true,
+      taxRegistry: true
+    },
+    commercialRegistryNumber: '123456789',
+    unifiedCommercialRegistryNumber: '987654321',
+    taxRegistryNumber: '456789123',
+    commercialRegistrationDate: '01/01/2010',
+
+    // Tab 2: Contact Information & Company Representative
+    governorate: 'Cairo',
+    district: 'Nasr City',
+    streetAddress: '123 Dummy Street',
+    companyWebsite: 'www.dummycompany.com',
+    officialEmail: 'contact@dummycompany.com',
+    phoneMobile: '01234567890',
+    branches: [{ branchName: 'Dummy Branch', branchCountry: 'Egypt', branchGovernorate: 'Cairo', branchCity: 'Alexandria', branchDistrict: 'Downtown', branchEmail: 'branch@dummycompany.com', mobilePhone: '01987654321' }],
+    representativeName: 'John Doe',
+    representativeTitle: 'CEO',
+    representativeMobile: '01234567890',
+    representativeNationalId: '12345678901234',
+    representativeEmail: 'john.doe@dummycompany.com',
+    requestApplicant: 'company-in-charge',
+
+    // Tab 3: Activities, Attachments & Declaration
+    activities: {
+      softwareDesign: true,
+      itSystems: true,
+      trustServices: true,
+      websitesPlatforms: true,
+      electronicsEmbedded: true,
+      contentDigitization: true,
+      callCenterBusiness: true,
+      consultingResearch: true,
+      trainingLearning: true
+    },
+    attachments: {
+      commercialRegister: 'Available',
+      taxCard: 'Available',
+      nationalId: 'Available',
+      investmentGazette: 'Available',
+      declarationUndertaking: 'Available',
+      representativeAuthorization: 'Available',
+      representativeNationalId: 'Available'
+    },
+    licenseReceiptMethod: 'Available',
+    declarationAgreement: true,
+
+    // Company Head Information
+    companyHeadName: 'Jane Smith',
+    companyHeadTitle: 'CTO',
+    companyHeadMobile: '01123456789',
+    companyHeadNationalId: '98765432109876',
+    companyHeadEmail: 'jane.smith@dummycompany.com',
+    companyHeadEmail2: 'jane.smith2@dummycompany.com',
+
+    // Contact Persons
+    contactPersonName: 'Alex Johnson',
+    contactPersonTitle: 'Manager',
+    contactPersonMobile: '01987654321',
+    contactPersonNationalId: '12345678901234',
+    contactPersonEmail: 'alex.johnson@dummycompany.com',
+
+    // Financial Information
+    fiscalCapital: '1000000 EGP',
+    domesticSalesValue: '',
+    totalRevenueYear: '',
+    annualRevenue: '500000 EGP',
+    auditedBalanceSheet: null,
+    export: 'Yes',
+    ownershipNationality: 'Egyptian',
+    percentageEgyptianOwnership: '100%',
+    percentageNonEgyptianOwnership: '0%',
+    partnersNationalities: 'Egyptian',
+    totalNoOfEmployees: '50',
+    yearOfEstablishment: '2010',
+    companySize: 'Small',
+    typeOfOwnership: 'Private',
+    companyData: 'Technology Company',
+
+    // Updated fields to arrays for multi-select
+    keyTechnologies: ['React', 'Node.js', 'Python'],
+    certificates: ['ISO 9001'],
+    affiliation: ['ITIDA'],
+    memberships: ['Egyptian Software Association'],
+    partnerships: ['Microsoft', 'Google']
+  });
+
+  // Handlers for editing functionality
+  const handleEditToggle = () => {
+    setIsEditMode(!isEditMode);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+
+    if (type === 'checkbox') {
+      setFormData((prev: any) => ({
+        ...prev,
+        [name]: checked
+      }));
+    } else {
+      setFormData((prev: any) => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
+  const handleSave = () => {
+    // Update financialData with formData values
+    setFinancialData((prev: FinancialData) => ({
+      ...prev,
+      fiscalCapital: formData.fiscalCapital || prev.fiscalCapital,
+      annualRevenue: formData.annualRevenue || prev.annualRevenue,
+      export: formData.export || prev.export,
+      ownershipNationality: formData.ownershipNationality || prev.ownershipNationality,
+      percentageEgyptianOwnership: formData.percentageEgyptianOwnership || prev.percentageEgyptianOwnership,
+      percentageNonEgyptianOwnership: formData.percentageNonEgyptianOwnership || prev.percentageNonEgyptianOwnership,
+      partnersNationalities: formData.partnersNationalities || prev.partnersNationalities,
+      totalNoOfEmployees: formData.totalNoOfEmployees || prev.totalNoOfEmployees,
+      yearOfEstablishment: formData.yearOfEstablishment || prev.yearOfEstablishment,
+      companySize: formData.companySize || prev.companySize,
+      typeOfOwnership: formData.typeOfOwnership || prev.typeOfOwnership,
+      companyData: formData.companyData || prev.companyData,
+      keyTechnologies: formData.keyTechnologies || prev.keyTechnologies,
+      affiliation: formData.affiliation || prev.affiliation,
+      memberships: formData.memberships || prev.memberships,
+      certificates: formData.certificates || prev.certificates,
+      partnerships: formData.partnerships || prev.partnerships,
+      products: formData.products || prev.products,
+      services: formData.services || prev.services,
+      customerReferences: formData.customerReferences || prev.customerReferences,
+      owners: formData.owners || prev.owners,
+      domesticSalesDetails: formData.domesticSalesDetails || prev.domesticSalesDetails,
+      exportInformation: formData.exportInformation || prev.exportInformation,
+      companyClassification: formData.companyClassification || prev.companyClassification,
+      branches: formData.branches || prev.branches
+    }));
+    setIsEditMode(false);
+  };
+
+  const handleCancel = () => {
+    // Reset formData to current financialData values
+    setFormData((prev: any) => ({
+      ...prev,
+      fiscalCapital: financialData.fiscalCapital,
+      annualRevenue: financialData.annualRevenue,
+      export: financialData.export,
+      ownershipNationality: financialData.ownershipNationality,
+      percentageEgyptianOwnership: financialData.percentageEgyptianOwnership,
+      percentageNonEgyptianOwnership: financialData.percentageNonEgyptianOwnership,
+      partnersNationalities: financialData.partnersNationalities,
+      totalNoOfEmployees: financialData.totalNoOfEmployees,
+      yearOfEstablishment: financialData.yearOfEstablishment,
+      companySize: financialData.companySize,
+      typeOfOwnership: financialData.typeOfOwnership,
+      companyData: financialData.companyData,
+      keyTechnologies: financialData.keyTechnologies,
+      affiliation: financialData.affiliation,
+      memberships: financialData.memberships,
+      certificates: financialData.certificates,
+      partnerships: financialData.partnerships,
+      products: financialData.products,
+      services: financialData.services,
+      customerReferences: financialData.customerReferences,
+      owners: financialData.owners,
+      domesticSalesDetails: financialData.domesticSalesDetails,
+      exportInformation: financialData.exportInformation,
+      companyClassification: financialData.companyClassification
+    }));
+    setIsEditMode(false);
+  };
+
+
 
   const exportPDF = () => {
     const input = document.getElementById('profile-details-section');
@@ -270,8 +476,17 @@ const ProfilePage: React.FC = () => {
           <div className="flex justify-between items-center p-6 border-b border-gray-200">
             <h2 className="text-lg font-semibold">Profile Details</h2>
             <div className='flex gap-3'>
-              <button className="btn-primary px-4 py-2">Edit Profile</button>
-              <button className="btn-primary px-6 py-2" onClick={exportPDF}>Export PDF</button>
+              {!isEditMode ? (
+                <>
+                  <button className="btn-primary px-4 py-2" onClick={handleEditToggle}>Edit Profile</button>
+                  <button className="btn-primary px-6 py-2" onClick={exportPDF}>Export PDF</button>
+                </>
+              ) : (
+                <>
+                  <button className="btn-secondary px-4 py-2" onClick={handleCancel}>Cancel</button>
+                  <button className="btn-primary px-6 py-2" onClick={handleSave}>Save Changes</button>
+                </>
+              )}
             </div>
           </div>
           <div id="profile-details-section" className="space-y-8 text-gray-600  p-6">
@@ -281,47 +496,157 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].companyNameEnglish}</p>
-                  <p className="font-semibold">Dummy Company Name English</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="companyNameEn"
+                      value={formData.companyNameEn || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyNameEn || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].companyNameArabic}</p>
-                  <p className="font-semibold">اسم الشركة الوهمي</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="companyNameAr"
+                      value={formData.companyNameAr || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyNameAr || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].commercialDenomination}</p>
-                  <p className="font-semibold">Dummy Commercial Denomination</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="commercialDenomination"
+                      value={formData.commercialDenomination || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.commercialDenomination || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].legalType}</p>
-                  <p className="font-semibold">LLC</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="legalType"
+                      value={formData.legalType || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.legalType || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].companyClassification}</p>
-                  <p className="font-semibold">Technology</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="companyClassification"
+                      value={formData.companyClassification[0]?.companyClassification || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyClassification[0]?.companyClassification || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].commercialRegistryNumber}</p>
-                  <p className="font-semibold">123456789</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="commercialRegistryNumber"
+                      value={formData.commercialRegistryNumber || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.commercialRegistryNumber || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].unifiedCommercialRegistryNumber}</p>
-                  <p className="font-semibold">987654321</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="unifiedCommercialRegistryNumber"
+                      value={formData.unifiedCommercialRegistryNumber || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.unifiedCommercialRegistryNumber || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].taxRegistryNumber}</p>
-                  <p className="font-semibold">456789123</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="taxRegistryNumber"
+                      value={formData.taxRegistryNumber || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.taxRegistryNumber || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].commercialRegistrationDate}</p>
-                  <p className="font-semibold">01/01/2010</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="commercialRegistrationDate"
+                      value={formData.commercialRegistrationDate || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.commercialRegistrationDate || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].officialCompanyEmail}</p>
-                  <p className="font-semibold">official@dummycompany.com</p>
+                  {isEditMode ? (
+                    <input
+                      type="email"
+                      name="officialEmail"
+                      value={formData.officialEmail || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.officialEmail || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].yearOfEstablishment}</p>
-                  <p className="font-semibold">2010</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="yearOfEstablishment"
+                      value={formData.yearOfEstablishment || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.yearOfEstablishment || '-'}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -332,51 +657,174 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].governorate}</p>
-                  <p className="font-semibold">Cairo</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="governorate"
+                      value={formData.governorate || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.governorate || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].districtCity}</p>
-                  <p className="font-semibold">Nasr City</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="district"
+                      value={formData.district || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.district || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].streetAddress}</p>
-                  <p className="font-semibold">123 Dummy Street</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="streetAddress"
+                      value={formData.streetAddress || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.streetAddress || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].companyWebsiteUrl}</p>
-                  <p className="font-semibold">www.dummycompany.com</p>
+                  {isEditMode ? (
+                    <input
+                      type="url"
+                      name="companyWebsite"
+                      value={formData.companyWebsite || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyWebsite || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].officialEmail}</p>
-                  <p className="font-semibold">contact@dummycompany.com</p>
+                  {isEditMode ? (
+                    <input
+                      type="email"
+                      name="officialEmail"
+                      value={formData.officialEmail || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.officialEmail || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].phoneMobile}</p>
-                  <p className="font-semibold">01234567890</p>
+                  {isEditMode ? (
+                    <input
+                      type="tel"
+                      name="phoneMobile"
+                      value={formData.phoneMobile || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.phoneMobile || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].name}</p>
-                  <p className="font-semibold">John Doe</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="representativeName"
+                      value={formData.representativeName || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.representativeName || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].title}</p>
-                  <p className="font-semibold">CEO</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="representativeTitle"
+                      value={formData.representativeTitle || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.representativeTitle || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].mobile}</p>
-                  <p className="font-semibold">01234567890</p>
+                  {isEditMode ? (
+                    <input
+                      type="tel"
+                      name="representativeMobile"
+                      value={formData.representativeMobile || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.representativeMobile || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
-                  <p className="font-semibold">12345678901234</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="representativeNationalId"
+                      value={formData.representativeNationalId || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.representativeNationalId || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].email}</p>
-                  <p className="font-semibold">john.doe@dummycompany.com</p>
+                  {isEditMode ? (
+                    <input
+                      type="email"
+                      name="representativeEmail"
+                      value={formData.representativeEmail || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.representativeEmail || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].requestApplicant}</p>
-                  <p className="font-semibold">Yes</p>
+                  {isEditMode ? (
+                    <select
+                      name="requestApplicant"
+                      value={formData.requestApplicant || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Select</option>
+                      <option value="company-in-charge">Company in Charge</option>
+                      <option value="representative">Representative</option>
+                    </select>
+                  ) : (
+                    <p className="font-semibold">{formData.requestApplicant || '-'}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -387,31 +835,129 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchName}</p>
-                  <p className="font-semibold">Dummy Branch</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="branchName"
+                      value={formData.branches[0]?.branchName || ''}
+                      onChange={(e) => {
+                        const updatedBranches = [...formData.branches];
+                        updatedBranches[0] = { ...updatedBranches[0], branchName: e.target.value };
+                        setFormData({ ...formData, branches: updatedBranches });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.branches[0]?.branchName || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchCountry}</p>
-                  <p className="font-semibold">Egypt</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="branchCountry"
+                      value={formData.branches[0]?.branchCountry || ''}
+                      onChange={(e) => {
+                        const updatedBranches = [...formData.branches];
+                        updatedBranches[0] = { ...updatedBranches[0], branchCountry: e.target.value };
+                        setFormData({ ...formData, branches: updatedBranches });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.branches[0]?.branchCountry || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchGovernorate}</p>
-                  <p className="font-semibold">Cairo</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="branchGovernorate"
+                      value={formData.branches[0]?.branchGovernorate || ''}
+                      onChange={(e) => {
+                        const updatedBranches = [...formData.branches];
+                        updatedBranches[0] = { ...updatedBranches[0], branchGovernorate: e.target.value };
+                        setFormData({ ...formData, branches: updatedBranches });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.branches[0]?.branchGovernorate || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchCity}</p>
-                  <p className="font-semibold">Alexandria</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="branchCity"
+                      value={formData.branches[0]?.branchCity || ''}
+                      onChange={(e) => {
+                        const updatedBranches = [...formData.branches];
+                        updatedBranches[0] = { ...updatedBranches[0], branchCity: e.target.value };
+                        setFormData({ ...formData, branches: updatedBranches });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.branches[0]?.branchCity || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchDistrict}</p>
-                  <p className="font-semibold">Downtown</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="branchDistrict"
+                      value={formData.branches[0]?.branchDistrict || ''}
+                      onChange={(e) => {
+                        const updatedBranches = [...formData.branches];
+                        updatedBranches[0] = { ...updatedBranches[0], branchDistrict: e.target.value };
+                        setFormData({ ...formData, branches: updatedBranches });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.branches[0]?.branchDistrict || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">{translations[language].branchEmail}</p>
-                  <p className="font-semibold">branch@dummycompany.com</p>
+                  {isEditMode ? (
+                    <input
+                      type="email"
+                      name="branchEmail"
+                      value={formData.branches[0]?.branchEmail || ''}
+                      onChange={(e) => {
+                        const updatedBranches = [...formData.branches];
+                        updatedBranches[0] = { ...updatedBranches[0], branchEmail: e.target.value };
+                        setFormData({ ...formData, branches: updatedBranches });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.branches[0]?.branchEmail || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Mobile Phone</p>
-                  <p className="font-semibold">01987654321</p>
+                  {isEditMode ? (
+                    <input
+                      type="tel"
+                      name="mobilePhone"
+                      value={formData.branches[0]?.mobilePhone || ''}
+                      onChange={(e) => {
+                        const updatedBranches = [...formData.branches];
+                        updatedBranches[0] = { ...updatedBranches[0], mobilePhone: e.target.value };
+                        setFormData({ ...formData, branches: updatedBranches });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.branches[0]?.mobilePhone || '-'}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -759,71 +1305,178 @@ const ProfilePage: React.FC = () => {
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
                   <p className="text-sm text-gray-400">Fiscal Capital</p>
-                  <p className="font-semibold">{financialData.fiscalCapital || '-'}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Domestic Sales Value</p>
-                  <p className="font-semibold">
-                    {financialData.domesticSalesDetails.length > 0
-                      ? financialData.domesticSalesDetails.reduce((acc, cur) => acc + Number(cur.value || 0), 0)
-                      : '-'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Total Revenue Year</p>
-                  <p className="font-semibold">
-                    {financialData.domesticSalesDetails.length > 0
-                      ? financialData.domesticSalesDetails[0].totalRevenueYear || '-'
-                      : '-'}
-                  </p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="fiscalCapital"
+                      value={formData.fiscalCapital || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.fiscalCapital || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Annual Revenue</p>
-                  <p className="font-semibold">{financialData.annualRevenue || '-'}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Audited Balance Sheet</p>
-                  <p className="font-semibold">{financialData.auditedBalanceSheet ? financialData.auditedBalanceSheet.name : '-'}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="annualRevenue"
+                      value={formData.annualRevenue || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.annualRevenue || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Export</p>
-                  <p className="font-semibold">{financialData.export || '-'}</p>
+                  {isEditMode ? (
+                    <select
+                      name="export"
+                      value={formData.export || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Select</option>
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
+                  ) : (
+                    <p className="font-semibold">{financialData.export || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Ownership Nationality</p>
-                  <p className="font-semibold">{financialData.ownershipNationality || '-'}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="ownershipNationality"
+                      value={formData.ownershipNationality || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.ownershipNationality || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Percentage Egyptian Ownership</p>
-                  <p className="font-semibold">{financialData.percentageEgyptianOwnership || '-'}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="percentageEgyptianOwnership"
+                      value={formData.percentageEgyptianOwnership || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.percentageEgyptianOwnership || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Percentage Non-Egyptian Ownership</p>
-                  <p className="font-semibold">{financialData.percentageNonEgyptianOwnership || '-'}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="percentageNonEgyptianOwnership"
+                      value={formData.percentageNonEgyptianOwnership || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.percentageNonEgyptianOwnership || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Partners Nationalities</p>
-                  <p className="font-semibold">{financialData.partnersNationalities || '-'}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="partnersNationalities"
+                      value={formData.partnersNationalities || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.partnersNationalities || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Total Number of Employees</p>
-                  <p className="font-semibold">{financialData.totalNoOfEmployees || '-'}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="totalNoOfEmployees"
+                      value={formData.totalNoOfEmployees || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.totalNoOfEmployees || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Year of Establishment</p>
-                  <p className="font-semibold">{financialData.yearOfEstablishment || '-'}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="yearOfEstablishment"
+                      value={formData.yearOfEstablishment || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.yearOfEstablishment || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Company Size</p>
-                  <p className="font-semibold">{financialData.companySize || '-'}</p>
+                  {isEditMode ? (
+                    <select
+                      name="companySize"
+                      value={formData.companySize || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Select</option>
+                      <option value="Small">Small</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Large">Large</option>
+                    </select>
+                  ) : (
+                    <p className="font-semibold">{financialData.companySize || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Type of Ownership</p>
-                  <p className="font-semibold">{financialData.typeOfOwnership || '-'}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="typeOfOwnership"
+                      value={formData.typeOfOwnership || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.typeOfOwnership || '-'}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Company Data</p>
-                  <p className="font-semibold">{financialData.companyData || '-'}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="companyData"
+                      value={formData.companyData || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.companyData || '-'}</p>
+                  )}
                 </div>
               </div>
             </div>
