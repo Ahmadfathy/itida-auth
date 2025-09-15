@@ -2,13 +2,6 @@ import React, { useState } from 'react';
 import { useLanguage, translations } from '../contexts/LanguageContext';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import Select from 'react-select';
-import Tab1CompanyLegal from '../components/registration/registrationCompany/Tab1CompanyLegal';
-import Tab2ContactInfo from '../components/registration/registrationCompany/Tab2ContactInfo';
-import Tab3CompanyBranches from '../components/registration/registrationCompany/Tab3CompanyBranches';
-import Tab4ActivitiesAttachments from '../components/registration/registrationCompany/Tab4ActivitiesAttachments';
-import CompanyHeadInformation from '../components/registration/CompanyHeadInformation';
-import FinancialInformation from '../components/registration/FinancialInformation';
 
 interface FinancialData {
   fiscalCapital: string;
@@ -41,7 +34,6 @@ interface FinancialData {
 
 const ProfilePage: React.FC = () => {
   const { language } = useLanguage();
-  const t = translations[language];
 
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);
