@@ -230,6 +230,11 @@ export const translations = {
     mmYYYY: 'MM/YYYY',
     representativeInformations: 'Representative Informations',
 
+    // Job Titles
+    jobTitleResponsibleManager: 'Responsible Manager',
+    jobTitlePartner: 'Partner',
+    jobTitleManagerAndPartner: 'Manager and Partner',
+
     // Governorates
     cairo: 'Cairo',
     giza: 'Giza',
@@ -526,6 +531,11 @@ export const translations = {
     nidIssueDate: 'تاريخ إصدار الرقم القومي',
     mmYYYY: 'MM/YYYY',
     representativeInformations: 'معلومات الممثل',
+
+    // Job Titles
+    jobTitleResponsibleManager: 'مدير مسئول',
+    jobTitlePartner: 'شريك',
+    jobTitleManagerAndPartner: 'مدير و شريك',
 
     // Governorates
     cairo: 'القاهرة',
