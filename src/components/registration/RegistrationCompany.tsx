@@ -107,14 +107,14 @@ const RegistrationCompany: React.FC<RegistrationCompanyProps> = ({
       {/* Company OverView */}
       <div className='mt-6'>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Company overview
+          {t.companyOverView}
           <span className="text-red-500 ml-1">*</span>
         </label>
         <textarea
           name="companyOverView"
           id="companyOverView"
           className="input-field"
-          placeholder="Briefly describe your company's background, core competencies, and key achievements."
+          placeholder={t.companyOverviewPlaceholder}
           value={formData.companyOverView}
           onChange={onInputChange}
         />

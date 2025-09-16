@@ -1,7 +1,6 @@
-- [x] Add useEffect import
-- [x] Add useEffect to set default checked for checkboxes
-- [x] Update yup validationSchema for conditional required fields
-- [x] Add yup test for at least one checkbox checked
-- [x] Add useEffect to validate registerUsing on change
-- [x] Add disabled props to form fields under each checkbox
-- [x] Test the implementation
+# TODO: Translate hardcoded text in Tab1CompanyLegal.tsx
+
+## Steps:
+1. Add missing translation keys to LanguageContext.tsx for validation messages, options, and labels.
+2. Update Tab1CompanyLegal.tsx to use translation keys instead of hardcoded strings.
+3. Test the component to ensure translations work for both English and Arabic.

@@ -162,6 +162,8 @@ export const translations = {
     previous: 'Previous',
     next: 'Next',
     submitRegistration: 'Submit Registration',
+    companyOverView: 'Company Overview',
+    companyOverviewPlaceholder: 'Briefly describe your company\'s background, core competencies, and key achievements.',
 
     // Tab 1: Company Legal Information
     companyLegalInfoTitle: 'Company Legal Information',
@@ -195,6 +197,43 @@ export const translations = {
     branchOffice: 'محل فرعى',
     branchOther: 'فرعى',
     generalCenter: 'مركز عام',
+
+    // Validation Messages
+    thisFieldIsRequired: 'This field is required',
+    onlyEnglishLettersAllowed: 'Only English letters are allowed',
+    onlyArabicLettersAllowed: 'Only Arabic letters are allowed',
+    invalidEmailAddress: 'Invalid email address',
+    atLeastOneCompanyClassificationRequired: 'At least one company classification is required',
+    atLeastOneRegistrationMethodSelected: 'At least one registration method must be selected',
+    commercialRegistryNumberRequired: 'Commercial Registry Number is required',
+    unifiedCommercialRegistryNumberRequired: 'Unified Commercial Registry Number is required',
+    taxRegistryNumberRequired: 'Tax Registry Number is required',
+
+    // Company Classification Options
+    technology: 'Technology',
+    consulting: 'Consulting',
+    manufacturing: 'Manufacturing',
+    retail: 'Retail',
+    finance: 'Finance',
+    healthcare: 'Healthcare',
+    education: 'Education',
+
+    // Class Code Options
+    selectClassCode: 'Select Class Code',
+
+    // Legal Type Options
+    legalTypeSole: 'Sole proprietorship Co - شركة شخص واحد',
+    legalTypeSoleCorporation: 'Sole Corporation - فردي',
+    legalTypeGeneralPartnership: 'General Partnership - شركات مساهمة',
+    legalTypeLimitedLiability: 'Limited Liability Company - ذات مسئولية محدودة',
+    legalTypeJoint: 'Joint - شركة تضامن',
+    legalTypeSpecialLimited: 'Special Limited Partnership – توصية بسيطة',
+    legalTypeInherited: 'Inherited Company - واقع موروثة',
+    legalTypeLimitedShares: 'Limited Partnership by Shares - توصية بالاسهم',
+    legalTypeCooperative: 'Cooperative Associations - جمعيات تعاونية',
+    legalTypeDeFacto: 'De Facto Company - شركه واقع',
+    legalTypeBranchForeign: 'Branch of Foreign Company - فرع شركه اجنبيه',
+    legalTypeNonProfit: 'Non-Profit Entities - جهات غير هادفة',
 
     // Tab 2: Contact Information
     contactInfoTitle: 'Contact Information',
@@ -464,6 +503,8 @@ export const translations = {
     previous: 'السابق',
     next: 'التالي',
     submitRegistration: 'إرسال التسجيل',
+    companyOverView: 'نظرة عامة على الشركة',
+    companyOverviewPlaceholder: 'وصف باختصار خلفية شركتك وكفاءاتها الأساسية وإنجازاتها الرئيسية.',
 
     // Tab 1: Company Legal Information
     companyLegalInfoTitle: 'البيانات القانونية للشركة',
@@ -497,6 +538,43 @@ export const translations = {
     branchOffice: 'محل فرعى',
     branchOther: 'فرعى',
     generalCenter: 'مركز عام',
+
+    // Validation Messages
+    thisFieldIsRequired: 'هذا الحقل مطلوب',
+    onlyEnglishLettersAllowed: 'يسمح بالحروف الإنجليزية فقط',
+    onlyArabicLettersAllowed: 'يسمح بالحروف العربية فقط',
+    invalidEmailAddress: 'عنوان بريد إلكتروني غير صحيح',
+    atLeastOneCompanyClassificationRequired: 'يجب اختيار تصنيف شركة واحد على الأقل',
+    atLeastOneRegistrationMethodSelected: 'يجب اختيار طريقة تسجيل واحدة على الأقل',
+    commercialRegistryNumberRequired: 'رقم السجل التجاري مطلوب',
+    unifiedCommercialRegistryNumberRequired: 'رقم السجل التجاري الموحد مطلوب',
+    taxRegistryNumberRequired: 'رقم التسجيل الضريبي مطلوب',
+
+    // Company Classification Options
+    technology: 'تكنولوجيا',
+    consulting: 'استشارات',
+    manufacturing: 'تصنيع',
+    retail: 'تجزئة',
+    finance: 'مالية',
+    healthcare: 'رعاية صحية',
+    education: 'تعليم',
+
+    // Class Code Options
+    selectClassCode: 'اختر كود الفئة',
+
+    // Legal Type Options
+    legalTypeSole: 'Sole proprietorship Co - شركة شخص واحد',
+    legalTypeSoleCorporation: 'Sole Corporation - فردي',
+    legalTypeGeneralPartnership: 'General Partnership - شركات مساهمة',
+    legalTypeLimitedLiability: 'Limited Liability Company - ذات مسئولية محدودة',
+    legalTypeJoint: 'Joint - شركة تضامن',
+    legalTypeSpecialLimited: 'Special Limited Partnership – توصية بسيطة',
+    legalTypeInherited: 'Inherited Company - واقع موروثة',
+    legalTypeLimitedShares: 'Limited Partnership by Shares - توصية بالاسهم',
+    legalTypeCooperative: 'Cooperative Associations - جمعيات تعاونية',
+    legalTypeDeFacto: 'De Facto Company - شركه واقع',
+    legalTypeBranchForeign: 'Branch of Foreign Company - فرع شركه اجنبيه',
+    legalTypeNonProfit: 'Non-Profit Entities - جهات غير هادفة',
 
     // Tab 2: Contact Information
     contactInfoTitle: 'معلومات الاتصال',

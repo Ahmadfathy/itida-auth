@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { translations } from '../contexts/LanguageContext'
+import { useTranslation } from '../hooks/useTranslation'
 
 import CompanyHeadInformation from '../components/registration/CompanyHeadInformation'
 // import CompanyHeadInformation from '../components/registration/registrationCompany/CompanyHeadInformation'
@@ -11,7 +11,7 @@ interface RegistrationPageProps {
 }
 
 const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => {
-  const t = translations['en'] // Assuming default to 'en', or use a context if needed
+  const t = useTranslation()
   const [activeSidebarTab, setActiveSidebarTab] = useState(1)
 
   const multipleTypes = [
