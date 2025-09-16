@@ -95,40 +95,40 @@ const Tab3CompanyBranches: React.FC<Tab3CompanyBranchesProps> = ({ formData, set
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    City {formData.hasBranches && <span className="text-red-500">*</span>}
+                    {t.city} {formData.hasBranches && <span className="text-red-500">*</span>}
                   </label>
                   <input
                     type="text"
                     value={branch.branchCity || ''}
                     onChange={(e) => handleDynamicInputChange('branches', index, 'branchCity', e.target.value)}
                     className="input-field"
-                    placeholder={t.enterBranchLocation}
+                    placeholder={t.city}
                     required={formData.hasBranches}
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Mobile Phone {formData.hasBranches && <span className="text-red-500">*</span>}
+                    {t.mobilePhone} {formData.hasBranches && <span className="text-red-500">*</span>}
                   </label>
                   <input
                     type="text"
                     value={branch.mobilePhone || ''}
                     onChange={(e) => handleDynamicInputChange('branches', index, 'mobilePhone', e.target.value)}
                     className="input-field"
-                    placeholder={t.enterBranchLocation}
+                    placeholder={t.mobilePhone}
                     required={formData.hasBranches}
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email {formData.hasBranches && <span className="text-red-500">*</span>}
+                    {t.emailPlaceholder} {formData.hasBranches && <span className="text-red-500">*</span>}
                   </label>
                   <input
                     type="email"
                     value={branch.branchEmail || ''}
                     onChange={(e) => handleDynamicInputChange('branches', index, 'branchEmail', e.target.value)}
                     className="input-field"
-                    placeholder={t.enterBranchLocation}
+                    placeholder={t.emailPlaceholder}
                     required={formData.hasBranches}
                   />
                 </div>

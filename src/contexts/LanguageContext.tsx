@@ -1,8 +1,9 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState, ReactNode } from 'react'
 
 interface LanguageContextType {
   language: 'en' | 'ar'
   toggleLanguage: () => void
+  translations: typeof translations.en
 }
 
 export const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
@@ -388,6 +389,7 @@ export const translations = {
     submit: 'Submit',
     namePlaceholder: 'Your name',
     positionPlaceholder: 'Position',
+    mobilePhone: 'Mobile Phone',
     mobilePlaceholder: 'Mobile number',
     nationalIdPlaceholder: 'National ID',
     emailPlaceholder: 'Email',
@@ -401,10 +403,12 @@ export const translations = {
     contact: 'اتصل بنا',
     callUs: 'اتصل: 16248',
 
+    city: 'المدينة',
+    mobilePhone: 'رقم الجوال',
+
     // Added missing translations for CompanyHeadInformation.tsx
     district: 'الحي',
     street: 'الشارع',
-    companyWebsiteUrl: 'موقع الشركة الإلكتروني',
     namePlaceholder: 'اسمك',
     positionPlaceholder: 'المنصب',
     mobilePlaceholder: 'رقم الجوال',
