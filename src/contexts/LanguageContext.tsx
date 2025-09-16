@@ -67,7 +67,7 @@ export const translations = {
     cookiePolicy: 'Cookie Policy',
     contactLabel: 'Contact:',
     emailLabel: 'Email:',
-    addressLabel: 'Address:',
+    addressLabel: 'Address (as shown in the commercial register or tax card)',
     addressText: 'Smart Village, Cairo-Alexandria Desert Road, Giza, Egypt',
 
     // Registration Sidebar
@@ -268,6 +268,11 @@ export const translations = {
     nidIssueDate: 'NID Issue Date',
     mmYYYY: 'MM/YYYY',
     representativeInformations: 'Representative Informations',
+    nationalIdRequired: 'National ID is required',
+    nationalId14Digits: 'National ID must be exactly 14 digits',
+    dateRangeError: 'Date must be between {minDate} and today',
+    exampleGovernorate: 'e.g., Cairo',
+    dateFormat: 'MM/YYYY',
 
     // Job Titles
     jobTitleResponsibleManager: 'Responsible Manager',
@@ -373,7 +378,21 @@ export const translations = {
       'Call center and business process management services using information and communication technology.',
       'Consultancy, research and development, and entrepreneurship services in information and communication technology.',
       'Training and education services in information and communication technology.'
-    ]
+    ],
+    city: 'City',
+    district: 'District',
+    street: 'Street',
+    position: 'Position',
+    email2: 'Email 2',
+    companyHeadTitle: 'Company\'s Head',
+    submit: 'Submit',
+    namePlaceholder: 'Your name',
+    positionPlaceholder: 'Position',
+    mobilePlaceholder: 'Mobile number',
+    nationalIdPlaceholder: 'National ID',
+    emailPlaceholder: 'Email',
+    email2Placeholder: 'Email 2',
+    websitePlaceholder: 'Website/social media platform (linkin,instgram,..)'
   },
   ar: {
     // Header
@@ -381,6 +400,20 @@ export const translations = {
     benefits: 'الفوائد',
     contact: 'اتصل بنا',
     callUs: 'اتصل: 16248',
+
+    // Added missing translations for CompanyHeadInformation.tsx
+    district: 'الحي',
+    street: 'الشارع',
+    companyWebsiteUrl: 'موقع الشركة الإلكتروني',
+    namePlaceholder: 'اسمك',
+    positionPlaceholder: 'المنصب',
+    mobilePlaceholder: 'رقم الجوال',
+    nationalIdPlaceholder: 'الرقم القومي',
+    emailPlaceholder: 'البريد الإلكتروني',
+    email2Placeholder: 'البريد الإلكتروني 2',
+    websitePlaceholder: 'موقع الويب / منصة التواصل الاجتماعي (لينكدإن، إنستغرام، ..)',
+    companyHeadTitle: 'رئيس الشركة',
+    submit: 'إرسال',
 
     // Hero additional
     companies: 'الشركات',
@@ -408,7 +441,7 @@ export const translations = {
     cookiePolicy: 'سياسة ملفات تعريف الارتباط',
     contactLabel: 'التواصل:',
     emailLabel: 'البريد الإلكتروني:',
-    addressLabel: 'العنوان:',
+    addressLabel: 'العنوان (كما هو موضح في السجل التجاري أو بالبطاقة الضريبية)',
     addressText: 'القرية الذكية، طريق الصحراء القاهرة-الإسكندرية، الجيزة، مصر',
 
     // Registration Sidebar
@@ -609,6 +642,11 @@ export const translations = {
     nidIssueDate: 'تاريخ إصدار الرقم القومي',
     mmYYYY: 'MM/YYYY',
     representativeInformations: 'معلومات الممثل',
+    nationalIdRequired: 'الرقم القومي مطلوب',
+    nationalId14Digits: 'يجب أن يكون الرقم القومي 14 رقمًا بالضبط',
+    dateRangeError: 'يجب أن يكون التاريخ بين {minDate} واليوم',
+    exampleGovernorate: 'مثال: القاهرة',
+    dateFormat: 'MM/YYYY',
 
     // Job Titles
     jobTitleResponsibleManager: 'مدير مسئول',

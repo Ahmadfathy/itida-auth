@@ -86,7 +86,7 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              العنوان (كما هو موضح في السجل التجاري أو بالبطاقة الضريبية)
+              {t.addressLabel}
             </label>
             <input
               type="text"
@@ -124,7 +124,7 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                City
+                {t.city}
                 <span className="text-red-500 ml-1">*</span>
               </label>
               <input
@@ -133,13 +133,13 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
                 value={formData.city}
                 onChange={onInputChange}
                 className="input-field"
-                placeholder="City"
+                placeholder={t.city}
                 required
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                district
+                {t.district}
                 <span className="text-red-500 ml-1">*</span>
               </label>
               <input
@@ -148,13 +148,13 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
                 value={formData.district}
                 onChange={onInputChange}
                 className="input-field"
-                placeholder="district"
+                placeholder={t.district}
                 required
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Street
+                {t.street}
                 <span className="text-red-500 ml-1">*</span>
               </label>
               <input
@@ -163,7 +163,7 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
                 value={formData.Street}
                 onChange={onInputChange}
                 className="input-field"
-                placeholder="Street"
+                placeholder={t.street}
                 required
               />
             </div>
@@ -179,7 +179,7 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
               value={formData.companyWebsite}
               onChange={onInputChange}
               className="input-field"
-              placeholder="Website/social media platform (linkin,instgram,..)"
+              placeholder={t.websitePlaceholder}
             />
           </div>
         </div>
@@ -187,7 +187,7 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
         {/* Company's Head Section */}
         <div className="space-y-6 mb-8">
           <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-            Company's Head
+            {t.companyHeadTitle}
           </h3>
           {/* <h4 className="font-medium mb-4">Company's Head</h4> */}
 
@@ -200,63 +200,63 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
               <div key={`company-head-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.name} <span className="text-red-500">*</span></label>
                     <input
                       type="text"
                       value={head.name}
                       onChange={(e) => handleDynamicInputChange('companyHeads', index, 'name', e.target.value)}
                       className="input-field"
-                      placeholder="اسمك"
+                      placeholder={t.namePlaceholder}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Position <span className="text-red-500">*</span></label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.position} <span className="text-red-500">*</span></label>
                     <input
                       type="text"
                       value={head.position}
                       onChange={(e) => handleDynamicInputChange('companyHeads', index, 'position', e.target.value)}
                       className="input-field"
-                      placeholder="المنصب"
+                      placeholder={t.positionPlaceholder}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Mobile <span className="text-red-500">*</span></label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.mobile} <span className="text-red-500">*</span></label>
                     <input
                       type="text"
                       value={head.mobile}
                       onChange={(e) => handleDynamicInputChange('companyHeads', index, 'mobile', e.target.value)}
                       className="input-field"
-                      placeholder="رقم المحمول"
+                      placeholder={t.mobilePlaceholder}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">National ID <span className="text-red-500">*</span></label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.nationalId} <span className="text-red-500">*</span></label>
                     <input
                       type="text"
                       value={head.nationalId}
                       onChange={(e) => handleDynamicInputChange('companyHeads', index, 'nationalId', e.target.value)}
                       className="input-field"
-                      placeholder="الرقم القومي"
+                      placeholder={t.nationalIdPlaceholder}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">E-mail <span className="text-red-500">*</span></label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.email} <span className="text-red-500">*</span></label>
                     <input
                       type="email"
                       value={head.email}
                       onChange={(e) => handleDynamicInputChange('companyHeads', index, 'email', e.target.value)}
                       className="input-field"
-                      placeholder="البريد الإلكتروني"
+                      placeholder={t.emailPlaceholder}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email 2</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.email2}</label>
                     <input
                       type="email"
                       value={head.email2}
                       onChange={(e) => handleDynamicInputChange('companyHeads', index, 'email2', e.target.value)}
                       className="input-field"
-                      placeholder="البريد الإلكتروني 2"
+                      placeholder={t.email2Placeholder}
                     />
                   </div>
                 </div>
@@ -298,7 +298,7 @@ const CompanyHeadInformation: React.FC<CompanyHeadInformationProps> = ({
           type="submit"
           className="px-8 py-3 rounded-lg font-medium transition-all duration-300 bg-itida-blue hover:bg-itida-dark text-white"
         >
-          Submit
+          {t.submit}
         </button>
       </div>
     </form>
