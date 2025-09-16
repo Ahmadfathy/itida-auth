@@ -19,31 +19,31 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
   const validationSchema = yup.object().shape({
     ldv_englishname: yup
       .string()
-      .required('This field is required')
-      .matches(/^[A-Za-z\s]+$/, 'Only English letters are allowed'),
+      .required(t.thisFieldIsRequired)
+      .matches(/^[A-Za-z\s]+$/, t.onlyEnglishLettersAllowed),
     ldv_arabicname: yup
       .string()
-      .required('This field is required')
-      .matches(/^[\u0600-\u06FF\s]+$/, 'Only Arabic letters are allowed'),
-    ldv_commercialdenomination: yup.string().required('This field is required'),
-    ldv_legaltypecode: yup.string().required('This field is required'),
-    emailaddress1: yup.string().required('This field is required').email('Invalid email address'),
-    companyClassification: yup.array().min(1, 'At least one company classification is required'),
+      .required(t.thisFieldIsRequired)
+      .matches(/^[\u0600-\u06FF\s]+$/, t.onlyArabicLettersAllowed),
+    ldv_commercialdenomination: yup.string().required(t.thisFieldIsRequired),
+    ldv_legaltypecode: yup.string().required(t.thisFieldIsRequired),
+    emailaddress1: yup.string().required(t.thisFieldIsRequired).email(t.invalidEmailAddress),
+    companyClassification: yup.array().min(1, t.atLeastOneCompanyClassificationRequired),
     registerUsing: yup.object().shape({
       commercialRegistry: yup.boolean(),
       unifiedCommercialRegistry: yup.boolean(),
       taxRegistry: yup.boolean()
-    }).test('at-least-one', 'At least one registration method must be selected', (value) => {
+    }).test('at-least-one', t.atLeastOneRegistrationMethodSelected, (value) => {
       return value.commercialRegistry || value.unifiedCommercialRegistry || value.taxRegistry
     }),
     commercialRegistryNumber: yup.string().when('registerUsing.commercialRegistry', (value) => {
-      return value ? yup.string().required('Commercial Registry Number is required') : yup.string()
+      return value ? yup.string().required(t.commercialRegistryNumberRequired) : yup.string()
     }),
     unifiedCommercialRegistryNumber: yup.string().when('registerUsing.unifiedCommercialRegistry', (value) => {
-      return value ? yup.string().required('Unified Commercial Registry Number is required') : yup.string()
+      return value ? yup.string().required(t.unifiedCommercialRegistryNumberRequired) : yup.string()
     }),
     taxRegistryNumber: yup.string().when('registerUsing.taxRegistry', (value) => {
-      return value ? yup.string().required('Tax Registry Number is required') : yup.string()
+      return value ? yup.string().required(t.taxRegistryNumberRequired) : yup.string()
     })
   })
 
@@ -62,13 +62,13 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
   }
 
   const classificationOptions = [
-    { value: 'technology', label: 'Technology' },
-    { value: 'consulting', label: 'Consulting' },
-    { value: 'manufacturing', label: 'Manufacturing' },
-    { value: 'retail', label: 'Retail' },
-    { value: 'finance', label: 'Finance' },
-    { value: 'healthcare', label: 'Healthcare' },
-    { value: 'education', label: 'Education' }
+    { value: 'technology', label: t.technology },
+    { value: 'consulting', label: t.consulting },
+    { value: 'manufacturing', label: t.manufacturing },
+    { value: 'retail', label: t.retail },
+    { value: 'finance', label: t.finance },
+    { value: 'healthcare', label: t.healthcare },
+    { value: 'education', label: t.education }
   ]
 
   const selectedClassifications = classificationOptions.filter(option =>
@@ -82,13 +82,13 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
   })
 
   const classCodeOptions = [
-    { value: '', label: 'Class Code' },
-    { value: '', label: 'كود الفئة' },
-    { value: 'محل رئيسى', label: 'محل رئيسى' },
-    { value: 'رئيسى آخر', label: 'رئيسى آخر' },
-    { value: 'محل فرعى', label: 'محل فرعى' },
-    { value: 'فرعى', label: 'فرعى' },
-    { value: 'مركز عام', label: 'مركز عام' }
+    { value: '', label: t.selectClassCode },
+    { value: '', label: t.classCodeArabic },
+    { value: t.mainBranch, label: t.mainBranch },
+    { value: t.otherMain, label: t.otherMain },
+    { value: t.branchOffice, label: t.branchOffice },
+    { value: t.branchOther, label: t.branchOther },
+    { value: t.generalCenter, label: t.generalCenter }
   ]
 
   useEffect(() => {
@@ -188,34 +188,34 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
             name="ldv_legaltypecode"
             options={[
               { value: '', label: t.selectLegalType },
-              { value: 'Sole proprietorship Co', label: 'Sole proprietorship Co - شركة شخص واحد' },
-              { value: 'Sole Corporation', label: 'Sole Corporation - فردي' },
-              { value: 'General Partnership', label: 'General Partnership - شركات مساهمة' },
-              { value: 'Limited Liability Company', label: 'Limited Liability Company - ذات مسئولية محدودة' },
-              { value: 'Joint', label: 'Joint - شركة تضامن' },
-              { value: 'Special Limited Partnership', label: 'Special Limited Partnership – توصية بسيطة' },
-              { value: 'Inherited Company', label: 'Inherited Company - واقع موروثة' },
-              { value: 'Limited Partnership by Shares', label: 'Limited Partnership by Shares - توصية بالاسهم' },
-              { value: 'Cooperative Associations', label: 'Cooperative Associations - جمعيات تعاونية' },
-              { value: 'De Facto Company', label: 'De Facto Company - شركه واقع' },
-              { value: 'Branch of Foreign Company', label: 'Branch of Foreign Company - فرع شركه اجنبيه' },
-              { value: 'Non-Profit Entities', label: 'Non-Profit Entities - جهات غير هادفة' }
+              { value: 'Sole proprietorship Co', label: t.legalTypeSole },
+              { value: 'Sole Corporation', label: t.legalTypeSoleCorporation },
+              { value: 'General Partnership', label: t.legalTypeGeneralPartnership },
+              { value: 'Limited Liability Company', label: t.legalTypeLimitedLiability },
+              { value: 'Joint', label: t.legalTypeJoint },
+              { value: 'Special Limited Partnership', label: t.legalTypeSpecialLimited },
+              { value: 'Inherited Company', label: t.legalTypeInherited },
+              { value: 'Limited Partnership by Shares', label: t.legalTypeLimitedShares },
+              { value: 'Cooperative Associations', label: t.legalTypeCooperative },
+              { value: 'De Facto Company', label: t.legalTypeDeFacto },
+              { value: 'Branch of Foreign Company', label: t.legalTypeBranchForeign },
+              { value: 'Non-Profit Entities', label: t.legalTypeNonProfit }
             ]}
             value={
               [
                 { value: '', label: t.selectLegalType },
-                { value: 'Sole proprietorship Co', label: 'Sole proprietorship Co - شركة شخص واحد' },
-                { value: 'Sole Corporation', label: 'Sole Corporation - فردي' },
-                { value: 'General Partnership', label: 'General Partnership - شركات مساهمة' },
-                { value: 'Limited Liability Company', label: 'Limited Liability Company - ذات مسئولية محدودة' },
-                { value: 'Joint', label: 'Joint - شركة تضامن' },
-                { value: 'Special Limited Partnership', label: 'Special Limited Partnership – توصية بسيطة' },
-                { value: 'Inherited Company', label: 'Inherited Company - واقع موروثة' },
-                { value: 'Limited Partnership by Shares', label: 'Limited Partnership by Shares - توصية بالاسهم' },
-                { value: 'Cooperative Associations', label: 'Cooperative Associations - جمعيات تعاونية' },
-                { value: 'De Facto Company', label: 'De Facto Company - شركه واقع' },
-                { value: 'Branch of Foreign Company', label: 'Branch of Foreign Company - فرع شركه اجنبيه' },
-                { value: 'Non-Profit Entities', label: 'Non-Profit Entities - جهات غير هادفة' }
+                { value: 'Sole proprietorship Co', label: t.legalTypeSole },
+                { value: 'Sole Corporation', label: t.legalTypeSoleCorporation },
+                { value: 'General Partnership', label: t.legalTypeGeneralPartnership },
+                { value: 'Limited Liability Company', label: t.legalTypeLimitedLiability },
+                { value: 'Joint', label: t.legalTypeJoint },
+                { value: 'Special Limited Partnership', label: t.legalTypeSpecialLimited },
+                { value: 'Inherited Company', label: t.legalTypeInherited },
+                { value: 'Limited Partnership by Shares', label: t.legalTypeLimitedShares },
+                { value: 'Cooperative Associations', label: t.legalTypeCooperative },
+                { value: 'De Facto Company', label: t.legalTypeDeFacto },
+                { value: 'Branch of Foreign Company', label: t.legalTypeBranchForeign },
+                { value: 'Non-Profit Entities', label: t.legalTypeNonProfit }
               ].find(option => option.value === formData.ldv_legaltypecode) || null
             }
             onChange={(selectedOption) => {
@@ -259,7 +259,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
         {/* Commercial Registration Date */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Year of Establishment
+            {t.yearOfEstablishment}
           </label>
           <Select
             options={establishmentYearOptions}
@@ -276,7 +276,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
             styles={customReactSelectStyles}
             className="basic-single"
             classNamePrefix="select"
-            placeholder="Select year"
+            placeholder={t.selectYear}
             isClearable
           />
         </div>
@@ -285,7 +285,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
       {/* Company classification */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Company classification
+          {t.companyClassification}
           <span className="text-red-500 ml-1">*</span>
         </label>
         <Select
@@ -368,7 +368,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                     value={formData.commercialRegistryOffice}
                     onChange={onInputChange}
                     className="input-field"
-                    placeholder="CR Office"
+                    placeholder={t.crOffice}
                     disabled={!formData.registerUsing?.commercialRegistry}
                   />
                 </div>
@@ -390,7 +390,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
                     styles={customReactSelectStyles}
                     className="basic-single"
                     classNamePrefix="select"
-                    placeholder="Select Class Code"
+                    placeholder={t.selectClassCode}
                     isClearable
                     isDisabled={!formData.registerUsing?.commercialRegistry}
                   />
