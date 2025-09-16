@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import { useLanguage, translations } from '../../../contexts/LanguageContext'
 
 interface Tab2ContactInfoProps {
@@ -12,10 +14,27 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
   const { language: currentLanguage } = useLanguage()
   const t = translations[currentLanguage]
 
+  const parseDate = (dateStr: string): Date | null => {
+    if (!dateStr) return null
+    const [month, year] = dateStr.split('/').map(Number)
+    return new Date(year, month - 1, 1)
+  }
+
   const [contactError, setContactError] = useState<string>('')
   const [representativeError, setRepresentativeError] = useState<string>('')
   const [contactNationalIdError, setContactNationalIdError] = useState<string>('')
   const [representativeNationalIdError, setRepresentativeNationalIdError] = useState<string>('')
+
+  const [selectedDate, setSelectedDate] = useState<Date | null>(parseDate(formData.contact_ldv_nidissuedate))
+  const [selectedDateRepresentative, setSelectedDateRepresentative] = useState<Date | null>(parseDate(formData.representative_nidissuedate))
+
+  useEffect(() => {
+    setSelectedDate(parseDate(formData.contact_ldv_nidissuedate))
+  }, [formData.contact_ldv_nidissuedate])
+
+  useEffect(() => {
+    setSelectedDateRepresentative(parseDate(formData.representative_nidissuedate))
+  }, [formData.representative_nidissuedate])
 
   const validateDate = (value: string): string => {
     if (!value) {
@@ -25,10 +44,12 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
     if (!regex.test(value)) {
       return t.invalidFormatUseMMYYYY
     }
-    const [_month, year] = value.split('/').map(Number)
-    const currentYear = new Date().getFullYear()
-    if (year < currentYear - 7) {
-      return `Year must be within the last 7 years (from ${currentYear - 7} onwards)`
+    const [month, year] = value.split('/').map(Number)
+    const currentDate = new Date()
+    const minDate = new Date(currentDate.getFullYear() - 7, currentDate.getMonth(), currentDate.getDate())
+    const inputDate = new Date(year, month - 1, 1)
+    if (inputDate < minDate || inputDate > currentDate) {
+      return `Date must be between ${minDate.toLocaleDateString('en-US', { month: '2-digit', year: 'numeric' })} and today`
     }
     return ''
   }
@@ -41,6 +62,33 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
       return 'National ID must be exactly 14 digits'
     }
     return ''
+  }
+
+  const handleDateChange = (date: Date | null, fieldName: string) => {
+    if (date) {
+      const month = (date.getMonth() + 1).toString().padStart(2, '0')
+      const year = date.getFullYear().toString()
+      const value = `${month}/${year}`
+      const validationError = validateDate(value)
+      if (fieldName === 'contact_ldv_nidissuedate') {
+        setContactError(validationError)
+      } else if (fieldName === 'representative_nidissuedate') {
+        setRepresentativeError(validationError)
+      }
+      if (onDateChange) {
+        onDateChange(fieldName, value)
+      }
+    } else {
+      // Clear error if date is cleared
+      if (fieldName === 'contact_ldv_nidissuedate') {
+        setContactError('')
+      } else if (fieldName === 'representative_nidissuedate') {
+        setRepresentativeError('')
+      }
+      if (onDateChange) {
+        onDateChange(fieldName, '')
+      }
+    }
   }
 
 
@@ -68,6 +116,9 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let { value, name } = e.target
 
+    // Skip for date fields as they are now DatePicker
+    if (name === 'contact_ldv_nidissuedate' || name === 'representative_nidissuedate') return
+
     // Remove any non-numeric characters
     value = value.replace(/[^0-9]/g, '')
 
@@ -86,17 +137,7 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
       value = value.substring(0, 7)
     }
 
-    // Validate the formatted value
-    const validationError = validateDate(value)
-    if (name === 'contact_ldv_nidissuedate') {
-      setContactError(validationError)
-    } else if (name === 'representative_nidissuedate') {
-      setRepresentativeError(validationError)
-    }
 
-    if (onDateChange) {
-      onDateChange(name, value)
-    }
   }
 
   const handleNationalIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -257,17 +298,18 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
               {t.nidIssueDate}
               <span className="text-red-500 ml-1">*</span>
             </label>
-            <input
-              type="text"
-              name="contact_ldv_nidissuedate"
-              value={formData.contact_ldv_nidissuedate}
-              onChange={handleInputChange}
-              onBlur={() => {
-                const validationError = validateDate(formData.contact_ldv_nidissuedate)
-                setContactError(validationError)
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => {
+                setSelectedDate(date)
+                handleDateChange(date, 'contact_ldv_nidissuedate')
               }}
+              dateFormat="MM/yyyy"
+              showMonthYearPicker
+              minDate={new Date(new Date().getFullYear() - 7, new Date().getMonth(), new Date().getDate())}
+              maxDate={new Date()}
               className={`input-field ${contactError ? 'border-red-500' : ''}`}
-              placeholder="MM/YYYY"
+              placeholderText="MM/YYYY"
               required
             />
             {contactError && <p className="text-red-500 text-sm mt-1">{contactError}</p>}
@@ -430,17 +472,18 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
               NID Issue Date
               <span className="text-red-500 ml-1">*</span>
             </label>
-            <input
-              type="text"
-              name="representative_nidissuedate"
-              value={formData.representative_nidissuedate}
-              onChange={handleInputChange}
-              onBlur={() => {
-                const validationError = validateDate(formData.representative_nidissuedate)
-                setRepresentativeError(validationError)
+            <DatePicker
+              selected={selectedDateRepresentative}
+              onChange={(date) => {
+                setSelectedDateRepresentative(date)
+                handleDateChange(date, 'representative_nidissuedate')
               }}
+              dateFormat="MM/yyyy"
+              showMonthYearPicker
+              minDate={new Date(new Date().getFullYear() - 7, new Date().getMonth(), new Date().getDate())}
+              maxDate={new Date()}
               className={`input-field ${representativeError ? 'border-red-500' : ''}`}
-              placeholder="MM/YYYY"
+              placeholderText="MM/YYYY"
               required
             />
             {representativeError && <p className="text-red-500 text-sm mt-1">{representativeError}</p>}

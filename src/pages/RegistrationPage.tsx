@@ -114,7 +114,7 @@ const [formData, setFormData] = useState<any>({
     yearOfEstablishment: '',
     companySize: '',
     typeOfOwnership: '',
-    companyData: '',
+    companyOverView: '',
 
     // Updated fields to arrays for multi-select
     keyTechnologies: [],
@@ -440,7 +440,7 @@ const [formData, setFormData] = useState<any>({
                         id="companyOverView"
                         className="input-field"
                         placeholder="Briefly describe your company's background, core competencies, and key achievements."
-                        value={formData.companyData}
+                        value={formData.companyOverView}
                         onChange={handleInputChange}
                       />
                     </div>
