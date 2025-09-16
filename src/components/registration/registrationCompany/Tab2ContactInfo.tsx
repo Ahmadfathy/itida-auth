@@ -27,8 +27,8 @@ const Tab2ContactInfo: React.FC<Tab2ContactInfoProps> = ({ formData, onInputChan
     }
     const [_month, year] = value.split('/').map(Number)
     const currentYear = new Date().getFullYear()
-    if (year < currentYear - 15) {
-      return `Year must be within the last 15 years (from ${currentYear - 15} onwards)`
+    if (year < currentYear - 7) {
+      return `Year must be within the last 7 years (from ${currentYear - 7} onwards)`
     }
     return ''
   }

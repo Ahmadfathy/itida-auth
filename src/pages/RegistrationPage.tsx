@@ -409,7 +409,7 @@ const [formData, setFormData] = useState<any>({
                               {arrowIcon}
                             </button>
                             {isOpen && (
-                              <div id={`accordion-section-${section}`} className="p-6 bg-white">
+                              <div id={`accordion-section-${section}`} className="p-6 bg-white rounded-b-lg">
                                 {section === 1 && (
                                   <Tab1CompanyLegal formData={formData} onInputChange={handleInputChange} setFormData={setFormData} />
                                 )}
