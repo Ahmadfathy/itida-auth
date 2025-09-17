@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import Select, { MultiValue } from 'react-select'
 
 interface OptionType {
@@ -64,6 +64,16 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
   onSubmit
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [customKeyTech, setCustomKeyTech] = useState('')
+  const [showCustomKeyTechInput, setShowCustomKeyTechInput] = useState(false)
+  const [customAffiliation, setCustomAffiliation] = useState('')
+  const [showCustomAffiliationInput, setShowCustomAffiliationInput] = useState(false)
+  const [customMemberships, setCustomMemberships] = useState('')
+  const [showCustomMembershipsInput, setShowCustomMembershipsInput] = useState(false)
+  const [customCertificates, setCustomCertificates] = useState('')
+  const [showCustomCertificatesInput, setShowCustomCertificatesInput] = useState(false)
+  const [customPartnerships, setCustomPartnerships] = useState('')
+  const [showCustomPartnershipsInput, setShowCustomPartnershipsInput] = useState(false)
 
   const handleFileChangeInternal = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
@@ -421,6 +431,111 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
     }))
   }
 
+  const handleKeyTechChange = (selectedOptions: MultiValue<OptionType>) => {
+    const values = selectedOptions ? selectedOptions.map(option => option.value) : []
+    const hasOthers = values.includes('Others')
+    setShowCustomKeyTechInput(hasOthers)
+    const filteredValues = values.filter(v => v !== 'Others')
+    if (!hasOthers) {
+      setCustomKeyTech('')
+      setFormData((prev: any) => ({ ...prev, keyTechnologies: filteredValues }))
+    } else {
+      const finalValues = customKeyTech ? [...filteredValues, customKeyTech] : filteredValues
+      setFormData((prev: any) => ({ ...prev, keyTechnologies: finalValues }))
+    }
+  }
+
+  const handleCustomKeyTechChange = (value: string) => {
+    setCustomKeyTech(value)
+    const currentValues = formData.keyTechnologies.filter(v => v !== customKeyTech && keyTechnologiesOptions.some(option => option.value === v))
+    const newValues = value ? [...currentValues, value] : currentValues
+    setFormData((prev: any) => ({ ...prev, keyTechnologies: newValues }))
+  }
+
+  const handleAffiliationChange = (selectedOptions: MultiValue<OptionType>) => {
+    const values = selectedOptions ? selectedOptions.map(option => option.value) : []
+    const hasOthers = values.includes('Others')
+    setShowCustomAffiliationInput(hasOthers)
+    const filteredValues = values.filter(v => v !== 'Others')
+    if (!hasOthers) {
+      setCustomAffiliation('')
+      setFormData((prev: any) => ({ ...prev, affiliation: filteredValues }))
+    } else {
+      const finalValues = customAffiliation ? [...filteredValues, customAffiliation] : filteredValues
+      setFormData((prev: any) => ({ ...prev, affiliation: finalValues }))
+    }
+  }
+
+  const handleCustomAffiliationChange = (value: string) => {
+    setCustomAffiliation(value)
+    const currentValues = formData.affiliation.filter(v => v !== customAffiliation && affiliationOptions.some(option => option.value === v))
+    const newValues = value ? [...currentValues, value] : currentValues
+    setFormData((prev: any) => ({ ...prev, affiliation: newValues }))
+  }
+
+  const handleMembershipsChange = (selectedOptions: MultiValue<OptionType>) => {
+    const values = selectedOptions ? selectedOptions.map(option => option.value) : []
+    const hasOthers = values.includes('Others')
+    setShowCustomMembershipsInput(hasOthers)
+    const filteredValues = values.filter(v => v !== 'Others')
+    if (!hasOthers) {
+      setCustomMemberships('')
+      setFormData((prev: any) => ({ ...prev, memberships: filteredValues }))
+    } else {
+      const finalValues = customMemberships ? [...filteredValues, customMemberships] : filteredValues
+      setFormData((prev: any) => ({ ...prev, memberships: finalValues }))
+    }
+  }
+
+  const handleCustomMembershipsChange = (value: string) => {
+    setCustomMemberships(value)
+    const currentValues = formData.memberships.filter(v => v !== customMemberships && membershipsOptions.some(option => option.value === v))
+    const newValues = value ? [...currentValues, value] : currentValues
+    setFormData((prev: any) => ({ ...prev, memberships: newValues }))
+  }
+
+  const handleCertificatesChange = (selectedOptions: MultiValue<OptionType>) => {
+    const values = selectedOptions ? selectedOptions.map(option => option.value) : []
+    const hasOthers = values.includes('Others')
+    setShowCustomCertificatesInput(hasOthers)
+    const filteredValues = values.filter(v => v !== 'Others')
+    if (!hasOthers) {
+      setCustomCertificates('')
+      setFormData((prev: any) => ({ ...prev, certificates: filteredValues }))
+    } else {
+      const finalValues = customCertificates ? [...filteredValues, customCertificates] : filteredValues
+      setFormData((prev: any) => ({ ...prev, certificates: finalValues }))
+    }
+  }
+
+  const handleCustomCertificatesChange = (value: string) => {
+    setCustomCertificates(value)
+    const currentValues = formData.certificates.filter(v => v !== customCertificates && certificatesOptions.some(option => option.value === v))
+    const newValues = value ? [...currentValues, value] : currentValues
+    setFormData((prev: any) => ({ ...prev, certificates: newValues }))
+  }
+
+  const handlePartnershipsChange = (selectedOptions: MultiValue<OptionType>) => {
+    const values = selectedOptions ? selectedOptions.map(option => option.value) : []
+    const hasOthers = values.includes('Others')
+    setShowCustomPartnershipsInput(hasOthers)
+    const filteredValues = values.filter(v => v !== 'Others')
+    if (!hasOthers) {
+      setCustomPartnerships('')
+      setFormData((prev: any) => ({ ...prev, partnerships: filteredValues }))
+    } else {
+      const finalValues = customPartnerships ? [...filteredValues, customPartnerships] : filteredValues
+      setFormData((prev: any) => ({ ...prev, partnerships: finalValues }))
+    }
+  }
+
+  const handleCustomPartnershipsChange = (value: string) => {
+    setCustomPartnerships(value)
+    const currentValues = formData.partnerships.filter(v => v !== customPartnerships && partnershipsOptions.some(option => option.value === v))
+    const newValues = value ? [...currentValues, value] : currentValues
+    setFormData((prev: any) => ({ ...prev, partnerships: newValues }))
+  }
+
   const companyClassificationOptions: OptionType[] = [
     { value: 'Technology', label: 'Technology' },
     { value: 'Manufacturing', label: 'Manufacturing' },
@@ -663,13 +778,24 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
               isMulti
               options={keyTechnologiesOptions}
               value={keyTechnologiesOptions.filter(option => formData.keyTechnologies.includes(option.value))}
-              onChange={(selectedOptions) => handleMultiSelectChange('keyTechnologies', selectedOptions)}
+              onChange={handleKeyTechChange}
               placeholder="Select Key Technologies"
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
               closeMenuOnSelect={false}
             />
+            {showCustomKeyTechInput && (
+              <div className="mt-2">
+                <input
+                  type="text"
+                  value={customKeyTech}
+                  onChange={(e) => handleCustomKeyTechChange(e.target.value)}
+                  placeholder="Enter custom key technology"
+                  className="input-field"
+                />
+              </div>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Affiliation</label>
@@ -677,13 +803,24 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
               isMulti
               options={affiliationOptions}
               value={affiliationOptions.filter(option => formData.affiliation.includes(option.value))}
-              onChange={(selectedOptions) => handleMultiSelectChange('affiliation', selectedOptions)}
+              onChange={handleAffiliationChange}
               placeholder="Select Affiliations"
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
               closeMenuOnSelect={false}
             />
+            {showCustomAffiliationInput && (
+              <div className="mt-2">
+                <input
+                  type="text"
+                  value={customAffiliation}
+                  onChange={(e) => handleCustomAffiliationChange(e.target.value)}
+                  placeholder="Enter custom affiliation"
+                  className="input-field"
+                />
+              </div>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Memberships</label>
@@ -691,13 +828,24 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
               isMulti
               options={membershipsOptions}
               value={membershipsOptions.filter(option => formData.memberships.includes(option.value))}
-              onChange={(selectedOptions) => handleMultiSelectChange('memberships', selectedOptions)}
+              onChange={handleMembershipsChange}
               placeholder="Select Memberships"
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
               closeMenuOnSelect={false}
             />
+            {showCustomMembershipsInput && (
+              <div className="mt-2">
+                <input
+                  type="text"
+                  value={customMemberships}
+                  onChange={(e) => handleCustomMembershipsChange(e.target.value)}
+                  placeholder="Enter custom membership"
+                  className="input-field"
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -710,13 +858,24 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
               isMulti
               options={certificatesOptions}
               value={certificatesOptions.filter(option => formData.certificates.includes(option.value))}
-              onChange={(selectedOptions) => handleMultiSelectChange('certificates', selectedOptions)}
+              onChange={handleCertificatesChange}
               placeholder="Select Certificates"
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
               closeMenuOnSelect={false}
             />
+            {showCustomCertificatesInput && (
+              <div className="mt-2">
+                <input
+                  type="text"
+                  value={customCertificates}
+                  onChange={(e) => handleCustomCertificatesChange(e.target.value)}
+                  placeholder="Enter custom certificate"
+                  className="input-field"
+                />
+              </div>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Partnerships</label>
@@ -724,13 +883,24 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
               isMulti
               options={partnershipsOptions}
               value={partnershipsOptions.filter(option => formData.partnerships.includes(option.value))}
-              onChange={(selectedOptions) => handleMultiSelectChange('partnerships', selectedOptions)}
+              onChange={handlePartnershipsChange}
               placeholder="Select Partnerships"
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
               closeMenuOnSelect={false}
             />
+            {showCustomPartnershipsInput && (
+              <div className="mt-2">
+                <input
+                  type="text"
+                  value={customPartnerships}
+                  onChange={(e) => handleCustomPartnershipsChange(e.target.value)}
+                  placeholder="Enter custom partnership"
+                  className="input-field"
+                />
+              </div>
+            )}
           </div>
         </div>
 
