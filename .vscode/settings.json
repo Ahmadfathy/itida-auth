@@ -68,5 +68,8 @@
   "breadcrumbs.enabled": true,
   "problems.decorations.enabled": true,
   "extensions.autoUpdate": true,
-  "telemetry.telemetryLevel": "off"
+  "telemetry.telemetryLevel": "off",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useLanguage, translations } from '../contexts/LanguageContext';
-import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import React, { useState } from 'react';
+import { translations, useLanguage } from '../contexts/LanguageContext';
 
 interface FinancialData {
   fiscalCapital: string;
@@ -227,6 +227,24 @@ const ProfilePage: React.FC = () => {
       companyClassification: formData.companyClassification || prev.companyClassification,
       branches: formData.branches || prev.branches
     }));
+
+    // Update formData with new company head and contact person data
+    setFormData((prev: any) => ({
+      ...prev,
+      companyHeadName: formData.companyHeadName || prev.companyHeadName,
+      companyHeadTitle: formData.companyHeadTitle || prev.companyHeadTitle,
+      companyHeadMobile: formData.companyHeadMobile || prev.companyHeadMobile,
+      companyHeadNationalId: formData.companyHeadNationalId || prev.companyHeadNationalId,
+      companyHeadEmail: formData.companyHeadEmail || prev.companyHeadEmail,
+      companyHeadEmail2: formData.companyHeadEmail2 || prev.companyHeadEmail2,
+      contactPersonName: formData.contactPersonName || prev.contactPersonName,
+      contactPersonTitle: formData.contactPersonTitle || prev.contactPersonTitle,
+      contactPersonMobile: formData.contactPersonMobile || prev.contactPersonMobile,
+      contactPersonNationalId: formData.contactPersonNationalId || prev.contactPersonNationalId,
+      contactPersonEmail: formData.contactPersonEmail || prev.contactPersonEmail,
+      activities: formData.activities || prev.activities
+    }));
+
     setIsEditMode(false);
   };
 
@@ -257,7 +275,8 @@ const ProfilePage: React.FC = () => {
       owners: financialData.owners,
       domesticSalesDetails: financialData.domesticSalesDetails,
       exportInformation: financialData.exportInformation,
-      companyClassification: financialData.companyClassification
+      companyClassification: financialData.companyClassification,
+      activities: formData.activities // Keep current activities state
     }));
     setIsEditMode(false);
   };
@@ -325,14 +344,14 @@ const ProfilePage: React.FC = () => {
             <div className="relative">
               <img
                 src="/images/itida-logo.png"
-                alt="Company Logo"
+                alt={translations[language].companyLogo}
                 className="border w-24 h-24 rounded-full object-cover"
               />
               <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></span>
             </div>
             <div>
               <h1 className="text-2xl font-bold flex items-center space-x-2 mb-6">
-                <span>Dummy Company Name</span>
+                <span>{translations[language].dummyCompanyName}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-blue-600"
@@ -385,7 +404,7 @@ const ProfilePage: React.FC = () => {
           </div>
           <div className="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-4 md:space-y-0">
             <div className="flex flex-col items-end">
-              <p className="text-sm text-gray-400 mb-1">Profile Completion</p>
+              <p className="text-sm text-gray-400 mb-1">{translations[language].profileCompletion}</p>
               <div className="w-48 bg-gray-200 rounded-full h-4">
                 <div className="bg-yellow-500 h-4 rounded-full" style={{ width: '50%' }}>
                   <p className="text-xs text-white px-3 text-end">50%</p>
@@ -401,11 +420,11 @@ const ProfilePage: React.FC = () => {
         {/* Alerts Section */}
         {showError && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
-            <strong className="font-bold">Error! </strong>
+            <strong className="font-bold">{translations[language].error} </strong>
             <span className="block sm:inline">
-              There was an error processing your profile.{' '}
+              {translations[language].errorProcessingProfile}{' '}
               <a href="#" className="underline font-semibold text-red-700 hover:text-red-900">
-                complete it
+                {translations[language].completeIt}
               </a>
             </span>
             <button
@@ -414,7 +433,7 @@ const ProfilePage: React.FC = () => {
               onClick={() => setShowError(false)}
             >
               <svg className="fill-current h-4 w-4" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <title>Close</title>
+                <title>{translations[language].close}</title>
                 <path d="M14.348 5.652a1 1 0 00-1.414 0L10 8.586 7.066 5.652a1 1 0 10-1.414 1.414L8.586 10l-2.934 2.934a1 1 0 101.414 1.414L10 11.414l2.934 2.934a1 1 0 001.414-1.414L11.414 10l2.934-2.934a1 1 0 000-1.414z" />
               </svg>
             </button>
@@ -422,11 +441,11 @@ const ProfilePage: React.FC = () => {
         )}
         {showWarning && (
           <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mt-4" role="alert">
-            <strong className="font-bold">Warning! </strong>
+            <strong className="font-bold">{translations[language].warning} </strong>
             <span className="block sm:inline">
-              Your profile is 50% complete.{' '}
+              {translations[language].profileFiftyPercentComplete}{' '}
               <a href="#" className="underline font-semibold text-yellow-700 hover:text-yellow-900">
-                complete it
+                {translations[language].completeIt}
               </a>
             </span>
             <button
@@ -435,7 +454,7 @@ const ProfilePage: React.FC = () => {
               onClick={() => setShowWarning(false)}
             >
               <svg className="fill-current h-4 w-4" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <title>Close</title>
+                <title>{translations[language].close}</title>
                 <path d="M14.348 5.652a1 1 0 00-1.414 0L10 8.586 7.066 5.652a1 1 0 10-1.414 1.414L8.586 10l-2.934 2.934a1 1 0 101.414 1.414L10 11.414l2.934 2.934a1 1 0 001.414-1.414L11.414 10l2.934-2.934a1 1 0 000-1.414z" />
               </svg>
             </button>
@@ -443,11 +462,11 @@ const ProfilePage: React.FC = () => {
         )}
         {showInfo && (
           <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative mt-4" role="alert">
-            <strong className="font-bold">Info! </strong>
+            <strong className="font-bold">{translations[language].info} </strong>
             <span className="block sm:inline">
-              Keep your profile updated for better opportunities.{' '}
+              {translations[language].keepProfileUpdated}{' '}
               <a href="#" className="underline font-semibold text-blue-700 hover:text-blue-900">
-                complete it
+                {translations[language].completeIt}
               </a>
             </span>
             <button
@@ -456,7 +475,7 @@ const ProfilePage: React.FC = () => {
               onClick={() => setShowInfo(false)}
             >
               <svg className="fill-current h-4 w-4" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <title>Close</title>
+                <title>{translations[language].close}</title>
                 <path d="M14.348 5.652a1 1 0 00-1.414 0L10 8.586 7.066 5.652a1 1 0 10-1.414 1.414L8.586 10l-2.934 2.934a1 1 0 101.414 1.414L10 11.414l2.934 2.934a1 1 0 001.414-1.414L11.414 10l2.934-2.934a1 1 0 000-1.414z" />
               </svg>
             </button>
@@ -466,17 +485,17 @@ const ProfilePage: React.FC = () => {
         {/* Profile Details Section */}
         <div className="bg-white rounded-lg shadow mt-6">
           <div className="flex justify-between items-center p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold">Profile Details</h2>
+            <h2 className="text-lg font-semibold">{translations[language].profileDetails}</h2>
             <div className='flex gap-3'>
               {!isEditMode ? (
                 <>
-                  <button className="btn-primary px-4 py-2" onClick={handleEditToggle}>Edit Profile</button>
-                  <button className="btn-primary px-6 py-2" onClick={exportPDF}>Export PDF</button>
+                  <button className="btn-primary px-4 py-2" onClick={handleEditToggle}>{translations[language].editProfile}</button>
+                  <button className="btn-primary px-6 py-2" onClick={exportPDF}>{translations[language].exportPDF}</button>
                 </>
               ) : (
                 <>
-                  <button className="btn-secondary px-4 py-2" onClick={handleCancel}>Cancel</button>
-                  <button className="btn-primary px-6 py-2" onClick={handleSave}>Save Changes</button>
+                  <button className="btn-secondary px-4 py-2" onClick={handleCancel}>{translations[language].cancel}</button>
+                  <button className="btn-primary px-6 py-2" onClick={handleSave}>{translations[language].saveChanges}</button>
                 </>
               )}
             </div>
@@ -487,7 +506,7 @@ const ProfilePage: React.FC = () => {
               <h3 className="text-md font-semibold mb-4">{translations[language].companyLegalInformation}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].companyNameEnglish}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].companyNameEnglish}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -501,7 +520,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].companyNameArabic}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].companyNameArabic}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -515,7 +534,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].commercialDenomination}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].commercialDenomination}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -529,7 +548,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].legalType}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].legalType}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -543,7 +562,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].companyClassification}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].companyClassification}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -557,7 +576,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].commercialRegistryNumber}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].commercialRegistryNumber}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -571,7 +590,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].unifiedCommercialRegistryNumber}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].unifiedCommercialRegistryNumber}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -585,7 +604,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].taxRegistryNumber}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].taxRegistryNumber}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -599,7 +618,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].commercialRegistrationDate}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].commercialRegistrationDate}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -613,7 +632,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].officialCompanyEmail}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].officialCompanyEmail}</p>
                   {isEditMode ? (
                     <input
                       type="email"
@@ -627,7 +646,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].yearOfEstablishment}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].yearOfEstablishment}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -648,7 +667,7 @@ const ProfilePage: React.FC = () => {
               <h3 className="text-md font-semibold mb-4">{translations[language].contactInformation}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].governorate}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].governorate}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -662,7 +681,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].districtCity}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].districtCity}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -676,7 +695,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].streetAddress}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].streetAddress}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -690,7 +709,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].companyWebsiteUrl}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].companyWebsiteUrl}</p>
                   {isEditMode ? (
                     <input
                       type="url"
@@ -704,7 +723,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].officialEmail}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].officialEmail}</p>
                   {isEditMode ? (
                     <input
                       type="email"
@@ -718,7 +737,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].phoneMobile}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].phoneMobile}</p>
                   {isEditMode ? (
                     <input
                       type="tel"
@@ -732,7 +751,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].name}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].name}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -746,7 +765,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].title}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].title}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -760,7 +779,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].mobile}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].mobile}</p>
                   {isEditMode ? (
                     <input
                       type="tel"
@@ -774,7 +793,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].nationalId}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -788,7 +807,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].email}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].email}</p>
                   {isEditMode ? (
                     <input
                       type="email"
@@ -802,7 +821,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].requestApplicant}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].requestApplicant}</p>
                   {isEditMode ? (
                     <select
                       name="requestApplicant"
@@ -826,7 +845,7 @@ const ProfilePage: React.FC = () => {
               <h3 className="text-md font-semibold mb-4">{translations[language].companyBranchesTitle}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].branchName}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].branchName}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -844,7 +863,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].branchCountry}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].branchCountry}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -862,7 +881,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].branchGovernorate}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].branchGovernorate}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -880,7 +899,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].branchCity}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].branchCity}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -898,7 +917,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].branchDistrict}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].branchDistrict}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -916,7 +935,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].branchEmail}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].branchEmail}</p>
                   {isEditMode ? (
                     <input
                       type="email"
@@ -934,7 +953,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Mobile Phone</p>
+                  <p className="text-sm text-gray-400 mb-1">Mobile Phone</p>
                   {isEditMode ? (
                     <input
                       type="tel"
@@ -954,85 +973,135 @@ const ProfilePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Activities & Attachments */}
+            {/* Activities */}
             <div>
               <h3 className="text-md font-semibold mb-4">{translations[language].activitiesAttachments}</h3>
-              <div className="grid md:grid-cols-4 gap-6">
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].softwareDesignServices}</p>
-                  <p className="font-semibold">Yes</p>
+              <div className="grid md:grid-cols-1 gap-6">
+                <div className='flex flex-row gap-2 items-center'>
+                  {isEditMode ? (
+                    <input
+                      type="checkbox"
+                      name="softwareDesign"
+                      checked={formData.activities?.softwareDesign || false}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.activities?.softwareDesign ? 'Yes' : 'No'}</p>
+                  )}
+                  <p className="text-sm text-gray-500">{translations[language].softwareDesignServices}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].itSystemsServices}</p>
-                  <p className="font-semibold">Yes</p>
+                <div className='flex flex-row gap-2 items-center'>
+                  {isEditMode ? (
+                    <input
+                      type="checkbox"
+                      name="itSystems"
+                      checked={formData.activities?.itSystems || false}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.activities?.itSystems ? 'Yes' : 'No'}</p>
+                  )}
+                  <p className="text-sm text-gray-500">{translations[language].itSystemsServices}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].trustServices}</p>
-                  <p className="font-semibold">Yes</p>
+                <div className='flex flex-row gap-2 items-center'>
+                  {isEditMode ? (
+                    <input
+                      type="checkbox"
+                      name="trustServices"
+                      checked={formData.activities?.trustServices || false}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.activities?.trustServices ? 'Yes' : 'No'}</p>
+                  )}
+                  <p className="text-sm text-gray-500">{translations[language].trustServices}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].websitesPlatformsServices}</p>
-                  <p className="font-semibold">Yes</p>
+                <div className='flex flex-row gap-2 items-center'>
+                  {isEditMode ? (
+                    <input
+                      type="checkbox"
+                      name="websitesPlatforms"
+                      checked={formData.activities?.websitesPlatforms || false}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.activities?.websitesPlatforms ? 'Yes' : 'No'}</p>
+                  )}
+                  <p className="text-sm text-gray-500">{translations[language].websitesPlatformsServices}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].electronicsEmbeddedServices}</p>
-                  <p className="font-semibold">Yes</p>
+                <div className='flex flex-row gap-2 items-center'>
+                  {isEditMode ? (
+                    <input
+                      type="checkbox"
+                      name="electronicsEmbedded"
+                      checked={formData.activities?.electronicsEmbedded || false}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.activities?.electronicsEmbedded ? 'Yes' : 'No'}</p>
+                  )}
+                  <p className="text-sm text-gray-500">{translations[language].electronicsEmbeddedServices}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].contentDigitizationServices}</p>
-                  <p className="font-semibold">Yes</p>
+                <div className='flex flex-row gap-2 items-center'>
+                  {isEditMode ? (
+                    <input
+                      type="checkbox"
+                      name="contentDigitization"
+                      checked={formData.activities?.contentDigitization || false}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.activities?.contentDigitization ? 'Yes' : 'No'}</p>
+                  )}
+                  <p className="text-sm text-gray-500">{translations[language].contentDigitizationServices}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].callCenterBusinessServices}</p>
-                  <p className="font-semibold">Yes</p>
+                <div className='flex flex-row gap-2 items-center'>
+                  {isEditMode ? (
+                    <input
+                      type="checkbox"
+                      name="callCenterBusiness"
+                      checked={formData.activities?.callCenterBusiness || false}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.activities?.callCenterBusiness ? 'Yes' : 'No'}</p>
+                  )}
+                  <p className="text-sm text-gray-500">{translations[language].callCenterBusinessServices}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].consultingResearchServices}</p>
-                  <p className="font-semibold">Yes</p>
+                <div className='flex flex-row gap-2 items-center'>
+                  {isEditMode ? (
+                    <input
+                      type="checkbox"
+                      name="consultingResearch"
+                      checked={formData.activities?.consultingResearch || false}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.activities?.consultingResearch ? 'Yes' : 'No'}</p>
+                  )}
+                  <p className="text-sm text-gray-500">{translations[language].consultingResearchServices}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].trainingLearningServices}</p>
-                  <p className="font-semibold">Yes</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].commercialRegisterImage}</p>
-                  <p className="font-semibold">Available</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].taxCardImage}</p>
-                  <p className="font-semibold">Available</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].nationalIdImage}</p>
-                  <p className="font-semibold">Available</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].investmentGazetteImage}</p>
-                  <p className="font-semibold">Available</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].declarationUndertakingImage}</p>
-                  <p className="font-semibold">Available</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].representativeAuthorizationImage}</p>
-                  <p className="font-semibold">Available</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].representativeNationalIdImage}</p>
-                  <p className="font-semibold">Available</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].licenseReceipt}</p>
-                  <p className="font-semibold">Available</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].methodOfLicenseReceipt}</p>
-                  <p className="font-semibold">Available</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">{translations[language].declarationAgreement}</p>
-                  <p className="font-semibold">Available</p>
+                <div className='flex flex-row gap-2 items-center'>
+                  {isEditMode ? (
+                    <input
+                      type="checkbox"
+                      name="trainingLearning"
+                      checked={formData.activities?.trainingLearning || false}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.activities?.trainingLearning ? 'Yes' : 'No'}</p>
+                  )}
+                  <p className="text-sm text-gray-500">{translations[language].trainingLearningServices}</p>
                 </div>
               </div>
             </div>
@@ -1042,77 +1111,213 @@ const ProfilePage: React.FC = () => {
               <h3 className="text-md font-semibold mb-4">{translations[language].companyHead}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].name}</p>
-                  <p className="font-semibold">Jane Smith</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].name}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="companyHeadName"
+                      value={formData.companyHeadName || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyHeadName || 'Jane Smith'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].title}</p>
-                  <p className="font-semibold">CTO</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].title}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="companyHeadTitle"
+                      value={formData.companyHeadTitle || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyHeadTitle || 'CTO'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].mobile}</p>
-                  <p className="font-semibold">01123456789</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].mobile}</p>
+                  {isEditMode ? (
+                    <input
+                      type="tel"
+                      name="companyHeadMobile"
+                      value={formData.companyHeadMobile || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyHeadMobile || '01123456789'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
-                  <p className="font-semibold">98765432109876</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].nationalId}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="companyHeadNationalId"
+                      value={formData.companyHeadNationalId || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyHeadNationalId || '98765432109876'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].email}</p>
-                  <p className="font-semibold">jane.smith@dummycompany.com</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].email}</p>
+                  {isEditMode ? (
+                    <input
+                      type="email"
+                      name="companyHeadEmail"
+                      value={formData.companyHeadEmail || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyHeadEmail || 'jane.smith@dummycompany.com'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Email 2</p>
-                  <p className="font-semibold">jane.smith2@dummycompany.com</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].email2}</p>
+                  {isEditMode ? (
+                    <input
+                      type="email"
+                      name="companyHeadEmail2"
+                      value={formData.companyHeadEmail2 || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.companyHeadEmail2 || 'jane.smith2@dummycompany.com'}</p>
+                  )}
                 </div>
               </div>
             </div>
 
             {/* Contact Persons */}
             <div>
-              <h3 className="text-md font-semibold mb-4">Contact Persons</h3>
+              <h3 className="text-md font-semibold mb-4">{translations[language].contactPersons}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].name}</p>
-                  <p className="font-semibold">Alex Johnson</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].name}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="contactPersonName"
+                      value={formData.contactPersonName || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.contactPersonName || 'Alex Johnson'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].title}</p>
-                  <p className="font-semibold">Manager</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].title}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="contactPersonTitle"
+                      value={formData.contactPersonTitle || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.contactPersonTitle || 'Manager'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].mobile}</p>
-                  <p className="font-semibold">01987654321</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].mobile}</p>
+                  {isEditMode ? (
+                    <input
+                      type="tel"
+                      name="contactPersonMobile"
+                      value={formData.contactPersonMobile || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.contactPersonMobile || '01987654321'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].nationalId}</p>
-                  <p className="font-semibold">12345678901234</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].nationalId}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="contactPersonNationalId"
+                      value={formData.contactPersonNationalId || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.contactPersonNationalId || '12345678901234'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">{translations[language].email}</p>
-                  <p className="font-semibold">alex.johnson@dummycompany.com</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].email}</p>
+                  {isEditMode ? (
+                    <input
+                      type="email"
+                      name="contactPersonEmail"
+                      value={formData.contactPersonEmail || ''}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="font-semibold">{formData.contactPersonEmail || 'alex.johnson@dummycompany.com'}</p>
+                  )}
                 </div>
               </div>
             </div>
 
             {/* Products */}
             <div>
-              <h3 className="text-md font-semibold mb-4">Products</h3>
+              <h3 className="text-md font-semibold mb-4">{translations[language].products}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 {financialData.products.length > 0 ? (
                   financialData.products.map((product, index) => (
                     <div key={index}>
-                      <p className="text-sm text-gray-400">Product Name</p>
-                      <p className="font-semibold">{product.name || '-'}</p>
-                      <p className="text-sm text-gray-400">Description</p>
-                      <p className="font-semibold">{product.description || '-'}</p>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].productName}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value={product.name || ''}
+                          onChange={(e) => {
+                            const updatedProducts = [...financialData.products];
+                            updatedProducts[index] = { ...updatedProducts[index], name: e.target.value };
+                            setFinancialData({ ...financialData, products: updatedProducts });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      ) : (
+                        <p className="font-semibold">{product.name || '-'}</p>
+                      )}
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].description}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value={product.description || ''}
+                          onChange={(e) => {
+                            const updatedProducts = [...financialData.products];
+                            updatedProducts[index] = { ...updatedProducts[index], description: e.target.value };
+                            setFinancialData({ ...financialData, products: updatedProducts });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      ) : (
+                        <p className="font-semibold">{product.description || '-'}</p>
+                      )}
                     </div>
                   ))
                 ) : (
                   <div>
-                    <p className="text-sm text-gray-400">Product Name</p>
+                    <p className="text-sm text-gray-400 mb-1">{translations[language].productName}</p>
                     <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Description</p>
+                    <p className="text-sm text-gray-400 mb-1">{translations[language].description}</p>
                     <p className="font-semibold">-</p>
                   </div>
                 )}
@@ -1121,22 +1326,48 @@ const ProfilePage: React.FC = () => {
 
             {/* Services */}
             <div>
-              <h3 className="text-md font-semibold mb-4">Services</h3>
+              <h3 className="text-md font-semibold mb-4">{translations[language].services}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 {financialData.services.length > 0 ? (
                   financialData.services.map((service, index) => (
                     <div key={index}>
-                      <p className="text-sm text-gray-400">Service Name</p>
-                      <p className="font-semibold">{service.name || '-'}</p>
-                      <p className="text-sm text-gray-400">Description</p>
-                      <p className="font-semibold">{service.description || '-'}</p>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].serviceName}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value={service.name || ''}
+                          onChange={(e) => {
+                            const updatedServices = [...financialData.services];
+                            updatedServices[index] = { ...updatedServices[index], name: e.target.value };
+                            setFinancialData({ ...financialData, services: updatedServices });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      ) : (
+                        <p className="font-semibold">{service.name || '-'}</p>
+                      )}
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].description}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value={service.description || ''}
+                          onChange={(e) => {
+                            const updatedServices = [...financialData.services];
+                            updatedServices[index] = { ...updatedServices[index], description: e.target.value };
+                            setFinancialData({ ...financialData, services: updatedServices });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      ) : (
+                        <p className="font-semibold">{service.description || '-'}</p>
+                      )}
                     </div>
                   ))
                 ) : (
                   <div>
-                    <p className="text-sm text-gray-400">Service Name</p>
+                    <p className="text-sm text-gray-400 mb-1">{translations[language].serviceName}</p>
                     <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Description</p>
+                    <p className="text-sm text-gray-400 mb-1">{translations[language].description}</p>
                     <p className="font-semibold">-</p>
                   </div>
                 )}
@@ -1145,118 +1376,555 @@ const ProfilePage: React.FC = () => {
 
             {/* Customer References */}
             <div>
-              <h3 className="text-md font-semibold mb-4">Customer References</h3>
+              <h3 className="text-md font-semibold mb-4">{translations[language].customerReferences}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 {financialData.customerReferences.length > 0 ? (
                   financialData.customerReferences.map((ref, index) => (
-                    <div key={index}>
-                      <p className="text-sm text-gray-400">Name</p>
-                      <p className="font-semibold">{ref.name || '-'}</p>
-                      <p className="text-sm text-gray-400">Country</p>
-                      <p className="font-semibold">{ref.country || '-'}</p>
-                      <p className="text-sm text-gray-400">Project Size</p>
-                      <p className="font-semibold">{ref.projectSize || '-'}</p>
-                      <p className="text-sm text-gray-400">Scope</p>
-                      <p className="font-semibold">{ref.scope || '-'}</p>
-                      <p className="text-sm text-gray-400">Industries Sector</p>
-                      <p className="font-semibold">{ref.industriesSector || '-'}</p>
-                      <p className="text-sm text-gray-400">Description</p>
-                      <p className="font-semibold">{ref.description || '-'}</p>
-                    </div>
-                  ))
-                ) : (
-                  <div>
-                    <p className="text-sm text-gray-400">Name</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Country</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Project Size</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Scope</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Industries Sector</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Description</p>
-                    <p className="font-semibold">-</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Export Information */}
-            <div>
-              <h3 className="text-md font-semibold mb-4">Export Information</h3>
-              <div className="grid md:grid-cols-4 gap-6">
-                {financialData.exportInformation.length > 0 ? (
-                  financialData.exportInformation.map((exportInfo, index) => (
-                    <div key={index}>
-                      <p className="text-sm text-gray-400">Year</p>
-                      <p className="font-semibold">{exportInfo.year || '-'}</p>
-                      <p className="text-sm text-gray-400">Market Region</p>
-                      <p className="font-semibold">{exportInfo.marketRegion || '-'}</p>
-                      <p className="text-sm text-gray-400">Country</p>
-                      <p className="font-semibold">{exportInfo.country || '-'}</p>
-                      <p className="text-sm text-gray-400">Value Exported</p>
-                      <p className="font-semibold">{exportInfo.valueExported || '-'}</p>
-                    </div>
-                  ))
-                ) : (
-                  <div>
-                    <p className="text-sm text-gray-400">Year</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Market Region</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Country</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Value Exported</p>
-                    <p className="font-semibold">-</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Owners */}
-            <div>
-              <h3 className="text-md font-semibold mb-4">Owners</h3>
-              <div className="grid md:grid-cols-4 gap-6">
-                {financialData.owners.length > 0 ? (
-                  financialData.owners.map((owner, index) => (
                     <React.Fragment key={index}>
                       <div>
-                        <p className="text-sm text-gray-400">Name</p>
-                        <p className="font-semibold">{owner.name || '-'}</p>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].name}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={ref.name || ''}
+                            onChange={(e) => {
+                              const updatedRefs = [...financialData.customerReferences];
+                              updatedRefs[index] = { ...updatedRefs[index], name: e.target.value };
+                              setFinancialData({ ...financialData, customerReferences: updatedRefs });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{ref.name || '-'}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-400">Mobile</p>
-                        <p className="font-semibold">{owner.mobile || '-'}</p>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].country}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={ref.country || ''}
+                            onChange={(e) => {
+                              const updatedRefs = [...financialData.customerReferences];
+                              updatedRefs[index] = { ...updatedRefs[index], country: e.target.value };
+                              setFinancialData({ ...financialData, customerReferences: updatedRefs });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{ref.country || '-'}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-400">Telephone</p>
-                        <p className="font-semibold">{owner.telephone || '-'}</p>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].projectSize}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={ref.projectSize || ''}
+                            onChange={(e) => {
+                              const updatedRefs = [...financialData.customerReferences];
+                              updatedRefs[index] = { ...updatedRefs[index], projectSize: e.target.value };
+                              setFinancialData({ ...financialData, customerReferences: updatedRefs });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{ref.projectSize || '-'}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-400">Email</p>
-                        <p className="font-semibold">{owner.email || '-'}</p>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].scope}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={ref.scope || ''}
+                            onChange={(e) => {
+                              const updatedRefs = [...financialData.customerReferences];
+                              updatedRefs[index] = { ...updatedRefs[index], scope: e.target.value };
+                              setFinancialData({ ...financialData, customerReferences: updatedRefs });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{ref.scope || '-'}</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].industriesSector}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={ref.industriesSector || ''}
+                            onChange={(e) => {
+                              const updatedRefs = [...financialData.customerReferences];
+                              updatedRefs[index] = { ...updatedRefs[index], industriesSector: e.target.value };
+                              setFinancialData({ ...financialData, customerReferences: updatedRefs });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{ref.industriesSector || '-'}</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].description}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={ref.description || ''}
+                            onChange={(e) => {
+                              const updatedRefs = [...financialData.customerReferences];
+                              updatedRefs[index] = { ...updatedRefs[index], description: e.target.value };
+                              setFinancialData({ ...financialData, customerReferences: updatedRefs });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{ref.description || '-'}</p>
+                        )}
                       </div>
                     </React.Fragment>
                   ))
                 ) : (
                   <>
                     <div>
-                      <p className="text-sm text-gray-400">Name</p>
-                      <p className="font-semibold">-</p>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].name}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              customerReferences: [{ name: e.target.value, country: '', projectSize: '', scope: '', industriesSector: '', description: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].name}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">Mobile</p>
-                      <p className="font-semibold">-</p>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].country}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              customerReferences: [{ name: '', country: e.target.value, projectSize: '', scope: '', industriesSector: '', description: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].country}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">Telephone</p>
-                      <p className="font-semibold">-</p>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].projectSize}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              customerReferences: [{ name: '', country: '', projectSize: e.target.value, scope: '', industriesSector: '', description: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].projectSize}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">Email</p>
-                      <p className="font-semibold">-</p>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].scope}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              customerReferences: [{ name: '', country: '', projectSize: '', scope: e.target.value, industriesSector: '', description: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].scope}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].industriesSector}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              customerReferences: [{ name: '', country: '', projectSize: '', scope: '', industriesSector: e.target.value, description: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].industriesSector}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].description}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              customerReferences: [{ name: '', country: '', projectSize: '', scope: '', industriesSector: '', description: e.target.value }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].description}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Export Information */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">{translations[language].exportInformation}</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                {financialData.exportInformation.length > 0 ? (
+                  financialData.exportInformation.map((exportInfo, index) => (
+                    <React.Fragment key={index}>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].year}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={exportInfo.year || ''}
+                            onChange={(e) => {
+                              const updatedExports = [...financialData.exportInformation];
+                              updatedExports[index] = { ...updatedExports[index], year: e.target.value };
+                              setFinancialData({ ...financialData, exportInformation: updatedExports });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{exportInfo.year || '-'}</p>
+                        )}
+                      </div>
+
+
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].marketRegion}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={exportInfo.marketRegion || ''}
+                            onChange={(e) => {
+                              const updatedExports = [...financialData.exportInformation];
+                              updatedExports[index] = { ...updatedExports[index], marketRegion: e.target.value };
+                              setFinancialData({ ...financialData, exportInformation: updatedExports });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{exportInfo.marketRegion || '-'}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].country}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={exportInfo.country || ''}
+                            onChange={(e) => {
+                              const updatedExports = [...financialData.exportInformation];
+                              updatedExports[index] = { ...updatedExports[index], country: e.target.value };
+                              setFinancialData({ ...financialData, exportInformation: updatedExports });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{exportInfo.country || '-'}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].valueExported}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={exportInfo.valueExported || ''}
+                            onChange={(e) => {
+                              const updatedExports = [...financialData.exportInformation];
+                              updatedExports[index] = { ...updatedExports[index], valueExported: e.target.value };
+                              setFinancialData({ ...financialData, exportInformation: updatedExports });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{exportInfo.valueExported || '-'}</p>
+                        )}
+                      </div>
+                    </React.Fragment>
+                  ))
+                ) : (
+                  <>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].year}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              exportInformation: [{ year: e.target.value, marketRegion: '', country: '', valueExported: '', totalAmountExported: 0 }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].year}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].marketRegion}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              exportInformation: [{ year: '', marketRegion: e.target.value, country: '', valueExported: '', totalAmountExported: 0 }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].marketRegion}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].country}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              exportInformation: [{ year: '', marketRegion: '', country: e.target.value, valueExported: '', totalAmountExported: 0 }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].country}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].valueExported}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              exportInformation: [{ year: '', marketRegion: '', country: '', valueExported: e.target.value, totalAmountExported: 0 }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].valueExported}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                  </>
+                )
+                }
+              </div>
+            </div>
+
+            {/* Owners */}
+            <div>
+              <h3 className="text-md font-semibold mb-4">{translations[language].owners}</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                {financialData.owners.length > 0 ? (
+                  financialData.owners.map((owner, index) => (
+                    <React.Fragment key={index}>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].ownerName}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={owner.name || ''}
+                            onChange={(e) => {
+                              const updatedOwners = [...financialData.owners];
+                              updatedOwners[index] = { ...updatedOwners[index], name: e.target.value };
+                              setFinancialData({ ...financialData, owners: updatedOwners });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{owner.name || '-'}</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].ownerMobile}</p>
+                        {isEditMode ? (
+                          <input
+                            type="tel"
+                            value={owner.mobile || ''}
+                            onChange={(e) => {
+                              const updatedOwners = [...financialData.owners];
+                              updatedOwners[index] = { ...updatedOwners[index], mobile: e.target.value };
+                              setFinancialData({ ...financialData, owners: updatedOwners });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{owner.mobile || '-'}</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].ownerTelephone}</p>
+                        {isEditMode ? (
+                          <input
+                            type="tel"
+                            value={owner.telephone || ''}
+                            onChange={(e) => {
+                              const updatedOwners = [...financialData.owners];
+                              updatedOwners[index] = { ...updatedOwners[index], telephone: e.target.value };
+                              setFinancialData({ ...financialData, owners: updatedOwners });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{owner.telephone || '-'}</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].ownerEmail}</p>
+                        {isEditMode ? (
+                          <input
+                            type="email"
+                            value={owner.email || ''}
+                            onChange={(e) => {
+                              const updatedOwners = [...financialData.owners];
+                              updatedOwners[index] = { ...updatedOwners[index], email: e.target.value };
+                              setFinancialData({ ...financialData, owners: updatedOwners });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{owner.email || '-'}</p>
+                        )}
+                      </div>
+                    </React.Fragment>
+                  ))
+                ) : (
+                  <>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].ownerName}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              owners: [{ name: e.target.value, mobile: '', telephone: '', email: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].ownerName}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].ownerMobile}</p>
+                      {isEditMode ? (
+                        <input
+                          type="tel"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              owners: [{ name: '', mobile: e.target.value, telephone: '', email: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].ownerMobile}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].ownerTelephone}</p>
+                      {isEditMode ? (
+                        <input
+                          type="tel"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              owners: [{ name: '', mobile: '', telephone: e.target.value, email: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].ownerTelephone}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].ownerEmail}</p>
+                      {isEditMode ? (
+                        <input
+                          type="email"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              owners: [{ name: '', mobile: '', telephone: '', email: e.target.value }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].ownerEmail}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
                     </div>
                   </>
                 )}
@@ -1265,28 +1933,124 @@ const ProfilePage: React.FC = () => {
 
             {/* Domestic Sales Details */}
             <div>
-              <h3 className="text-md font-semibold mb-4">Domestic Sales Details</h3>
+              <h3 className="text-md font-semibold mb-4">{translations[language].domesticSalesDetails}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 {financialData.domesticSalesDetails.length > 0 ? (
                   financialData.domesticSalesDetails.map((salesDetail, index) => (
-                    <div key={index}>
-                      <p className="text-sm text-gray-400">Year</p>
-                      <p className="font-semibold">{salesDetail.year || '-'}</p>
-                      <p className="text-sm text-gray-400">Value</p>
-                      <p className="font-semibold">{salesDetail.value || '-'}</p>
-                      <p className="text-sm text-gray-400">Total Revenue Year</p>
-                      <p className="font-semibold">{salesDetail.totalRevenueYear || '-'}</p>
-                    </div>
+                    <React.Fragment key={index}>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].domesticSalesYear}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={salesDetail.year || ''}
+                            onChange={(e) => {
+                              const updatedSales = [...financialData.domesticSalesDetails];
+                              updatedSales[index] = { ...updatedSales[index], year: e.target.value };
+                              setFinancialData({ ...financialData, domesticSalesDetails: updatedSales });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{salesDetail.year || '-'}</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].domesticSalesValue}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={salesDetail.value || ''}
+                            onChange={(e) => {
+                              const updatedSales = [...financialData.domesticSalesDetails];
+                              updatedSales[index] = { ...updatedSales[index], value: e.target.value };
+                              setFinancialData({ ...financialData, domesticSalesDetails: updatedSales });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{salesDetail.value || '-'}</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">{translations[language].totalRevenueYear}</p>
+                        {isEditMode ? (
+                          <input
+                            type="text"
+                            value={salesDetail.totalRevenueYear || ''}
+                            onChange={(e) => {
+                              const updatedSales = [...financialData.domesticSalesDetails];
+                              updatedSales[index] = { ...updatedSales[index], totalRevenueYear: e.target.value };
+                              setFinancialData({ ...financialData, domesticSalesDetails: updatedSales });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <p className="font-semibold">{salesDetail.totalRevenueYear || '-'}</p>
+                        )}
+                      </div>
+                    </React.Fragment>
                   ))
                 ) : (
-                  <div>
-                    <p className="text-sm text-gray-400">Year</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Value</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400">Total Revenue Year</p>
-                    <p className="font-semibold">-</p>
-                  </div>
+                  <>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].domesticSalesYear}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              domesticSalesDetails: [{ year: e.target.value, value: '', totalRevenueYear: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].domesticSalesYear}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].domesticSalesValue}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              domesticSalesDetails: [{ year: '', value: e.target.value, totalRevenueYear: '' }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].domesticSalesValue}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].totalRevenueYear}</p>
+                      {isEditMode ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => {
+                            setFinancialData({
+                              ...financialData,
+                              domesticSalesDetails: [{ year: '', value: '', totalRevenueYear: e.target.value }]
+                            });
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={translations[language].totalRevenueYear}
+                        />
+                      ) : (
+                        <p className="font-semibold">-</p>
+                      )}
+                    </div>
+                  </>
                 )}
               </div>
             </div>
@@ -1296,7 +2060,7 @@ const ProfilePage: React.FC = () => {
               <h3 className="text-md font-semibold mb-4">{translations[language].financialInformation}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400">Fiscal Capital</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].fiscalCapital}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1310,7 +2074,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Annual Revenue</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].annualRevenue}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1324,7 +2088,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Export</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].export}</p>
                   {isEditMode ? (
                     <select
                       name="export"
@@ -1332,16 +2096,16 @@ const ProfilePage: React.FC = () => {
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="">Select</option>
-                      <option value="Yes">Yes</option>
-                      <option value="No">No</option>
+                      <option value="">{translations[language].select}</option>
+                      <option value="Yes">{translations[language].yes}</option>
+                      <option value="No">{translations[language].no}</option>
                     </select>
                   ) : (
                     <p className="font-semibold">{financialData.export || '-'}</p>
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Ownership Nationality</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].ownershipNationality}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1355,7 +2119,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Percentage Egyptian Ownership</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].percentageEgyptianOwnership}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1369,7 +2133,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Percentage Non-Egyptian Ownership</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].percentageNonEgyptianOwnership}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1383,7 +2147,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Partners Nationalities</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].partnersNationalities}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1397,7 +2161,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Total Number of Employees</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].totalNumberOfEmployees}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1411,7 +2175,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Year of Establishment</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].yearOfEstablishment}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1425,7 +2189,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Company Size</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].companySize}</p>
                   {isEditMode ? (
                     <select
                       name="companySize"
@@ -1433,17 +2197,17 @@ const ProfilePage: React.FC = () => {
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="">Select</option>
-                      <option value="Small">Small</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Large">Large</option>
+                      <option value="">{translations[language].select}</option>
+                      <option value="Small">{translations[language].small}</option>
+                      <option value="Medium">{translations[language].medium}</option>
+                      <option value="Large">{translations[language].large}</option>
                     </select>
                   ) : (
                     <p className="font-semibold">{financialData.companySize || '-'}</p>
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Type of Ownership</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].typeOfOwnership}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1457,7 +2221,7 @@ const ProfilePage: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Company Data</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].companyData}</p>
                   {isEditMode ? (
                     <input
                       type="text"
@@ -1475,27 +2239,92 @@ const ProfilePage: React.FC = () => {
 
             {/* Additional Information */}
             <div>
-              <h3 className="text-md font-semibold mb-4">Additional Information</h3>
+              <h3 className="text-md font-semibold mb-4">{translations[language].additionalInformation}</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400">Key Technologies</p>
-                  <p className="font-semibold">{financialData.keyTechnologies.length > 0 ? financialData.keyTechnologies.join(', ') : '-'}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].keyTechnologies}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      value={financialData.keyTechnologies.join(', ') || ''}
+                      onChange={(e) => {
+                        const technologies = e.target.value.split(',').map(tech => tech.trim()).filter(tech => tech);
+                        setFinancialData({ ...financialData, keyTechnologies: technologies });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Enter technologies separated by commas"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.keyTechnologies.length > 0 ? financialData.keyTechnologies.join(', ') : '-'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Certificates</p>
-                  <p className="font-semibold">{financialData.certificates.length > 0 ? financialData.certificates.join(', ') : '-'}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].certificates}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      value={financialData.certificates.join(', ') || ''}
+                      onChange={(e) => {
+                        const certificates = e.target.value.split(',').map(cert => cert.trim()).filter(cert => cert);
+                        setFinancialData({ ...financialData, certificates: certificates });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Enter certificates separated by commas"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.certificates.length > 0 ? financialData.certificates.join(', ') : '-'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Affiliation</p>
-                  <p className="font-semibold">{financialData.affiliation.length > 0 ? financialData.affiliation.join(', ') : '-'}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].affiliation}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      value={financialData.affiliation.join(', ') || ''}
+                      onChange={(e) => {
+                        const affiliations = e.target.value.split(',').map(aff => aff.trim()).filter(aff => aff);
+                        setFinancialData({ ...financialData, affiliation: affiliations });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Enter affiliations separated by commas"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.affiliation.length > 0 ? financialData.affiliation.join(', ') : '-'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Memberships</p>
-                  <p className="font-semibold">{financialData.memberships.length > 0 ? financialData.memberships.join(', ') : '-'}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].memberships}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      value={financialData.memberships.join(', ') || ''}
+                      onChange={(e) => {
+                        const memberships = e.target.value.split(',').map(mem => mem.trim()).filter(mem => mem);
+                        setFinancialData({ ...financialData, memberships: memberships });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Enter memberships separated by commas"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.memberships.length > 0 ? financialData.memberships.join(', ') : '-'}</p>
+                  )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Partnerships</p>
-                  <p className="font-semibold">{financialData.partnerships.length > 0 ? financialData.partnerships.join(', ') : '-'}</p>
+                  <p className="text-sm text-gray-400 mb-1">{translations[language].partnerships}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      value={financialData.partnerships.join(', ') || ''}
+                      onChange={(e) => {
+                        const partnerships = e.target.value.split(',').map(part => part.trim()).filter(part => part);
+                        setFinancialData({ ...financialData, partnerships: partnerships });
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Enter partnerships separated by commas"
+                    />
+                  ) : (
+                    <p className="font-semibold">{financialData.partnerships.length > 0 ? financialData.partnerships.join(', ') : '-'}</p>
+                  )}
                 </div>
               </div>
             </div>
