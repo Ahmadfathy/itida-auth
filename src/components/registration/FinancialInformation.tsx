@@ -89,90 +89,90 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
   }
 
   const companySizeOptions = [
-    { value: 'small', label: 'Small (1-10 employees)' },
-    { value: 'medium', label: 'Medium (11-50 employees)' },
-    { value: 'large', label: 'Large (51-200 employees)' },
-    { value: 'enterprise', label: 'Enterprise (200+ employees)' }
+    { value: 'small', label: t.smallEmployees },
+    { value: 'medium', label: t.mediumEmployees },
+    { value: 'large', label: t.largeEmployees },
+    { value: 'enterprise', label: t.enterpriseEmployees }
   ]
 
   // Options for multi-select fields
   const keyTechnologiesOptions: OptionType[] = [
-    { value: 'IBM', label: 'IBM' },
-    { value: 'Microsoft', label: 'Microsoft' },
-    { value: 'Oracle', label: 'Oracle' },
-    { value: 'SUN', label: 'SUN' },
-    { value: 'Java', label: 'Java' },
-    { value: 'Open Source', label: 'Open Source' },
-    { value: 'SAP', label: 'SAP' },
-    { value: 'Sybase', label: 'Sybase' },
-    { value: 'Others', label: 'Others' }
+    { value: 'IBM', label: t.ibm },
+    { value: 'Microsoft', label: t.microsoft },
+    { value: 'Oracle', label: t.oracle },
+    { value: 'SUN', label: t.sun },
+    { value: 'Java', label: t.java },
+    { value: 'Open Source', label: t.openSource },
+    { value: 'SAP', label: t.sap },
+    { value: 'Sybase', label: t.sybase },
+    { value: 'Others', label: t.others }
   ]
 
   const affiliationOptions: OptionType[] = [
-    { value: 'MENA Innovation 2018', label: 'MENA Innovation 2018' },
-    { value: 'Others', label: 'Others' }
+    { value: 'MENA Innovation 2018', label: t.menaInnovation },
+    { value: 'Others', label: t.others }
   ]
 
   const membershipsOptions: OptionType[] = [
-    { value: 'CIT', label: 'CIT' },
-    { value: 'EITISAL', label: 'EITISAL' },
-    { value: 'eLABs', label: 'eLABs' },
-    { value: 'ITI', label: 'ITI' },
-    { value: 'FoCCIT', label: 'FoCCIT' },
-    { value: 'ITEC', label: 'ITEC' },
-    { value: 'Others', label: 'Others' }
+    { value: 'CIT', label: t.cit },
+    { value: 'EITISAL', label: t.eitisal },
+    { value: 'eLABs', label: t.elabs },
+    { value: 'ITI', label: t.iti },
+    { value: 'FoCCIT', label: t.foccit },
+    { value: 'ITEC', label: t.itec },
+    { value: 'Others', label: t.others }
   ]
 
   const certificatesOptions: OptionType[] = [
-    { value: 'BS 15000', label: 'BS 15000' },
-    { value: 'ISO 20K', label: 'ISO 20K' },
-    { value: 'CMMI-DEV', label: 'CMMI-DEV' },
-    { value: 'ISO 27001 (BS 7799 merged)', label: 'ISO 27001 (BS 7799 merged)' },
-    { value: 'CMMI-SVC', label: 'CMMI-SVC' },
-    { value: 'ISO 9001 Quality', label: 'ISO 9001 Quality' },
-    { value: 'COBIT', label: 'COBIT' },
-    { value: 'PCMM', label: 'PCMM' },
-    { value: 'COPC 2000', label: 'COPC 2000' },
-    { value: 'Six Sigma Businesses', label: 'Six Sigma Businesses' },
-    { value: 'eSCM Establishing', label: 'eSCM Establishing' },
-    { value: 'Others', label: 'Others' }
+    { value: 'BS 15000', label: t.bs15000 },
+    { value: 'ISO 20K', label: t.iso20k },
+    { value: 'CMMI-DEV', label: t.cmmiDev },
+    { value: 'ISO 27001 (BS 7799 merged)', label: t.iso27001 },
+    { value: 'CMMI-SVC', label: t.cmmiSvc },
+    { value: 'ISO 9001 Quality', label: t.iso9001 },
+    { value: 'COBIT', label: t.cobit },
+    { value: 'PCMM', label: t.pcmm },
+    { value: 'COPC 2000', label: t.copc2000 },
+    { value: 'Six Sigma Businesses', label: t.sixSigma },
+    { value: 'eSCM Establishing', label: t.escm },
+    { value: 'Others', label: t.others }
   ]
 
   const partnershipsOptions: OptionType[] = [
-    { value: 'Microsoft Certified Partner', label: 'Microsoft Certified Partner' },
-    { value: 'HP Preferred Partner', label: 'HP Preferred Partner' },
-    { value: 'Oracle Certified Partner', label: 'Oracle Certified Partner' },
-    { value: 'IBM Partner', label: 'IBM Partner' },
-    { value: 'Intel Certified Partner', label: 'Intel Certified Partner' },
-    { value: 'Cisco Partner', label: 'Cisco Partner' },
-    { value: 'Others', label: 'Others' }
+    { value: 'Microsoft Certified Partner', label: t.microsoftCertifiedPartner },
+    { value: 'HP Preferred Partner', label: t.hpPreferredPartner },
+    { value: 'Oracle Certified Partner', label: t.oracleCertifiedPartner },
+    { value: 'IBM Partner', label: t.ibmPartner },
+    { value: 'Intel Certified Partner', label: t.intelCertifiedPartner },
+    { value: 'Cisco Partner', label: t.ciscoPartner },
+    { value: 'Others', label: t.others }
   ]
 
   const nationalitiesOptions: OptionType[] = [
-    { value: 'Egyptian', label: 'Egyptian' },
-    { value: 'American', label: 'American' },
-    { value: 'British', label: 'British' },
-    { value: 'Canadian', label: 'Canadian' },
-    { value: 'French', label: 'French' },
-    { value: 'German', label: 'German' },
-    { value: 'Indian', label: 'Indian' },
-    { value: 'Italian', label: 'Italian' },
-    { value: 'Japanese', label: 'Japanese' },
-    { value: 'Mexican', label: 'Mexican' },
-    { value: 'Nigerian', label: 'Nigerian' },
-    { value: 'Russian', label: 'Russian' },
-    { value: 'South African', label: 'South African' },
-    { value: 'Spanish', label: 'Spanish' },
-    { value: 'Swedish', label: 'Swedish' },
-    { value: 'Turkish', label: 'Turkish' },
-    { value: 'Ukrainian', label: 'Ukrainian' },
-    { value: 'Vietnamese', label: 'Vietnamese' },
-    { value: 'Chinese', label: 'Chinese' },
-    { value: 'Brazilian', label: 'Brazilian' }
+    { value: 'Egyptian', label: t.egyptian },
+    { value: 'American', label: t.american },
+    { value: 'British', label: t.british },
+    { value: 'Canadian', label: t.canadian },
+    { value: 'French', label: t.french },
+    { value: 'German', label: t.german },
+    { value: 'Indian', label: t.indian },
+    { value: 'Italian', label: t.italian },
+    { value: 'Japanese', label: t.japanese },
+    { value: 'Mexican', label: t.mexican },
+    { value: 'Nigerian', label: t.nigerian },
+    { value: 'Russian', label: t.russian },
+    { value: 'South African', label: t.southAfrican },
+    { value: 'Spanish', label: t.spanish },
+    { value: 'Swedish', label: t.swedish },
+    { value: 'Turkish', label: t.turkish },
+    { value: 'Ukrainian', label: t.ukrainian },
+    { value: 'Vietnamese', label: t.vietnamese },
+    { value: 'Chinese', label: t.chinese },
+    { value: 'Brazilian', label: t.brazilian }
   ]
 
   const countryOptions: OptionType[] = [
-    { value: '', label: 'Select Country' },
+    { value: '', label: t.selectCountryPlaceholder },
     { value: 'Egypt', label: 'Egypt' },
     { value: 'United States', label: 'United States' },
     { value: 'United Kingdom', label: 'United Kingdom' },
@@ -396,7 +396,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
     { value: 'Burundi', label: 'Burundi' },
     { value: 'South Sudan', label: 'South Sudan' },
     { value: 'Somaliland', label: 'Somaliland' },
-    { value: 'Others', label: 'Others' }
+    { value: 'Others', label: t.others }
   ]
 
   // Custom Option component for checkbox in react-select
@@ -537,46 +537,46 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
   }
 
   const companyClassificationOptions: OptionType[] = [
-    { value: 'Technology', label: 'Technology' },
-    { value: 'Manufacturing', label: 'Manufacturing' },
-    { value: 'Services', label: 'Services' },
-    { value: 'Retail', label: 'Retail' },
-    { value: 'Others', label: 'Others' }
+    { value: 'Technology', label: t.technology },
+    { value: 'Manufacturing', label: t.manufacturing },
+    { value: 'Services', label: t.services },
+    { value: 'Retail', label: t.retail },
+    { value: 'Others', label: t.others }
   ]
 
   const subClassificationMapping: { [key: string]: OptionType[] } = {
     Technology: [
-      { value: 'Software Development', label: 'Software Development' },
-      { value: 'Hardware', label: 'Hardware' },
-      { value: 'Consulting', label: 'Consulting' },
-      { value: 'Others', label: 'Others' }
+      { value: 'Software Development', label: t.softwareDevelopment },
+      { value: 'Hardware', label: t.hardware },
+      { value: 'Consulting', label: t.consulting },
+      { value: 'Others', label: t.others }
     ],
     Manufacturing: [
-      { value: 'Production', label: 'Production' },
-      { value: 'Assembly', label: 'Assembly' },
-      { value: 'Others', label: 'Others' }
+      { value: 'Production', label: t.production },
+      { value: 'Assembly', label: t.assembly },
+      { value: 'Others', label: t.others }
     ],
     Services: [
-      { value: 'Consulting', label: 'Consulting' },
-      { value: 'Outsourcing', label: 'Outsourcing' },
-      { value: 'Others', label: 'Others' }
+      { value: 'Consulting', label: t.consulting },
+      { value: 'Outsourcing', label: t.outsourcing },
+      { value: 'Others', label: t.others }
     ],
     Retail: [
-      { value: 'E-commerce', label: 'E-commerce' },
-      { value: 'Physical Stores', label: 'Physical Stores' },
-      { value: 'Others', label: 'Others' }
+      { value: 'E-commerce', label: t.ecommerce },
+      { value: 'Physical Stores', label: t.physicalStores },
+      { value: 'Others', label: t.others }
     ],
     Others: [
-      { value: 'Others', label: 'Others' }
+      { value: 'Others', label: t.others }
     ]
   }
 
   const industrySectorsOptions: OptionType[] = [
-    { value: 'IT', label: 'IT' },
-    { value: 'Finance', label: 'Finance' },
-    { value: 'Healthcare', label: 'Healthcare' },
-    { value: 'Education', label: 'Education' },
-    { value: 'Others', label: 'Others' }
+    { value: 'IT', label: t.it },
+    { value: 'Finance', label: t.finance },
+    { value: 'Healthcare', label: t.healthcare },
+    { value: 'Education', label: t.education },
+    { value: 'Others', label: t.others }
   ]
 
   const handleCompanyClassificationChange = (index: number, selectedOption: any) => {
@@ -603,19 +603,21 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
 
   return (
     <form onSubmit={onSubmit} className="py-4">
-      <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">{t.financialInformation}</h2>
+      <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
+        {t.financialInformation}
+        </h2>
 
       {/* Financial Information */}
       <div className="space-y-6 mb-10">
         <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-          Financial Information
+        {t.financialInformation}
         </h3>
 
         <div className="grid md:grid-cols-2 gap-6">
 
           {/* Audited Balance Sheet */}
           <div className="mb-6 md:mb-0">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Audited Balance Sheet/P&L/Tax return + Certificate of Chartered Accountant <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.auditedBalanceSheet} <span className="text-red-500">*</span></label>
             <div className="flex items-center gap-2">
               <input
                 type="file"
@@ -629,21 +631,21 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 onClick={() => fileInputRef.current?.click()}
                 className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-all"
               >
-                Choose File
+                {t.chooseFile}
               </button>
-              <span className="text-sm text-gray-500">{formData.auditedBalanceSheet ? formData.auditedBalanceSheet.name : 'No file chosen'}</span>
+              <span className="text-sm text-gray-500">{formData.auditedBalanceSheet ? formData.auditedBalanceSheet.name : t.noFileChosen}</span>
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Paid Capital
+              {t.paidCapital}
               <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               className="input-field"
-              placeholder="Enter Paid capital"
+              placeholder={t.enterPaidCapital}
               value={formData.fiscalCapital}
               onChange={handleInputChange}
               name="fiscalCapital"
@@ -655,41 +657,41 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         {/* Domestic Sales Details */}
         <div className="space-y-4">
           <h4 className="text-md font-semibold text-gray-800 pb-2">
-            Domestic Sales Details
+            {t.domesticSalesDetails}
           </h4>
           <div className="space-y-4">
             {formData.domesticSalesDetails.map((detail, index) => (
               <div key={`domesticSales-${index}`} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 border border-gray-200 rounded-lg p-4 bg-gray-50">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Domestic Sales Year <span className="text-red-500">*</span>
+{t.domesticSalesYear} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     className="input-field"
-                    placeholder="Enter domestic sales Year"
+                    placeholder={t.enterDomesticSalesYear}
                     value={detail.year}
                     onChange={(e) => handleDynamicInputChange('domesticSalesDetails', index, 'year', e.target.value)}
                     name={`domesticSalesDetails.${index}.year`}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Domestic Sales Value <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.domesticSalesValue} <span className="text-red-500">*</span></label>
                   <input
                     type="text"
                     className="input-field"
-                    placeholder="Enter domestic sales value"
+                    placeholder={t.enterDomesticSalesValue}
                     value={detail.value}
                     onChange={(e) => handleDynamicInputChange('domesticSalesDetails', index, 'value', e.target.value)}
                     name={`domesticSalesDetails.${index}.value`}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Total Revenue Year <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.totalRevenueYear} <span className="text-red-500">*</span></label>
                   <input
                     type="text"
                     className="input-field"
-                    placeholder="Enter total revenue year"
+                    placeholder={t.enterTotalRevenueYear}
                     value={detail.totalRevenueYear}
                     onChange={(e) => handleDynamicInputChange('domesticSalesDetails', index, 'totalRevenueYear', e.target.value)}
                     name={`domesticSalesDetails.${index}.totalRevenueYear`}
@@ -723,11 +725,11 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Annual Revenue <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.annualRevenue} <span className="text-red-500">*</span></label>
             <input
               type="text"
               className="input-field"
-              placeholder="Enter annual revenue"
+              placeholder={t.enterAnnualRevenue}
               value={formData.annualRevenue}
               onChange={handleInputChange}
               name="annualRevenue"
@@ -739,23 +741,23 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         {/* Total No of Employees and Company Size */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Total No of Employees</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.totalNoOfEmployees}</label>
             <input
               type="text"
               className="input-field"
-              placeholder="Enter total number of employees"
+              placeholder={t.enterTotalNumberOfEmployees}
               value={formData.totalNoOfEmployees}
               onChange={handleInputChange}
               name="totalNoOfEmployees"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Company Size</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.companySize}</label>
             <Select
               options={companySizeOptions}
               value={companySizeOptions.find(option => option.value === formData.companySize)}
               onChange={handleCompanySizeChange}
-              placeholder="Select company size"
+              placeholder={t.selectCompanySize}
               className="basic-single"
               classNamePrefix="select"
             />
@@ -767,19 +769,19 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
       {/* Market Information */}
       <div className="space-y-6 mb-10">
         <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-          Market Information
+{t.marketInformation}
         </h3>
 
         {/* Key Technologies, Affiliations, Memberships */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Key Technologies</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.keyTechnologies}</label>
             <Select
               isMulti
               options={keyTechnologiesOptions}
               value={keyTechnologiesOptions.filter(option => formData.keyTechnologies.includes(option.value))}
               onChange={handleKeyTechChange}
-              placeholder="Select Key Technologies"
+              placeholder={t.selectKeyTechnologies}
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
@@ -791,20 +793,20 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                   type="text"
                   value={customKeyTech}
                   onChange={(e) => handleCustomKeyTechChange(e.target.value)}
-                  placeholder="Enter custom key technology"
+                  placeholder={t.enterCustomKeyTechnology}
                   className="input-field"
                 />
               </div>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Affiliation</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.affiliation}</label>
             <Select
               isMulti
               options={affiliationOptions}
               value={affiliationOptions.filter(option => formData.affiliation.includes(option.value))}
               onChange={handleAffiliationChange}
-              placeholder="Select Affiliations"
+              placeholder={t.selectAffiliations}
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
@@ -816,20 +818,20 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                   type="text"
                   value={customAffiliation}
                   onChange={(e) => handleCustomAffiliationChange(e.target.value)}
-                  placeholder="Enter custom affiliation"
+                  placeholder={t.enterCustomAffiliation}
                   className="input-field"
                 />
               </div>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Memberships</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.memberships}</label>
             <Select
               isMulti
               options={membershipsOptions}
               value={membershipsOptions.filter(option => formData.memberships.includes(option.value))}
               onChange={handleMembershipsChange}
-              placeholder="Select Memberships"
+              placeholder={t.selectMemberships}
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
@@ -841,7 +843,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                   type="text"
                   value={customMemberships}
                   onChange={(e) => handleCustomMembershipsChange(e.target.value)}
-                  placeholder="Enter custom membership"
+                  placeholder={t.enterCustomMembership}
                   className="input-field"
                 />
               </div>
@@ -853,13 +855,13 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Certificates</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.certificates}</label>
             <Select
               isMulti
               options={certificatesOptions}
               value={certificatesOptions.filter(option => formData.certificates.includes(option.value))}
               onChange={handleCertificatesChange}
-              placeholder="Select Certificates"
+              placeholder={t.selectCertificates}
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
@@ -871,20 +873,20 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                   type="text"
                   value={customCertificates}
                   onChange={(e) => handleCustomCertificatesChange(e.target.value)}
-                  placeholder="Enter custom certificate"
+                  placeholder={t.enterCustomCertificate}
                   className="input-field"
                 />
               </div>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Partnerships</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t.partnerships}</label>
             <Select
               isMulti
               options={partnershipsOptions}
               value={partnershipsOptions.filter(option => formData.partnerships.includes(option.value))}
               onChange={handlePartnershipsChange}
-              placeholder="Select Partnerships"
+              placeholder={t.selectPartnerships}
               className="basic-multi-select"
               classNamePrefix="select"
               components={{ Option: CheckboxOption }}
@@ -896,7 +898,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                   type="text"
                   value={customPartnerships}
                   onChange={(e) => handleCustomPartnershipsChange(e.target.value)}
-                  placeholder="Enter custom partnership"
+                  placeholder={t.enterCustomPartnership}
                   className="input-field"
                 />
               </div>
@@ -906,28 +908,28 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
 
         {/* Products Section */}
         <div className="mb-6">
-          <h4 className="font-medium mb-3">Products</h4>
+          <h4 className="font-medium mb-3">{t.products}</h4>
           {formData.products.map((product: { name: string; description: string }, index: number) => (
             <div key={`product-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.productName}</label>
                   <input
                     type="text"
                     value={product.name}
                     onChange={(e) => handleDynamicInputChange('products', index, 'name', e.target.value)}
                     className="input-field"
-                    placeholder="Product Name"
+                    placeholder={t.productName}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Product Description</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.productDescription}</label>
                   <input
                     type="text"
                     value={product.description}
                     onChange={(e) => handleDynamicInputChange('products', index, 'description', e.target.value)}
                     className="input-field"
-                    placeholder="Product Description"
+                    placeholder={t.productDescription}
                   />
                 </div>
               </div>
@@ -959,28 +961,28 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
 
         {/* Services Section */}
         <div className="mb-6">
-          <h4 className="font-medium mb-3">Services</h4>
+          <h4 className="font-medium mb-3">{t.services}</h4>
           {formData.services.map((service: { name: string; description: string }, index: number) => (
             <div key={`service-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.serviceName}</label>
                   <input
                     type="text"
                     value={service.name}
                     onChange={(e) => handleDynamicInputChange('services', index, 'name', e.target.value)}
                     className="input-field"
-                    placeholder="Service Name"
+                    placeholder={t.serviceName}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Service Description</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.serviceDescription}</label>
                   <input
                     type="text"
                     value={service.description}
                     onChange={(e) => handleDynamicInputChange('services', index, 'description', e.target.value)}
                     className="input-field"
-                    placeholder="Service Description"
+                    placeholder={t.serviceDescription}
                   />
                 </div>
               </div>
@@ -1012,71 +1014,71 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
 
         {/* Customer Reference */}
         <div className="mb-6">
-          <h4 className="font-medium mb-3">Customer Reference</h4>
+          <h4 className="font-medium mb-3">{t.customerReference}</h4>
           {formData.customerReferences.map((reference: { name: string; country: string; projectSize: string; scope: string; industriesSector: string; description: string }, index: number) => (
             <div key={`reference-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.customerName}</label>
                   <input
                     type="text"
                     value={reference.name}
                     onChange={(e) => handleDynamicInputChange('customerReferences', index, 'name', e.target.value)}
                     className="input-field"
-                    placeholder="Customer Name"
+                    placeholder={t.customerName}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.country}</label>
                   <Select
                     options={countryOptions}
                     value={countryOptions.find(option => option.value === reference.country)}
                     onChange={(selectedOption) => handleDynamicInputChange('customerReferences', index, 'country', selectedOption ? selectedOption.value : '')}
-                    placeholder="Select Country"
+                    placeholder={t.selectCountry}
                     className="basic-single"
                     classNamePrefix="select"
                     isClearable
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Project Size</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.projectSize}</label>
                   <input
                     type="text"
                     value={reference.projectSize}
                     onChange={(e) => handleDynamicInputChange('customerReferences', index, 'projectSize', e.target.value)}
                     className="input-field"
-                    placeholder="Project Size"
+                    placeholder={t.projectSize}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Scope</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.scope}</label>
                   <input
                     type="text"
                     value={reference.scope}
                     onChange={(e) => handleDynamicInputChange('customerReferences', index, 'scope', e.target.value)}
                     className="input-field"
-                    placeholder="Scope"
+                    placeholder={t.scope}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Industries Sector</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.industriesSector}</label>
                   <input
                     type="text"
                     value={reference.industriesSector}
                     onChange={(e) => handleDynamicInputChange('customerReferences', index, 'industriesSector', e.target.value)}
                     className="input-field"
-                    placeholder="Industries Sector"
+                    placeholder={t.industriesSector}
                   />
                 </div>
               </div>
               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Project Description</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.projectDescription}</label>
                   <input
                     type="text"
                     value={reference.description}
                     onChange={(e) => handleDynamicInputChange('customerReferences', index, 'description', e.target.value)}
                     className="input-field"
-                    placeholder="Project Description"
+                    placeholder={t.projectDescription}
                   />
                 </div>
               <div className="flex justify-end mt-2">
@@ -1107,19 +1109,19 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
 
         {/* Company Classifications */}
         <div className="mb-6">
-          <h4 className="font-medium mb-3">Company Classifications</h4>
+          <h4 className="font-medium mb-3">{t.companyClassifications}</h4>
           {formData.companyClassification.map((classification, index) => (
             <div key={`classification-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Company Classifications <span className="text-red-500">*</span>
+{t.companyClassifications} <span className="text-red-500">*</span>
                   </label>
                   <Select
                     options={companyClassificationOptions}
                     value={companyClassificationOptions.find(option => option.value === classification.companyClassification)}
                     onChange={(selectedOption) => handleCompanyClassificationChange(index, selectedOption)}
-                    placeholder="Select Company Classification"
+                    placeholder={t.selectCompanyClassification}
                     className="basic-single"
                     classNamePrefix="select"
                     isClearable
@@ -1127,13 +1129,13 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Company's Sub Classification <span className="text-red-500">*</span>
+                    {t.companySubClassification} <span className="text-red-500">*</span>
                   </label>
                   <Select
                     options={subClassificationMapping[classification.companyClassification] || []}
                     value={(subClassificationMapping[classification.companyClassification] || []).find(option => option.value === classification.subClassification)}
                     onChange={(selectedOption) => handleSubClassificationChange(index, selectedOption)}
-                    placeholder="Select Sub Classification"
+                    placeholder={t.selectSubClassification}
                     className="basic-single"
                     classNamePrefix="select"
                     isClearable
@@ -1141,13 +1143,13 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Industry Sectors
+                    {t.industrySectors}
                   </label>
                   <Select
                     options={industrySectorsOptions}
                     value={industrySectorsOptions.find(option => option.value === formData.industrySectors)}
                     onChange={handleIndustrySectorsChange}
-                    placeholder="Select Industry Sector"
+                    placeholder={t.selectIndustrySector}
                     className="basic-single"
                     classNamePrefix="select"
                     isClearable
@@ -1193,7 +1195,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
 
         {/* Do You Export Section */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Do You Export? <span className="text-red-500">*</span></label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{t.export}? <span className="text-red-500">*</span></label>
           <div className="flex items-center gap-4">
             <label className="inline-flex items-center">
               <input
@@ -1204,7 +1206,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 onChange={(e) => handleRadioChange('export', e.target.value)}
                 className="form-radio h-4 w-4 text-blue-600"
               />
-              <span className="ml-2">Yes</span>
+              <span className="ml-2">{t.yes}</span>
             </label>
             <label className="inline-flex items-center">
               <input
@@ -1215,7 +1217,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 onChange={(e) => handleRadioChange('export', e.target.value)}
                 className="form-radio h-4 w-4 text-blue-600"
               />
-              <span className="ml-2">No</span>
+              <span className="ml-2">{t.no}</span>
             </label>
           </div>
         </div>
@@ -1224,61 +1226,61 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
           <>
             {/* Export Information */}
             <div className="mb-6">
-              <h4 className="font-medium mb-3">Export Information</h4>
+              <h4 className="font-medium mb-3">{t.exportInformation}</h4>
               {formData.exportInformation.map((exportInfo, index) => (
                 <div key={`export-${index}`} className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.year}</label>
                       <input
                         type="text"
                         value={exportInfo.year}
                         onChange={(e) => handleDynamicInputChange('exportInformation', index, 'year', e.target.value)}
                         className="input-field"
-                        placeholder="Year"
+                        placeholder={t.year}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Market (Region)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.marketRegion}</label>
                       <input
                         type="text"
                         value={exportInfo.marketRegion}
                         onChange={(e) => handleDynamicInputChange('exportInformation', index, 'marketRegion', e.target.value)}
                         className="input-field"
-                        placeholder="Market region"
+                        placeholder={t.marketRegion}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.country}</label>
                       <input
                         type="text"
                         value={exportInfo.country}
                         onChange={(e) => handleDynamicInputChange('exportInformation', index, 'country', e.target.value)}
                         className="input-field"
-                        placeholder="Country"
+                        placeholder={t.country}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Types products / Services Exported</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.typesProductsServicesExported}</label>
                       <div className="relative">
                         <input
                           type="text"
                           value={exportInfo.valueExported}
                           onChange={(e) => handleDynamicInputChange('exportInformation', index, 'valueExported', e.target.value)}
                           className="input-field"
-                          placeholder="Types products / Services Exported"
+                          placeholder={t.typesProductsServicesExported}
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Total amount of exports / Year in USD</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.totalAmountExportsYearUSD}</label>
                       <div className="relative">
                         <input
                           type="text"
                           value={exportInfo.totalAmountExported}
                           onChange={(e) => handleDynamicInputChange('exportInformation', index, 'totalAmountExported', e.target.value)}
                           className="input-field"
-                          placeholder="Total amount of exports / Year in USD"
+                          placeholder={t.totalAmountExportsYearUSD}
                         />
                       </div>
                     </div>
@@ -1314,7 +1316,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         {/* Type of Ownership */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Type of Ownership (selected (100% Egyptian))? <span className="text-red-500">*</span>
+{t.ownership} ({t.selected100PercentEgyptian})? <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center gap-4">
             <label className="inline-flex items-center">
@@ -1326,7 +1328,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 onChange={(e) => handleRadioChange('ownershipNationality', e.target.value)}
                 className="form-radio h-4 w-4 text-blue-600"
               />
-              <span className="ml-2">Yes</span>
+              <span className="ml-2">{t.yes}</span>
             </label>
             <label className="inline-flex items-center">
               <input
@@ -1337,7 +1339,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 onChange={(e) => handleRadioChange('ownershipNationality', e.target.value)}
                 className="form-radio h-4 w-4 text-blue-600"
               />
-              <span className="ml-2">No</span>
+              <span className="ml-2">{t.no}</span>
             </label>
           </div>
         </div>
@@ -1348,12 +1350,12 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                 <div className="">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Percentage Of Egyptian OwnerShip</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.percentageOfEgyptianOwnership}</label>
                   <div className="relative">
                     <input
                       type="text"
                       className="input-field pr-8"
-                      placeholder="Percentage Of Egyptian OwnerShip"
+                      placeholder={t.percentageOfEgyptianOwnership}
                       value={formData.percentageEgyptianOwnership}
                       onChange={handleInputChange}
                       name="percentageEgyptianOwnership"
@@ -1363,12 +1365,12 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 </div>
 
                 <div className="">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Percentage Of NonEgyptian OwnerShip</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.percentageOfNonEgyptianOwnership}</label>
                   <div className="relative">
                     <input
                       type="text"
                       className="input-field pr-8"
-                      placeholder="Percentage Of NonEgyptian OwnerShip"
+                      placeholder={t.percentageOfNonEgyptianOwnership}
                       value={formData.percentageNonEgyptianOwnership}
                       onChange={handleInputChange}
                       name="percentageNonEgyptianOwnership"
@@ -1378,12 +1380,12 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 </div>
 
                 <div className="">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Partners Or Shareholders Nationalities</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.partnersOrShareholdersNationalities}</label>
                   <Select
                     options={nationalitiesOptions}
                     value={nationalitiesOptions.find(option => option.value === formData.partnersNationalities)}
                     onChange={handlePartnersNationalitiesChange}
-                    placeholder="Select nationality"
+                    placeholder={t.selectNationality}
                     className="basic-single"
                     classNamePrefix="select"
                     isClearable

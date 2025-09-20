@@ -40,20 +40,20 @@ const Header: React.FC<HeaderProps> = ({ onLogoClick }) => {
              <button
                onClick={toggleLanguage}
                className="hover:bg-gray-100 rounded-lg transition-all duration-300 flex items-center justify-center"
-               title={language === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+               title={language === 'en' ? t.switchToArabic : t.switchToEnglish}
              >
                {language === 'en' ? (
                  // Egyptian Flag (when current language is English, show Egypt flag to switch to Arabic)
                  <img 
                    src="/images/ar.png" 
-                   alt="العربية" 
+                   alt={t.arabicFlagAlt} 
                    className="w-6 h-4 object-cover rounded-sm cursor-pointer"
                  />
                ) : (
                  // English Flag (when current language is Arabic, show English flag to switch to English)
                  <img 
                    src="/images/en.png" 
-                   alt="English" 
+                   alt={t.englishFlagAlt} 
                    className="w-6 h-4 object-cover rounded-sm cursor-pointer"
                  />
                )}

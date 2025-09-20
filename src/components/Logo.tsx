@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from '../hooks/useTranslation'
 
 interface LogoProps {
   variant?: 'default' | 'white'
@@ -7,6 +8,7 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ variant = 'default', onClick, className = '' }) => {
+  const t = useTranslation()
   const isWhite = variant === 'white'
   
   return (
@@ -19,7 +21,7 @@ const Logo: React.FC<LogoProps> = ({ variant = 'default', onClick, className = '
           <div className={`h-14 ${isWhite ? 'bg-transparent' : 'bg-white'} rounded-lg flex items-center justify-center overflow-hidden`}>
             <img 
               src="/images/itida-logo.png" 
-              alt="ITIDA Logo" 
+              alt={t.itidaLogoAlt} 
               className={`w-full h-full object-contain ${isWhite ? 'brightness-0 invert' : ''}`}
               onError={(e) => {
                 // Fallback to text if image fails to load
