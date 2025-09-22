@@ -27,7 +27,7 @@ const ComprehensiveDataTest: React.FC = () => {
         const governorates = loadLookupData('governorates')
         const countries = loadLookupData('countries')
         const legalTypes = loadLookupData('legalTypes')
-        
+
         results.lookupData = {
           success: true,
           governoratesCount: governorates?.length || 0,
@@ -61,7 +61,7 @@ const ComprehensiveDataTest: React.FC = () => {
           email: company.credentials?.email,
           companyName: company.registrationFormData?.ldv_englishname
         })) || []
-        
+
         results.credentials = {
           success: true,
           credentials: testCredentials
@@ -79,7 +79,7 @@ const ComprehensiveDataTest: React.FC = () => {
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Comprehensive Data Loading Test</h2>
-      
+
       <div className="space-y-4">
         {/* Fake Companies Test */}
         <div className="border rounded-lg p-4">

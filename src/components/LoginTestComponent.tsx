@@ -38,7 +38,7 @@ const LoginTestComponent: React.FC = () => {
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Login Test Component</h2>
-      
+
       <div className="mb-4">
         <p className="text-sm text-gray-600 mb-2">Current Status:</p>
         <p>Authenticated: {isAuthenticated ? 'Yes' : 'No'}</p>
