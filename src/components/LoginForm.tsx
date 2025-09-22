@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { useLanguage } from '../contexts/LanguageContext'
-import { translations } from '../contexts/LanguageContext'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { translations, useLanguage } from '../contexts/LanguageContext'
 
 interface LoginFormProps {
   onForgotPassword?: () => void
@@ -14,7 +13,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
   const t = translations[language]
   const navigate = useNavigate()
   const { login, loading } = useAuth()
-  
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -28,7 +27,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
     const checked = (e.target as HTMLInputElement).checked
-    
+
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
@@ -44,9 +43,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
 
     try {
       const result = await login(formData.username, formData.password)
-      
+
       console.log('Login result:', result)
-      
+
       if (result.success) {
         // Redirect to profile page
         navigate('/profile')
@@ -155,7 +154,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
                   />
                   <span className="ml-2 text-sm text-gray-700">{t.rememberMe}</span>
                 </label>
-                <button 
+                <button
                   type="button"
                   onClick={onForgotPassword}
                   className="text-sm text-itida-blue hover:text-itida-dark underline bg-transparent border-none cursor-pointer"
@@ -184,30 +183,30 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
               </button>
             </form>
 
-                               {/* Demo Credentials */}
-                   <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                     <h4 className="text-sm font-medium text-blue-900 mb-2">Demo Credentials:</h4>
-                     <div className="text-xs text-blue-700 space-y-1">
-                       <div><strong>Advanced Digital:</strong> advancedigital / ads2024!</div>
-                       <div><strong>Green Energy:</strong> greenenergy / get2024!</div>
-                       <div><strong>Startup Hub:</strong> startupinnovations / sih2024!</div>
-                       <div><strong>Creative Design:</strong> creativedesign / cds2024!</div>
-                     </div>
-                   </div>
+            {/* Demo Credentials */}
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+              <h4 className="text-sm font-medium text-blue-900 mb-2">Demo Credentials:</h4>
+              <div className="text-xs text-blue-700 space-y-1">
+                <div><strong>Advanced Digital:</strong> advancedigital / ads2024!</div>
+                <div><strong>Green Energy:</strong> greenenergy / get2024!</div>
+                <div><strong>Startup Hub:</strong> startupinnovations / sih2024!</div>
+                <div><strong>Creative Design:</strong> creativedesign / cds2024!</div>
+              </div>
+            </div>
 
-                   {/* Additional Info */}
-                   <div className="mt-8 text-center">
-                     <p className="text-sm text-gray-600">
-                       {t.dontHaveAccount}{' '}
-                       <button
-                         type="button"
-                         onClick={onRegister}
-                         className="text-itida-blue hover:text-itida-dark font-medium underline bg-transparent border-none cursor-pointer"
-                       >
-                         {t.registerHere}
-                       </button>
-                     </p>
-                   </div>
+            {/* Additional Info */}
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-600">
+                {t.dontHaveAccount}{' '}
+                <button
+                  type="button"
+                  onClick={onRegister}
+                  className="text-itida-blue hover:text-itida-dark font-medium underline bg-transparent border-none cursor-pointer"
+                >
+                  {t.registerHere}
+                </button>
+              </p>
+            </div>
           </div>
 
           {/* Right Side - Visual Content */}
@@ -233,11 +232,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
                   ].map((role) => (
                     <label
                       key={role.value}
-                      className={`relative cursor-pointer rounded-lg border-2 p-4 text-center text-gray-500 transition-all duration-300 ${
-                        formData.userRole === role.value
+                      className={`relative cursor-pointer rounded-lg border-2 p-4 text-center text-gray-500 transition-all duration-300 ${formData.userRole === role.value
                           ? 'border-itida-blue bg-blue-50 text-itida-blue'
                           : 'border-gray-200 hover:border-gray-300'
-                      }`}
+                        }`}
                     >
                       <input
                         type="radio"

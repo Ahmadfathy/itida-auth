@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { loadFakeCompaniesData } from '../utils/loadMockData'
 
 export interface CompanyCredentials {
@@ -57,15 +57,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (username: string, password: string): Promise<{ success: boolean; message: string; company?: Company }> => {
     setLoading(true)
-    
+
     try {
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000))
-      
+
       const companiesData = loadFakeCompaniesData()
       console.log('Available companies:', companiesData.companies.map(c => ({ username: c.credentials.username, password: c.credentials.password })))
       console.log('Login attempt:', { username, password })
-      
+
       const company = companiesData.companies.find(
         comp => comp.credentials.username === username && comp.credentials.password === password
       )
@@ -76,7 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setCurrentCompany(company)
         setIsAuthenticated(true)
         localStorage.setItem('currentCompany', JSON.stringify(company))
-        
+
         return {
           success: true,
           message: `Welcome back, ${company.registrationFormData.ldv_englishname}!`,
