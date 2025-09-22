@@ -1,6 +1,8 @@
 // Fake API Service for Registration Form
 // This service provides mock data and endpoints for all registration form functionality
 
+import { loadLookupData, loadRegistrationData, loadRegistrationHistory } from '../utils/loadMockData'
+
 export interface CompanyHead {
   name: string
   position: string
@@ -205,191 +207,9 @@ export interface ValidationError {
   message: string
 }
 
-// Mock data generators
-const generateMockCompanyHead = (): CompanyHead => ({
-  name: 'Ahmed Mohamed Hassan',
-  position: 'CEO',
-  mobile: '+201234567890',
-  nationalId: '12345678901234',
-  email: 'ahmed.hassan@company.com',
-  email2: 'ahmed.hassan.personal@gmail.com'
-})
 
-const generateMockContactPerson = (): ContactPerson => ({
-  name: 'Sara Ali Mohamed',
-  position: 'Operations Manager',
-  mobile: '+201987654321',
-  nationalId: '98765432109876',
-  email: 'sara.ali@company.com'
-})
-
-const generateMockProduct = (): Product => ({
-  name: 'Enterprise Management System',
-  description: 'Comprehensive business management solution for small to medium enterprises'
-})
-
-const generateMockService = (): Service => ({
-  name: 'IT Consulting',
-  description: 'Strategic IT consulting services for digital transformation'
-})
-
-const generateMockCustomerReference = (): CustomerReference => ({
-  name: 'ABC Corporation',
-  country: 'Egypt',
-  projectSize: 'Large',
-  scope: 'Full-stack development',
-  industriesSector: 'Banking',
-  description: 'Developed a complete banking management system'
-})
-
-const generateMockExportInformation = (): ExportInformation => ({
-  year: '2023',
-  marketRegion: 'Middle East',
-  country: 'Saudi Arabia',
-  valueExported: 'Software Solutions',
-  totalAmountExported: 500000
-})
-
-const generateMockOwner = (): Owner => ({
-  name: 'Mohamed Ibrahim',
-  mobile: '+201112233445',
-  telephone: '+20234567890',
-  email: 'mohamed.ibrahim@company.com'
-})
-
-const generateMockDomesticSalesDetail = (): DomesticSalesDetail => ({
-  year: '2023',
-  value: '1000000',
-  totalRevenueYear: '1500000'
-})
-
-const generateMockCompanyBranch = (): CompanyBranch => ({
-  branchName: 'Cairo Branch',
-  branchCountry: 'Egypt',
-  branchGovernorate: 'Cairo',
-  branchCity: 'Cairo',
-  branchDistrict: 'Nasr City',
-  branchEmail: 'cairo@company.com',
-  mobilePhone: '+201234567890'
-})
-
-// Mock data
-const mockRegistrationData: RegistrationFormData = {
-  // Company Legal Information
-  ldv_englishname: 'Tech Solutions Egypt',
-  ldv_arabicname: 'حلول التكنولوجيا مصر',
-  ldv_commercialdenomination: 'TECH-2024-001',
-  ldv_legaltypecode: 'Limited Liability Company',
-  emailaddress1: 'info@techsolutions-egypt.com',
-  ldv_establishmentyear: '2020',
-  companyClassification: [
-    { companyClassification: 'Technology', subClassification: 'Software Development' },
-    { companyClassification: 'Services', subClassification: 'Consulting' }
-  ],
-  registerUsing: {
-    commercialRegistry: true,
-    unifiedCommercialRegistry: true,
-    taxRegistry: true
-  },
-  commercialRegistryNumber: 'CR-12345-2024',
-  commercialRegistryOffice: 'Cairo Commercial Registry',
-  classCode: 'Main Branch',
-  unifiedCommercialRegistryNumber: 'UCR-67890-2024',
-  taxRegistryNumber: 'TR-11111-2024',
-
-  // Contact Information
-  fullName: 'Ahmed Mohamed Hassan',
-  contact_jobtitle: 'partner',
-  contact_mobilephone: '+201234567890',
-  contact_mail: 'ahmed.hassan@techsolutions-egypt.com',
-  contact_ldv_nationalid: '12345678901234',
-  contact_ldv_nidissuedfrom: 'Cairo',
-  contact_ldv_nidissuedate: '01/2020',
-  requestApplicant: 'company-in-charge',
-  representative_fullName: '',
-  representative_jobtitle: '',
-  representative_mobilephone: '',
-  representative_mail: '',
-  representative_nationalid: '',
-  representative_nidissuedfrom: '',
-  representative_nidissuedate: '',
-
-  // Address Information
-  address: '123 Technology Street, Smart City',
-  governorate: 'cairo',
-  city: 'Cairo',
-  district: 'Nasr City',
-  Street: 'Technology Street',
-  companyWebsite: 'https://www.techsolutions-egypt.com',
-
-  // Branches
-  hasBranches: true,
-  branches: [generateMockCompanyBranch()],
-
-  // Activities and Attachments
-  activities: {
-    softwareDesign: true,
-    itSystems: true,
-    trustServices: false,
-    websitesPlatforms: true,
-    electronicsEmbedded: false,
-    contentDigitization: true,
-    callCenterBusiness: false,
-    consultingResearch: true,
-    trainingLearning: false
-  },
-  attachments: {
-    commercialRegister: null,
-    taxCard: null,
-    nationalId: null,
-    investmentGazette: null,
-    declarationUndertaking: null,
-    representativeAuthorization: null,
-    representativeNationalId: null
-  },
-
-  // Financial Information
-  fiscalCapital: '1000000',
-  domesticSalesDetails: [generateMockDomesticSalesDetail()],
-  domesticSalesValue: '1000000',
-  totalRevenueYear: '1500000',
-  annualRevenue: '1500000',
-  auditedBalanceSheet: null,
-  export: 'yes',
-  exportInformation: [generateMockExportInformation()],
-  ownershipNationality: 'yes',
-  percentageEgyptianOwnership: '100',
-  percentageNonEgyptianOwnership: '0',
-  partnersNationalities: 'Egyptian',
-  totalNoOfEmployees: '25',
-  yearOfEstablishment: '2020',
-  companySize: 'medium',
-  typeOfOwnership: 'Private',
-  owners: [generateMockOwner()],
-  companyData: 'Leading technology solutions provider',
-  products: [generateMockProduct()],
-  services: [generateMockService()],
-  customerReferences: [generateMockCustomerReference()],
-  parent: '',
-  child: '',
-  grandChild: '',
-  industrySectors: 'IT',
-  keyTechnologies: ['Microsoft', 'Java', 'Open Source'],
-  certificates: ['ISO 9001 Quality', 'CMMI-DEV'],
-  affiliation: ['MENA Innovation 2018'],
-  memberships: ['CIT', 'EITISAL'],
-  partnerships: ['Microsoft Certified Partner', 'Oracle Certified Partner'],
-  companyOverview: 'We are a leading technology company specializing in software development and IT consulting services.',
-
-  // Dynamic arrays
-  companyHeads: [generateMockCompanyHead()],
-  contactPersons: [generateMockContactPerson()],
-
-  // Additional fields
-  licenseReceiptMethod: 'email',
-  declarationAgreement: true,
-  companyOverView: 'We are a leading technology company specializing in software development and IT consulting services.'
-}
+// Mock data loaded from JSON
+const mockRegistrationData: RegistrationFormData = loadRegistrationData()
 
 // API Service Class
 class FakeApiService {
@@ -450,35 +270,7 @@ class FakeApiService {
   async getGovernorates(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const governorates = [
-      { value: 'cairo', label: 'Cairo' },
-      { value: 'giza', label: 'Giza' },
-      { value: 'alexandria', label: 'Alexandria' },
-      { value: 'sharqia', label: 'Sharqia' },
-      { value: 'gharbia', label: 'Gharbia' },
-      { value: 'menoufia', label: 'Menoufia' },
-      { value: 'qalyubia', label: 'Qalyubia' },
-      { value: 'port-said', label: 'Port Said' },
-      { value: 'suez', label: 'Suez' },
-      { value: 'ismailia', label: 'Ismailia' },
-      { value: 'kafr-el-sheikh', label: 'Kafr El Sheikh' },
-      { value: 'beheira', label: 'Beheira' },
-      { value: 'assiut', label: 'Assiut' },
-      { value: 'sohag', label: 'Sohag' },
-      { value: 'qena', label: 'Qena' },
-      { value: 'luxor', label: 'Luxor' },
-      { value: 'aswan', label: 'Aswan' },
-      { value: 'red-sea', label: 'Red Sea' },
-      { value: 'new-valley', label: 'New Valley' },
-      { value: 'matruh', label: 'Matruh' },
-      { value: 'north-sinai', label: 'North Sinai' },
-      { value: 'south-sinai', label: 'South Sinai' },
-      { value: 'beni-suef', label: 'Beni Suef' },
-      { value: 'fayoum', label: 'Fayoum' },
-      { value: 'minya', label: 'Minya' },
-      { value: 'dakahlia', label: 'Dakahlia' },
-      { value: 'damietta', label: 'Damietta' }
-    ]
+    const governorates = loadLookupData('governorates')
 
     return {
       success: true,
@@ -489,26 +281,7 @@ class FakeApiService {
   async getCountries(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const countries = [
-      { value: 'Egypt', label: 'Egypt' },
-      { value: 'United States', label: 'United States' },
-      { value: 'United Kingdom', label: 'United Kingdom' },
-      { value: 'Canada', label: 'Canada' },
-      { value: 'France', label: 'France' },
-      { value: 'Germany', label: 'Germany' },
-      { value: 'India', label: 'India' },
-      { value: 'Italy', label: 'Italy' },
-      { value: 'Japan', label: 'Japan' },
-      { value: 'Saudi Arabia', label: 'Saudi Arabia' },
-      { value: 'UAE', label: 'UAE' },
-      { value: 'Kuwait', label: 'Kuwait' },
-      { value: 'Qatar', label: 'Qatar' },
-      { value: 'Jordan', label: 'Jordan' },
-      { value: 'Lebanon', label: 'Lebanon' },
-      { value: 'Morocco', label: 'Morocco' },
-      { value: 'Tunisia', label: 'Tunisia' },
-      { value: 'Algeria', label: 'Algeria' }
-    ]
+    const countries = loadLookupData('countries')
 
     return {
       success: true,
@@ -519,20 +292,7 @@ class FakeApiService {
   async getLegalTypes(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const legalTypes = [
-      { value: 'Sole proprietorship Co', label: 'Sole Proprietorship Company' },
-      { value: 'Sole Corporation', label: 'Sole Corporation' },
-      { value: 'General Partnership', label: 'General Partnership' },
-      { value: 'Limited Liability Company', label: 'Limited Liability Company' },
-      { value: 'Joint', label: 'Joint' },
-      { value: 'Special Limited Partnership', label: 'Special Limited Partnership' },
-      { value: 'Inherited Company', label: 'Inherited Company' },
-      { value: 'Limited Partnership by Shares', label: 'Limited Partnership by Shares' },
-      { value: 'Cooperative Associations', label: 'Cooperative Associations' },
-      { value: 'De Facto Company', label: 'De Facto Company' },
-      { value: 'Branch of Foreign Company', label: 'Branch of Foreign Company' },
-      { value: 'Non-Profit Entities', label: 'Non-Profit Entities' }
-    ]
+    const legalTypes = loadLookupData('legalTypes')
 
     return {
       success: true,
@@ -543,15 +303,7 @@ class FakeApiService {
   async getCompanyClassifications(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const classifications = [
-      { value: 'technology', label: 'Technology' },
-      { value: 'consulting', label: 'Consulting' },
-      { value: 'manufacturing', label: 'Manufacturing' },
-      { value: 'retail', label: 'Retail' },
-      { value: 'finance', label: 'Finance' },
-      { value: 'healthcare', label: 'Healthcare' },
-      { value: 'education', label: 'Education' }
-    ]
+    const classifications = loadLookupData('companyClassifications')
 
     return {
       success: true,
@@ -562,17 +314,7 @@ class FakeApiService {
   async getKeyTechnologies(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const technologies = [
-      { value: 'IBM', label: 'IBM' },
-      { value: 'Microsoft', label: 'Microsoft' },
-      { value: 'Oracle', label: 'Oracle' },
-      { value: 'SUN', label: 'SUN' },
-      { value: 'Java', label: 'Java' },
-      { value: 'Open Source', label: 'Open Source' },
-      { value: 'SAP', label: 'SAP' },
-      { value: 'Sybase', label: 'Sybase' },
-      { value: 'Others', label: 'Others' }
-    ]
+    const technologies = loadLookupData('keyTechnologies')
 
     return {
       success: true,
@@ -583,20 +325,7 @@ class FakeApiService {
   async getCertificates(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const certificates = [
-      { value: 'BS 15000', label: 'BS 15000' },
-      { value: 'ISO 20K', label: 'ISO 20K' },
-      { value: 'CMMI-DEV', label: 'CMMI-DEV' },
-      { value: 'ISO 27001 (BS 7799 merged)', label: 'ISO 27001 (BS 7799 merged)' },
-      { value: 'CMMI-SVC', label: 'CMMI-SVC' },
-      { value: 'ISO 9001 Quality', label: 'ISO 9001 Quality' },
-      { value: 'COBIT', label: 'COBIT' },
-      { value: 'PCMM', label: 'PCMM' },
-      { value: 'COPC 2000', label: 'COPC 2000' },
-      { value: 'Six Sigma Businesses', label: 'Six Sigma Businesses' },
-      { value: 'eSCM Establishing', label: 'eSCM Establishing' },
-      { value: 'Others', label: 'Others' }
-    ]
+    const certificates = loadLookupData('certificates')
 
     return {
       success: true,
@@ -607,15 +336,7 @@ class FakeApiService {
   async getMemberships(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const memberships = [
-      { value: 'CIT', label: 'CIT' },
-      { value: 'EITISAL', label: 'EITISAL' },
-      { value: 'eLABs', label: 'eLABs' },
-      { value: 'ITI', label: 'ITI' },
-      { value: 'FoCCIT', label: 'FoCCIT' },
-      { value: 'ITEC', label: 'ITEC' },
-      { value: 'Others', label: 'Others' }
-    ]
+    const memberships = loadLookupData('memberships')
 
     return {
       success: true,
@@ -626,15 +347,7 @@ class FakeApiService {
   async getPartnerships(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const partnerships = [
-      { value: 'Microsoft Certified Partner', label: 'Microsoft Certified Partner' },
-      { value: 'HP Preferred Partner', label: 'HP Preferred Partner' },
-      { value: 'Oracle Certified Partner', label: 'Oracle Certified Partner' },
-      { value: 'IBM Partner', label: 'IBM Partner' },
-      { value: 'Intel Certified Partner', label: 'Intel Certified Partner' },
-      { value: 'Cisco Partner', label: 'Cisco Partner' },
-      { value: 'Others', label: 'Others' }
-    ]
+    const partnerships = loadLookupData('partnerships')
 
     return {
       success: true,
@@ -645,10 +358,7 @@ class FakeApiService {
   async getAffiliations(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const affiliations = [
-      { value: 'MENA Innovation 2018', label: 'MENA Innovation 2018' },
-      { value: 'Others', label: 'Others' }
-    ]
+    const affiliations = loadLookupData('affiliations')
 
     return {
       success: true,
@@ -659,19 +369,7 @@ class FakeApiService {
   async getNationalities(): Promise<ApiResponse<{ value: string; label: string }[]>> {
     await this.delayResponse(null)
 
-    const nationalities = [
-      { value: 'Egyptian', label: 'Egyptian' },
-      { value: 'American', label: 'American' },
-      { value: 'British', label: 'British' },
-      { value: 'Canadian', label: 'Canadian' },
-      { value: 'French', label: 'French' },
-      { value: 'German', label: 'German' },
-      { value: 'Indian', label: 'Indian' },
-      { value: 'Italian', label: 'Italian' },
-      { value: 'Japanese', label: 'Japanese' },
-      { value: 'Chinese', label: 'Chinese' },
-      { value: 'Brazilian', label: 'Brazilian' }
-    ]
+    const nationalities = loadLookupData('nationalities')
 
     return {
       success: true,
@@ -842,22 +540,7 @@ class FakeApiService {
   async getRegistrationHistory(): Promise<ApiResponse<{ id: string; companyName: string; status: string; submittedAt: string; lastUpdated: string }[]>> {
     await this.delayResponse(null)
 
-    const history = [
-      {
-        id: 'REG_001',
-        companyName: 'Tech Solutions Egypt',
-        status: 'approved',
-        submittedAt: '2024-01-15T10:30:00Z',
-        lastUpdated: '2024-01-20T14:45:00Z'
-      },
-      {
-        id: 'REG_002',
-        companyName: 'Digital Innovations Ltd',
-        status: 'under_review',
-        submittedAt: '2024-02-01T09:15:00Z',
-        lastUpdated: '2024-02-05T11:20:00Z'
-      }
-    ]
+    const history = loadRegistrationHistory()
 
     return {
       success: true,

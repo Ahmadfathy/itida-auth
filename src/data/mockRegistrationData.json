@@ -1,0 +1,581 @@
+{
+  "registrationFormData": {
+    "ldv_englishname": "Tech Solutions Egypt",
+    "ldv_arabicname": "حلول التكنولوجيا مصر",
+    "ldv_commercialdenomination": "TECH-2024-001",
+    "ldv_legaltypecode": "Limited Liability Company",
+    "emailaddress1": "info@techsolutions-egypt.com",
+    "ldv_establishmentyear": "2020",
+    "companyClassification": [
+      {
+        "companyClassification": "Technology",
+        "subClassification": "Software Development"
+      },
+      {
+        "companyClassification": "Services",
+        "subClassification": "Consulting"
+      }
+    ],
+    "registerUsing": {
+      "commercialRegistry": true,
+      "unifiedCommercialRegistry": true,
+      "taxRegistry": true
+    },
+    "commercialRegistryNumber": "CR-12345-2024",
+    "commercialRegistryOffice": "Cairo Commercial Registry",
+    "classCode": "Main Branch",
+    "unifiedCommercialRegistryNumber": "UCR-67890-2024",
+    "taxRegistryNumber": "TR-11111-2024",
+    "fullName": "Ahmed Mohamed Hassan",
+    "contact_jobtitle": "partner",
+    "contact_mobilephone": "+201234567890",
+    "contact_mail": "ahmed.hassan@techsolutions-egypt.com",
+    "contact_ldv_nationalid": "12345678901234",
+    "contact_ldv_nidissuedfrom": "Cairo",
+    "contact_ldv_nidissuedate": "01/2020",
+    "requestApplicant": "company-in-charge",
+    "representative_fullName": "Sara Ali Mohamed",
+    "representative_jobtitle": "responsible_manager",
+    "representative_mobilephone": "+201987654321",
+    "representative_mail": "sara.ali@techsolutions-egypt.com",
+    "representative_nationalid": "98765432109876",
+    "representative_nidissuedfrom": "Giza",
+    "representative_nidissuedate": "03/2019",
+    "address": "123 Technology Street, Smart City",
+    "governorate": "cairo",
+    "city": "Cairo",
+    "district": "Nasr City",
+    "Street": "Technology Street",
+    "companyWebsite": "https://www.techsolutions-egypt.com",
+    "hasBranches": true,
+    "branches": [
+      {
+        "branchName": "Cairo Branch",
+        "branchCountry": "Egypt",
+        "branchGovernorate": "Cairo",
+        "branchCity": "Cairo",
+        "branchDistrict": "Nasr City",
+        "branchEmail": "cairo@techsolutions-egypt.com",
+        "mobilePhone": "+201234567890"
+      },
+      {
+        "branchName": "Alexandria Branch",
+        "branchCountry": "Egypt",
+        "branchGovernorate": "Alexandria",
+        "branchCity": "Alexandria",
+        "branchDistrict": "Smouha",
+        "branchEmail": "alexandria@techsolutions-egypt.com",
+        "mobilePhone": "+201234567891"
+      }
+    ],
+    "activities": {
+      "softwareDesign": true,
+      "itSystems": true,
+      "trustServices": false,
+      "websitesPlatforms": true,
+      "electronicsEmbedded": false,
+      "contentDigitization": true,
+      "callCenterBusiness": false,
+      "consultingResearch": true,
+      "trainingLearning": false
+    },
+    "attachments": {
+      "commercialRegister": null,
+      "taxCard": null,
+      "nationalId": null,
+      "investmentGazette": null,
+      "declarationUndertaking": null,
+      "representativeAuthorization": null,
+      "representativeNationalId": null
+    },
+    "fiscalCapital": "1000000",
+    "domesticSalesDetails": [
+      {
+        "year": "2023",
+        "value": "1000000",
+        "totalRevenueYear": "1500000"
+      },
+      {
+        "year": "2022",
+        "value": "800000",
+        "totalRevenueYear": "1200000"
+      }
+    ],
+    "domesticSalesValue": "1000000",
+    "totalRevenueYear": "1500000",
+    "annualRevenue": "1500000",
+    "auditedBalanceSheet": null,
+    "export": "yes",
+    "exportInformation": [
+      {
+        "year": "2023",
+        "marketRegion": "Middle East",
+        "country": "Saudi Arabia",
+        "valueExported": "Software Solutions",
+        "totalAmountExported": 500000
+      },
+      {
+        "year": "2023",
+        "marketRegion": "Africa",
+        "country": "Morocco",
+        "valueExported": "IT Consulting",
+        "totalAmountExported": 200000
+      }
+    ],
+    "ownershipNationality": "yes",
+    "percentageEgyptianOwnership": "100",
+    "percentageNonEgyptianOwnership": "0",
+    "partnersNationalities": "Egyptian",
+    "totalNoOfEmployees": "25",
+    "yearOfEstablishment": "2020",
+    "companySize": "medium",
+    "typeOfOwnership": "Private",
+    "owners": [
+      {
+        "name": "Mohamed Ibrahim",
+        "mobile": "+201112233445",
+        "telephone": "+20234567890",
+        "email": "mohamed.ibrahim@techsolutions-egypt.com"
+      }
+    ],
+    "companyData": "Leading technology solutions provider",
+    "products": [
+      {
+        "name": "Enterprise Management System",
+        "description": "Comprehensive business management solution for small to medium enterprises"
+      },
+      {
+        "name": "Mobile Banking App",
+        "description": "Secure mobile banking application for financial institutions"
+      }
+    ],
+    "services": [
+      {
+        "name": "IT Consulting",
+        "description": "Strategic IT consulting services for digital transformation"
+      },
+      {
+        "name": "Software Development",
+        "description": "Custom software development for various industries"
+      }
+    ],
+    "customerReferences": [
+      {
+        "name": "ABC Corporation",
+        "country": "Egypt",
+        "projectSize": "Large",
+        "scope": "Full-stack development",
+        "industriesSector": "Banking",
+        "description": "Developed a complete banking management system"
+      },
+      {
+        "name": "XYZ Industries",
+        "country": "Saudi Arabia",
+        "projectSize": "Medium",
+        "scope": "Mobile app development",
+        "industriesSector": "Manufacturing",
+        "description": "Created a mobile app for inventory management"
+      }
+    ],
+    "parent": "",
+    "child": "",
+    "grandChild": "",
+    "industrySectors": "IT",
+    "keyTechnologies": ["Microsoft", "Java", "Open Source", "React", "Node.js"],
+    "certificates": ["ISO 9001 Quality", "CMMI-DEV", "ISO 27001 (BS 7799 merged)"],
+    "affiliation": ["MENA Innovation 2018"],
+    "memberships": ["CIT", "EITISAL", "ITI"],
+    "partnerships": ["Microsoft Certified Partner", "Oracle Certified Partner", "IBM Partner"],
+    "companyOverview": "We are a leading technology company specializing in software development and IT consulting services. Our team of experienced developers and consultants work with clients across various industries to deliver innovative solutions that drive business growth and digital transformation.",
+    "companyHeads": [
+      {
+        "name": "Ahmed Mohamed Hassan",
+        "position": "CEO",
+        "mobile": "+201234567890",
+        "nationalId": "12345678901234",
+        "email": "ahmed.hassan@techsolutions-egypt.com",
+        "email2": "ahmed.hassan.personal@gmail.com"
+      },
+      {
+        "name": "Fatma Ali Ibrahim",
+        "position": "CTO",
+        "mobile": "+201234567891",
+        "nationalId": "12345678901235",
+        "email": "fatma.ali@techsolutions-egypt.com",
+        "email2": "fatma.ali.personal@gmail.com"
+      }
+    ],
+    "contactPersons": [
+      {
+        "name": "Sara Ali Mohamed",
+        "position": "Operations Manager",
+        "mobile": "+201987654321",
+        "nationalId": "98765432109876",
+        "email": "sara.ali@techsolutions-egypt.com"
+      },
+      {
+        "name": "Omar Hassan Ali",
+        "position": "Project Manager",
+        "mobile": "+201987654322",
+        "nationalId": "98765432109877",
+        "email": "omar.hassan@techsolutions-egypt.com"
+      }
+    ],
+    "licenseReceiptMethod": "email",
+    "declarationAgreement": true,
+    "companyOverView": "We are a leading technology company specializing in software development and IT consulting services. Our team of experienced developers and consultants work with clients across various industries to deliver innovative solutions that drive business growth and digital transformation."
+  },
+  "lookupData": {
+    "governorates": [
+      { "value": "cairo", "label": "Cairo" },
+      { "value": "giza", "label": "Giza" },
+      { "value": "alexandria", "label": "Alexandria" },
+      { "value": "sharqia", "label": "Sharqia" },
+      { "value": "gharbia", "label": "Gharbia" },
+      { "value": "menoufia", "label": "Menoufia" },
+      { "value": "qalyubia", "label": "Qalyubia" },
+      { "value": "port-said", "label": "Port Said" },
+      { "value": "suez", "label": "Suez" },
+      { "value": "ismailia", "label": "Ismailia" },
+      { "value": "kafr-el-sheikh", "label": "Kafr El Sheikh" },
+      { "value": "beheira", "label": "Beheira" },
+      { "value": "assiut", "label": "Assiut" },
+      { "value": "sohag", "label": "Sohag" },
+      { "value": "qena", "label": "Qena" },
+      { "value": "luxor", "label": "Luxor" },
+      { "value": "aswan", "label": "Aswan" },
+      { "value": "red-sea", "label": "Red Sea" },
+      { "value": "new-valley", "label": "New Valley" },
+      { "value": "matruh", "label": "Matruh" },
+      { "value": "north-sinai", "label": "North Sinai" },
+      { "value": "south-sinai", "label": "South Sinai" },
+      { "value": "beni-suef", "label": "Beni Suef" },
+      { "value": "fayoum", "label": "Fayoum" },
+      { "value": "minya", "label": "Minya" },
+      { "value": "dakahlia", "label": "Dakahlia" },
+      { "value": "damietta", "label": "Damietta" }
+    ],
+    "countries": [
+      { "value": "Egypt", "label": "Egypt" },
+      { "value": "United States", "label": "United States" },
+      { "value": "United Kingdom", "label": "United Kingdom" },
+      { "value": "Canada", "label": "Canada" },
+      { "value": "France", "label": "France" },
+      { "value": "Germany", "label": "Germany" },
+      { "value": "India", "label": "India" },
+      { "value": "Italy", "label": "Italy" },
+      { "value": "Japan", "label": "Japan" },
+      { "value": "Saudi Arabia", "label": "Saudi Arabia" },
+      { "value": "UAE", "label": "UAE" },
+      { "value": "Kuwait", "label": "Kuwait" },
+      { "value": "Qatar", "label": "Qatar" },
+      { "value": "Jordan", "label": "Jordan" },
+      { "value": "Lebanon", "label": "Lebanon" },
+      { "value": "Morocco", "label": "Morocco" },
+      { "value": "Tunisia", "label": "Tunisia" },
+      { "value": "Algeria", "label": "Algeria" }
+    ],
+    "legalTypes": [
+      { "value": "Sole proprietorship Co", "label": "Sole Proprietorship Company" },
+      { "value": "Sole Corporation", "label": "Sole Corporation" },
+      { "value": "General Partnership", "label": "General Partnership" },
+      { "value": "Limited Liability Company", "label": "Limited Liability Company" },
+      { "value": "Joint", "label": "Joint" },
+      { "value": "Special Limited Partnership", "label": "Special Limited Partnership" },
+      { "value": "Inherited Company", "label": "Inherited Company" },
+      { "value": "Limited Partnership by Shares", "label": "Limited Partnership by Shares" },
+      { "value": "Cooperative Associations", "label": "Cooperative Associations" },
+      { "value": "De Facto Company", "label": "De Facto Company" },
+      { "value": "Branch of Foreign Company", "label": "Branch of Foreign Company" },
+      { "value": "Non-Profit Entities", "label": "Non-Profit Entities" }
+    ],
+    "companyClassifications": [
+      { "value": "technology", "label": "Technology" },
+      { "value": "consulting", "label": "Consulting" },
+      { "value": "manufacturing", "label": "Manufacturing" },
+      { "value": "retail", "label": "Retail" },
+      { "value": "finance", "label": "Finance" },
+      { "value": "healthcare", "label": "Healthcare" },
+      { "value": "education", "label": "Education" }
+    ],
+    "keyTechnologies": [
+      { "value": "IBM", "label": "IBM" },
+      { "value": "Microsoft", "label": "Microsoft" },
+      { "value": "Oracle", "label": "Oracle" },
+      { "value": "SUN", "label": "SUN" },
+      { "value": "Java", "label": "Java" },
+      { "value": "Open Source", "label": "Open Source" },
+      { "value": "SAP", "label": "SAP" },
+      { "value": "Sybase", "label": "Sybase" },
+      { "value": "Others", "label": "Others" }
+    ],
+    "certificates": [
+      { "value": "BS 15000", "label": "BS 15000" },
+      { "value": "ISO 20K", "label": "ISO 20K" },
+      { "value": "CMMI-DEV", "label": "CMMI-DEV" },
+      { "value": "ISO 27001 (BS 7799 merged)", "label": "ISO 27001 (BS 7799 merged)" },
+      { "value": "CMMI-SVC", "label": "CMMI-SVC" },
+      { "value": "ISO 9001 Quality", "label": "ISO 9001 Quality" },
+      { "value": "COBIT", "label": "COBIT" },
+      { "value": "PCMM", "label": "PCMM" },
+      { "value": "COPC 2000", "label": "COPC 2000" },
+      { "value": "Six Sigma Businesses", "label": "Six Sigma Businesses" },
+      { "value": "eSCM Establishing", "label": "eSCM Establishing" },
+      { "value": "Others", "label": "Others" }
+    ],
+    "memberships": [
+      { "value": "CIT", "label": "CIT" },
+      { "value": "EITISAL", "label": "EITISAL" },
+      { "value": "eLABs", "label": "eLABs" },
+      { "value": "ITI", "label": "ITI" },
+      { "value": "FoCCIT", "label": "FoCCIT" },
+      { "value": "ITEC", "label": "ITEC" },
+      { "value": "Others", "label": "Others" }
+    ],
+    "partnerships": [
+      { "value": "Microsoft Certified Partner", "label": "Microsoft Certified Partner" },
+      { "value": "HP Preferred Partner", "label": "HP Preferred Partner" },
+      { "value": "Oracle Certified Partner", "label": "Oracle Certified Partner" },
+      { "value": "IBM Partner", "label": "IBM Partner" },
+      { "value": "Intel Certified Partner", "label": "Intel Certified Partner" },
+      { "value": "Cisco Partner", "label": "Cisco Partner" },
+      { "value": "Others", "label": "Others" }
+    ],
+    "affiliations": [
+      { "value": "MENA Innovation 2018", "label": "MENA Innovation 2018" },
+      { "value": "Others", "label": "Others" }
+    ],
+    "nationalities": [
+      { "value": "Egyptian", "label": "Egyptian" },
+      { "value": "American", "label": "American" },
+      { "value": "British", "label": "British" },
+      { "value": "Canadian", "label": "Canadian" },
+      { "value": "French", "label": "French" },
+      { "value": "German", "label": "German" },
+      { "value": "Indian", "label": "Indian" },
+      { "value": "Italian", "label": "Italian" },
+      { "value": "Japanese", "label": "Japanese" },
+      { "value": "Chinese", "label": "Chinese" },
+      { "value": "Brazilian", "label": "Brazilian" }
+    ]
+  },
+  "sampleCompanies": [
+    {
+      "id": "comp_1",
+      "name": "Tech Solutions Egypt",
+      "status": "active",
+      "industry": "Technology",
+      "employees": 25,
+      "established": 2020
+    },
+    {
+      "id": "comp_2",
+      "name": "Digital Innovations Ltd",
+      "status": "active",
+      "industry": "Software",
+      "employees": 50,
+      "established": 2018
+    },
+    {
+      "id": "comp_3",
+      "name": "Software House Cairo",
+      "status": "inactive",
+      "industry": "Technology",
+      "employees": 15,
+      "established": 2019
+    },
+    {
+      "id": "comp_4",
+      "name": "IT Services Company",
+      "status": "active",
+      "industry": "Consulting",
+      "employees": 30,
+      "established": 2021
+    }
+  ],
+  "registrationHistory": [
+    {
+      "id": "REG_001",
+      "companyName": "Tech Solutions Egypt",
+      "status": "approved",
+      "submittedAt": "2024-01-15T10:30:00Z",
+      "lastUpdated": "2024-01-20T14:45:00Z",
+      "reviewer": "Ahmed Hassan",
+      "notes": "All documents verified and approved"
+    },
+    {
+      "id": "REG_002",
+      "companyName": "Digital Innovations Ltd",
+      "status": "under_review",
+      "submittedAt": "2024-02-01T09:15:00Z",
+      "lastUpdated": "2024-02-05T11:20:00Z",
+      "reviewer": "Sara Mohamed",
+      "notes": "Pending additional documentation"
+    },
+    {
+      "id": "REG_003",
+      "companyName": "Software House Cairo",
+      "status": "rejected",
+      "submittedAt": "2024-01-10T14:20:00Z",
+      "lastUpdated": "2024-01-12T16:30:00Z",
+      "reviewer": "Omar Ali",
+      "notes": "Incomplete financial information"
+    }
+  ],
+  "validationExamples": {
+    "validCompanyNames": {
+      "english": [
+        "Tech Solutions Egypt",
+        "Digital Innovations Ltd",
+        "Software House Cairo",
+        "IT Services Company",
+        "Advanced Technology Group"
+      ],
+      "arabic": [
+        "حلول التكنولوجيا مصر",
+        "الابتكارات الرقمية المحدودة",
+        "بيت البرمجيات القاهرة",
+        "شركة خدمات تقنية المعلومات",
+        "مجموعة التكنولوجيا المتقدمة"
+      ]
+    },
+    "validNationalIds": [
+      "12345678901234",
+      "98765432109876",
+      "11223344556677",
+      "99887766554433",
+      "55667788990011"
+    ],
+    "validEmails": [
+      "info@techsolutions-egypt.com",
+      "ahmed.hassan@company.com",
+      "sara.ali@business.org",
+      "contact@innovations.net",
+      "support@services.co"
+    ],
+    "invalidExamples": {
+      "companyNames": {
+        "english": ["Tech123 Solutions", "Solutions@Tech", "Tech-Solutions-2024"],
+        "arabic": ["حلول123 التكنولوجيا", "حلول@التكنولوجيا", "حلول-التكنولوجيا-2024"]
+      },
+      "nationalIds": ["1234567890123", "123456789012345", "1234567890123a", "123456789012"],
+      "emails": ["invalid-email", "@company.com", "user@", "user.company.com"]
+    }
+  },
+  "fileUploadExamples": {
+    "validFiles": [
+      {
+        "name": "commercial_register.pdf",
+        "type": "application/pdf",
+        "size": 2048576,
+        "description": "Commercial registration document"
+      },
+      {
+        "name": "tax_card.jpg",
+        "type": "image/jpeg",
+        "size": 1536000,
+        "description": "Tax card image"
+      },
+      {
+        "name": "national_id.png",
+        "type": "image/png",
+        "size": 1024000,
+        "description": "National ID scan"
+      }
+    ],
+    "invalidFiles": [
+      {
+        "name": "large_document.pdf",
+        "type": "application/pdf",
+        "size": 5242880,
+        "description": "File too large (>3MB)"
+      },
+      {
+        "name": "document.txt",
+        "type": "text/plain",
+        "size": 1024,
+        "description": "Invalid file type"
+      }
+    ]
+  },
+  "formValidationRules": {
+    "requiredFields": [
+      "ldv_englishname",
+      "ldv_arabicname",
+      "ldv_legaltypecode",
+      "emailaddress1",
+      "contact_ldv_nationalid",
+      "contact_mobilephone",
+      "contact_mail"
+    ],
+    "optionalFields": [
+      "companyWebsite",
+      "representative_fullName",
+      "representative_mobilephone",
+      "representative_mail"
+    ],
+    "validationPatterns": {
+      "englishName": "^[A-Za-z\\s]+$",
+      "arabicName": "^[\\u0600-\\u06FF\\s]+$",
+      "nationalId": "^\\d{14}$",
+      "email": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+      "phone": "^\\+?[1-9]\\d{1,14}$",
+      "date": "^(0[1-9]|1[0-2])\\/\\d{4}$"
+    },
+    "fieldLimits": {
+      "companyName": { "min": 2, "max": 100 },
+      "nationalId": { "exact": 14 },
+      "phone": { "min": 10, "max": 15 },
+      "email": { "max": 254 },
+      "fileSize": { "max": 3145728 }
+    }
+  },
+  "apiEndpoints": {
+    "validation": [
+      "POST /api/validate/company-name",
+      "POST /api/validate/national-id",
+      "POST /api/validate/email"
+    ],
+    "lookups": [
+      "GET /api/lookups/governorates",
+      "GET /api/lookups/countries",
+      "GET /api/lookups/legal-types",
+      "GET /api/lookups/company-classifications",
+      "GET /api/lookups/key-technologies",
+      "GET /api/lookups/certificates",
+      "GET /api/lookups/memberships",
+      "GET /api/lookups/partnerships",
+      "GET /api/lookups/affiliations",
+      "GET /api/lookups/nationalities"
+    ],
+    "registration": [
+      "POST /api/registration/save-draft",
+      "GET /api/registration/load-draft/:id",
+      "POST /api/registration/submit",
+      "GET /api/registration/status/:id",
+      "GET /api/registration/history"
+    ],
+    "files": [
+      "POST /api/files/upload"
+    ],
+    "search": [
+      "GET /api/search/companies?q=:query"
+    ]
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2024-12-19T10:30:00Z",
+    "description": "Comprehensive mock data for ITIDA registration form",
+    "totalFields": 150,
+    "totalEndpoints": 25,
+    "supportedLanguages": ["en", "ar"],
+    "dataTypes": [
+      "string",
+      "number",
+      "boolean",
+      "array",
+      "object",
+      "file"
+    ]
+  }
+}
