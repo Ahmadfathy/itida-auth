@@ -36,7 +36,7 @@ interface FinancialData {
 
 const ProfilePage: React.FC = () => {
   const { language } = useLanguage();
-  const { isAuthenticated, currentCompany, logout } = useAuth();
+  const { isAuthenticated, currentCompany, logout, loading } = useAuth();
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(true);
@@ -45,12 +45,21 @@ const ProfilePage: React.FC = () => {
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  // Redirect to home if not authenticated
+  // Redirect to home if not authenticated (but wait for loading to complete)
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !isAuthenticated) {
       navigate('/');
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, loading, navigate]);
+
+  // Show loading spinner while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   const [financialData, setFinancialData] = useState<FinancialData>({
     fiscalCapital: '',
@@ -223,6 +232,97 @@ const ProfilePage: React.FC = () => {
         declarationAgreement: companyData.declarationAgreement || false,
         companyOverView: companyData.companyOverView || 'N/A'
       });
+    }
+  }, [currentCompany]);
+
+  // Function to calculate completion percentage
+  const calculateCompletionPercentage = (companyData: any): number => {
+    if (!companyData) return 0;
+
+    const fields = [
+      // Basic company information (20 points)
+      { value: companyData.ldv_englishname, weight: 2 },
+      { value: companyData.ldv_arabicname, weight: 2 },
+      { value: companyData.ldv_commercialdenomination, weight: 2 },
+      { value: companyData.ldv_legaltypecode, weight: 2 },
+      { value: companyData.emailaddress1, weight: 2 },
+      { value: companyData.ldv_establishmentyear, weight: 2 },
+      { value: companyData.commercialRegistryNumber, weight: 2 },
+      { value: companyData.taxRegistryNumber, weight: 2 },
+      { value: companyData.commercialRegistrationDate, weight: 2 },
+      { value: companyData.companyClassification && companyData.companyClassification.length > 0, weight: 2 },
+
+      // Contact information (15 points)
+      { value: companyData.governorate, weight: 2 },
+      { value: companyData.city, weight: 2 },
+      { value: companyData.district, weight: 2 },
+      { value: companyData.address, weight: 2 },
+      { value: companyData.companyWebsite, weight: 1 },
+      { value: companyData.contact_mobilephone, weight: 2 },
+      { value: companyData.contact_mail, weight: 2 },
+      { value: companyData.contact_ldv_nationalid, weight: 2 },
+
+      // Representative information (10 points)
+      { value: companyData.representative_fullName, weight: 2 },
+      { value: companyData.representative_jobtitle, weight: 2 },
+      { value: companyData.representative_mobilephone, weight: 2 },
+      { value: companyData.representative_mail, weight: 2 },
+      { value: companyData.representative_nationalid, weight: 2 },
+
+      // Financial information (15 points)
+      { value: companyData.fiscalCapital, weight: 3 },
+      { value: companyData.domesticSalesDetails && companyData.domesticSalesDetails.length > 0, weight: 3 },
+      { value: companyData.annualRevenue, weight: 3 },
+      { value: companyData.totalNoOfEmployees, weight: 2 },
+      { value: companyData.percentageEgyptianOwnership, weight: 2 },
+      { value: companyData.percentageNonEgyptianOwnership, weight: 2 },
+
+      // Activities and services (10 points)
+      { value: companyData.activities && Object.values(companyData.activities).some(Boolean), weight: 5 },
+      { value: companyData.products && companyData.products.length > 0, weight: 2.5 },
+      { value: companyData.services && companyData.services.length > 0, weight: 2.5 },
+
+      // Branches (5 points)
+      { value: companyData.branches && companyData.branches.length > 0, weight: 5 },
+
+      // Additional information (10 points)
+      { value: companyData.exportInformation && companyData.exportInformation.length > 0, weight: 3 },
+      { value: companyData.customerReferences && companyData.customerReferences.length > 0, weight: 3 },
+      { value: companyData.owners && companyData.owners.length > 0, weight: 2 },
+      { value: companyData.companyOverView, weight: 2 },
+
+      // Attachments (10 points)
+      { value: companyData.attachments?.commercialRegister, weight: 2 },
+      { value: companyData.attachments?.taxCard, weight: 2 },
+      { value: companyData.attachments?.nationalId, weight: 2 },
+      { value: companyData.attachments?.declarationUndertaking, weight: 2 },
+      { value: companyData.attachments?.representativeAuthorization, weight: 2 },
+
+      // Declaration (5 points)
+      { value: companyData.declarationAgreement, weight: 5 }
+    ];
+
+    let totalPoints = 0;
+    let maxPoints = 0;
+
+    fields.forEach(field => {
+      maxPoints += field.weight;
+      if (field.value && field.value !== '' && field.value !== 'N/A' && field.value !== 'غير متوفر') {
+        totalPoints += field.weight;
+      }
+    });
+
+    return Math.round((totalPoints / maxPoints) * 100);
+  };
+
+  // Update completion percentage when company data changes
+  useEffect(() => {
+    if (currentCompany) {
+      const completionPercentage = calculateCompletionPercentage(currentCompany.registrationFormData);
+      // Update the currentCompany object with the calculated percentage
+      if (currentCompany.completionPercentage !== completionPercentage) {
+        currentCompany.completionPercentage = completionPercentage;
+      }
     }
   }, [currentCompany]);
 
@@ -524,7 +624,17 @@ const ProfilePage: React.FC = () => {
               {currentCompany && (
                 <div className="text-sm text-gray-600 mb-2">
                   <div className="font-medium">{currentCompany.registrationFormData.ldv_arabicname}</div>
-                  <div className="text-xs text-gray-500">Status: {currentCompany.registrationStatus} ({currentCompany.completionPercentage}%)</div>
+                  <div className="text-xs text-gray-500">
+                    Status: {currentCompany.registrationStatus}
+                    <span className={`ml-1 font-semibold ${currentCompany.completionPercentage <= 40
+                      ? 'text-red-500'
+                      : currentCompany.completionPercentage <= 84
+                        ? 'text-yellow-500'
+                        : 'text-green-500'
+                      }`}>
+                      ({currentCompany.completionPercentage}%)
+                    </span>
+                  </div>
                 </div>
               )}
               <div className="text-gray-500 flex space-x-4 mt-1 text-sm">
@@ -568,7 +678,15 @@ const ProfilePage: React.FC = () => {
             <div className="flex flex-col items-end">
               <p className="text-sm text-gray-400 mb-1">{translations[language].profileCompletion}</p>
               <div className="w-48 bg-gray-200 rounded-full h-4">
-                <div className="bg-yellow-500 h-4 rounded-full" style={{ width: `${currentCompany ? currentCompany.completionPercentage : 50}%` }}>
+                <div
+                  className={`h-4 rounded-full ${currentCompany && currentCompany.completionPercentage <= 40
+                    ? 'bg-red-500'
+                    : currentCompany && currentCompany.completionPercentage <= 84
+                      ? 'bg-yellow-500'
+                      : 'bg-green-500'
+                    }`}
+                  style={{ width: `${currentCompany ? currentCompany.completionPercentage : 50}%` }}
+                >
                   <p className="text-xs text-white px-3 text-end">{currentCompany ? currentCompany.completionPercentage : 50}%</p>
                 </div>
               </div>
@@ -650,24 +768,11 @@ const ProfilePage: React.FC = () => {
         )}
 
         {/* Profile Details Section */}
-        <div className="bg-white rounded-lg shadow mt-6">
+        <div className="bg-white rounded-lg shadow mt-6 flex flex-col h-[600px]">
           <div className="flex justify-between items-center p-6 border-b border-gray-200">
             <h2 className="text-lg font-semibold">{translations[language].profileDetails}</h2>
-            <div className='flex gap-3'>
-              {!isEditMode ? (
-                <>
-                  <button className="btn-primary px-4 py-2" onClick={handleEditToggle}>{translations[language].editProfile}</button>
-                  <button className="btn-primary px-6 py-2" onClick={exportPDF}>{translations[language].exportPDF}</button>
-                </>
-              ) : (
-                <>
-                  <button className="btn-secondary px-4 py-2" onClick={handleCancel}>{translations[language].cancel}</button>
-                  <button className="btn-primary px-6 py-2" onClick={handleSave}>{translations[language].saveChanges}</button>
-                </>
-              )}
-            </div>
           </div>
-          <div id="profile-details-section" className="space-y-8 text-gray-600  p-6">
+          <div id="profile-details-section" className="space-y-8 text-gray-600 p-6 flex-1 overflow-y-auto">
             {/* Company Legal Information */}
             <div>
               <h3 className="text-md font-semibold mb-4">{translations[language].companyLegalInformation}</h3>
@@ -1485,7 +1590,7 @@ const ProfilePage: React.FC = () => {
                 ) : (
                   <>
                     <div>
-                      <p className="text-sm text-gray-400 mb-1">{translations[language].productName} ;ldf;lsdf</p>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].productName}</p>
                       <p className="font-semibold">-</p>
                     </div>
                     <div>
@@ -2501,6 +2606,21 @@ const ProfilePage: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Sticky Footer with Action Buttons */}
+          <div className="action-buttons flex justify-end gap-3 p-6 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+            {!isEditMode ? (
+              <>
+                <button className="btn-primary px-4 py-2" onClick={handleEditToggle}>{translations[language].editProfile}</button>
+                <button className="btn-primary px-6 py-2" onClick={exportPDF}>{translations[language].exportPDF}</button>
+              </>
+            ) : (
+              <>
+                <button className="btn-secondary px-4 py-2" onClick={handleCancel}>{translations[language].cancel}</button>
+                <button className="btn-primary px-6 py-2" onClick={handleSave}>{translations[language].saveChanges}</button>
+              </>
+            )}
           </div>
         </div>
       </div>
