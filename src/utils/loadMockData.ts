@@ -1,5 +1,6 @@
 // Utility function to load mock data from JSON file
 import mockData from '../data/mockRegistrationData.json'
+import fakeCompaniesData from '../data/fakeCompaniesData.json'
 
 export interface MockDataLoader {
   loadRegistrationData: () => any
@@ -8,6 +9,7 @@ export interface MockDataLoader {
   loadRegistrationHistory: () => any[]
   loadValidationExamples: () => any
   loadFormValidationRules: () => any
+  loadFakeCompaniesData: () => any
 }
 
 class MockDataLoaderService implements MockDataLoader {
@@ -36,6 +38,10 @@ class MockDataLoaderService implements MockDataLoader {
 
   loadFormValidationRules() {
     return this.data.formValidationRules
+  }
+
+  loadFakeCompaniesData() {
+    return fakeCompaniesData
   }
 
   // Helper method to get all lookup data
@@ -146,6 +152,7 @@ export const loadSampleCompanies = () => mockDataLoader.loadSampleCompanies()
 export const loadRegistrationHistory = () => mockDataLoader.loadRegistrationHistory()
 export const loadValidationExamples = () => mockDataLoader.loadValidationExamples()
 export const loadFormValidationRules = () => mockDataLoader.loadFormValidationRules()
+export const loadFakeCompaniesData = () => mockDataLoader.loadFakeCompaniesData()
 export const generateRandomData = (type: 'company' | 'person' | 'contact' | 'financial') =>
   mockDataLoader.generateRandomData(type)
 

@@ -1,0 +1,769 @@
+{
+  "companies": [
+    {
+      "id": "comp_001",
+      "registrationStatus": "completed",
+      "completionPercentage": 100,
+      "credentials": {
+        "username": "advancedigital",
+        "password": "ads2024!",
+        "email": "info@advancedigital-solutions.com"
+      },
+      "registrationFormData": {
+        "ldv_englishname": "Advanced Digital Solutions",
+        "ldv_arabicname": "الحلول الرقمية المتقدمة",
+        "ldv_commercialdenomination": "ADS-2024-001",
+        "ldv_legaltypecode": "Limited Liability Company",
+        "emailaddress1": "info@advancedigital-solutions.com",
+        "ldv_establishmentyear": "2019",
+        "companyClassification": [
+          {
+            "companyClassification": "Technology",
+            "subClassification": "Software Development"
+          },
+          {
+            "companyClassification": "Services",
+            "subClassification": "Digital Transformation"
+          }
+        ],
+        "registerUsing": {
+          "commercialRegistry": true,
+          "unifiedCommercialRegistry": true,
+          "taxRegistry": true
+        },
+        "commercialRegistryNumber": "CR-ADS-001-2024",
+        "commercialRegistryOffice": "Cairo Commercial Registry",
+        "classCode": "Main Branch",
+        "unifiedCommercialRegistryNumber": "UCR-ADS-001-2024",
+        "taxRegistryNumber": "TR-ADS-001-2024",
+        "fullName": "Mohamed Ahmed El-Sayed",
+        "contact_jobtitle": "founder",
+        "contact_mobilephone": "+201234567890",
+        "contact_mail": "mohamed.elsayed@advancedigital-solutions.com",
+        "contact_ldv_nationalid": "12345678901234",
+        "contact_ldv_nidissuedfrom": "Cairo",
+        "contact_ldv_nidissuedate": "01/2015",
+        "requestApplicant": "company-in-charge",
+        "representative_fullName": "Fatma Hassan Mohamed",
+        "representative_jobtitle": "general_manager",
+        "representative_mobilephone": "+201987654321",
+        "representative_mail": "fatma.hassan@advancedigital-solutions.com",
+        "representative_nationalid": "98765432109876",
+        "representative_nidissuedfrom": "Giza",
+        "representative_nidissuedate": "03/2016",
+        "address": "456 Innovation Street, Smart City",
+        "governorate": "cairo",
+        "city": "Cairo",
+        "district": "New Cairo",
+        "Street": "Innovation Street",
+        "companyWebsite": "https://www.advancedigital-solutions.com",
+        "hasBranches": true,
+        "branches": [
+          {
+            "branchName": "Cairo Main Branch",
+            "branchCountry": "Egypt",
+            "branchGovernorate": "Cairo",
+            "branchCity": "Cairo",
+            "branchDistrict": "New Cairo",
+            "branchEmail": "cairo@advancedigital-solutions.com",
+            "mobilePhone": "+201234567890"
+          },
+          {
+            "branchName": "Alexandria Branch",
+            "branchCountry": "Egypt",
+            "branchGovernorate": "Alexandria",
+            "branchCity": "Alexandria",
+            "branchDistrict": "Smouha",
+            "branchEmail": "alexandria@advancedigital-solutions.com",
+            "mobilePhone": "+201234567891"
+          }
+        ],
+        "activities": {
+          "softwareDesign": true,
+          "itSystems": true,
+          "trustServices": true,
+          "websitesPlatforms": true,
+          "electronicsEmbedded": false,
+          "contentDigitization": true,
+          "callCenterBusiness": false,
+          "consultingResearch": true,
+          "trainingLearning": true
+        },
+        "attachments": {
+          "commercialRegister": "commercial_register_ads.pdf",
+          "taxCard": "tax_card_ads.jpg",
+          "nationalId": "national_id_ads.jpg",
+          "investmentGazette": "investment_gazette_ads.pdf",
+          "declarationUndertaking": "declaration_ads.pdf",
+          "representativeAuthorization": "rep_auth_ads.pdf",
+          "representativeNationalId": "rep_national_id_ads.jpg"
+        },
+        "fiscalCapital": "5000000",
+        "domesticSalesDetails": [
+          {
+            "year": "2023",
+            "value": "3000000",
+            "totalRevenueYear": "4500000"
+          },
+          {
+            "year": "2022",
+            "value": "2500000",
+            "totalRevenueYear": "3800000"
+          }
+        ],
+        "domesticSalesValue": "3000000",
+        "totalRevenueYear": "4500000",
+        "annualRevenue": "4500000",
+        "auditedBalanceSheet": "balance_sheet_2023.pdf",
+        "export": "yes",
+        "exportInformation": [
+          {
+            "year": "2023",
+            "marketRegion": "Middle East",
+            "country": "UAE",
+            "valueExported": "Digital Solutions",
+            "totalAmountExported": 800000
+          },
+          {
+            "year": "2023",
+            "marketRegion": "Africa",
+            "country": "Nigeria",
+            "valueExported": "Software Development",
+            "totalAmountExported": 300000
+          }
+        ],
+        "ownershipNationality": "yes",
+        "percentageEgyptianOwnership": "100",
+        "percentageNonEgyptianOwnership": "0",
+        "partnersNationalities": "Egyptian",
+        "totalNoOfEmployees": "45",
+        "yearOfEstablishment": "2019",
+        "companySize": "medium",
+        "typeOfOwnership": "Private",
+        "owners": [
+          {
+            "name": "Mohamed Ahmed El-Sayed",
+            "mobile": "+201234567890",
+            "telephone": "+20234567890",
+            "email": "mohamed.elsayed@advancedigital-solutions.com"
+          },
+          {
+            "name": "Ahmed Hassan Ali",
+            "mobile": "+201112233445",
+            "telephone": "+20234567891",
+            "email": "ahmed.hassan@advancedigital-solutions.com"
+          }
+        ],
+        "companyData": "Leading provider of advanced digital solutions and software development services",
+        "products": [
+          {
+            "name": "Enterprise Resource Planning System",
+            "description": "Comprehensive ERP solution for large enterprises"
+          },
+          {
+            "name": "Customer Relationship Management Platform",
+            "description": "Advanced CRM system with AI-powered analytics"
+          }
+        ],
+        "services": [
+          {
+            "name": "Digital Transformation Consulting",
+            "description": "Strategic consulting for digital transformation initiatives"
+          },
+          {
+            "name": "Custom Software Development",
+            "description": "Tailored software solutions for various industries"
+          }
+        ],
+        "customerReferences": [
+          {
+            "name": "National Bank of Egypt",
+            "country": "Egypt",
+            "projectSize": "Large",
+            "scope": "Banking Software Development",
+            "industriesSector": "Banking",
+            "description": "Developed comprehensive banking management system"
+          },
+          {
+            "name": "Emirates Airlines",
+            "country": "UAE",
+            "projectSize": "Large",
+            "scope": "Customer Service Platform",
+            "industriesSector": "Aviation",
+            "description": "Built customer service and booking management platform"
+          }
+        ],
+        "parent": "",
+        "child": "",
+        "grandChild": "",
+        "industrySectors": "IT",
+        "keyTechnologies": ["Microsoft", "Oracle", "Java", "Open Source", "React", "Node.js", "AWS"],
+        "certificates": ["ISO 9001 Quality", "CMMI-DEV", "ISO 27001 (BS 7799 merged)", "ISO 20000"],
+        "affiliation": ["MENA Innovation 2019", "TechCrunch Disrupt 2020"],
+        "memberships": ["CIT", "EITISAL", "ITI", "eLABs"],
+        "partnerships": ["Microsoft Certified Partner", "Oracle Certified Partner", "AWS Partner"],
+        "companyOverview": "We are a leading technology company specializing in advanced digital solutions, software development, and digital transformation consulting. Our team of experienced professionals delivers innovative solutions that drive business growth and digital excellence.",
+        "companyHeads": [
+          {
+            "name": "Mohamed Ahmed El-Sayed",
+            "position": "CEO",
+            "mobile": "+201234567890",
+            "nationalId": "12345678901234",
+            "email": "mohamed.elsayed@advancedigital-solutions.com",
+            "email2": "mohamed.elsayed.personal@gmail.com"
+          },
+          {
+            "name": "Fatma Hassan Mohamed",
+            "position": "CTO",
+            "mobile": "+201987654321",
+            "nationalId": "98765432109876",
+            "email": "fatma.hassan@advancedigital-solutions.com",
+            "email2": "fatma.hassan.personal@gmail.com"
+          }
+        ],
+        "contactPersons": [
+          {
+            "name": "Omar Ali Hassan",
+            "position": "Operations Manager",
+            "mobile": "+201987654322",
+            "nationalId": "98765432109877",
+            "email": "omar.ali@advancedigital-solutions.com"
+          },
+          {
+            "name": "Nour Mohamed Ibrahim",
+            "position": "Project Manager",
+            "mobile": "+201987654323",
+            "nationalId": "98765432109878",
+            "email": "nour.mohamed@advancedigital-solutions.com"
+          }
+        ],
+        "licenseReceiptMethod": "email",
+        "declarationAgreement": true,
+        "companyOverView": "We are a leading technology company specializing in advanced digital solutions, software development, and digital transformation consulting. Our team of experienced professionals delivers innovative solutions that drive business growth and digital excellence."
+      }
+    },
+    {
+      "id": "comp_002",
+      "registrationStatus": "completed",
+      "completionPercentage": 100,
+      "credentials": {
+        "username": "greenenergy",
+        "password": "get2024!",
+        "email": "info@greenenergy-tech.com"
+      },
+      "registrationFormData": {
+        "ldv_englishname": "Green Energy Technologies",
+        "ldv_arabicname": "تقنيات الطاقة الخضراء",
+        "ldv_commercialdenomination": "GET-2024-002",
+        "ldv_legaltypecode": "Limited Liability Company",
+        "emailaddress1": "info@greenenergy-tech.com",
+        "ldv_establishmentyear": "2021",
+        "companyClassification": [
+          {
+            "companyClassification": "Technology",
+            "subClassification": "Clean Energy"
+          },
+          {
+            "companyClassification": "Manufacturing",
+            "subClassification": "Solar Equipment"
+          }
+        ],
+        "registerUsing": {
+          "commercialRegistry": true,
+          "unifiedCommercialRegistry": true,
+          "taxRegistry": true
+        },
+        "commercialRegistryNumber": "CR-GET-002-2024",
+        "commercialRegistryOffice": "Giza Commercial Registry",
+        "classCode": "Main Branch",
+        "unifiedCommercialRegistryNumber": "UCR-GET-002-2024",
+        "taxRegistryNumber": "TR-GET-002-2024",
+        "fullName": "Hassan Mohamed El-Mahdy",
+        "contact_jobtitle": "founder",
+        "contact_mobilephone": "+201234567892",
+        "contact_mail": "hassan.elmahdy@greenenergy-tech.com",
+        "contact_ldv_nationalid": "12345678901235",
+        "contact_ldv_nidissuedfrom": "Giza",
+        "contact_ldv_nidissuedate": "02/2018",
+        "requestApplicant": "company-in-charge",
+        "representative_fullName": "Aisha Ahmed Hassan",
+        "representative_jobtitle": "general_manager",
+        "representative_mobilephone": "+201987654324",
+        "representative_mail": "aisha.ahmed@greenenergy-tech.com",
+        "representative_nationalid": "98765432109879",
+        "representative_nidissuedfrom": "Cairo",
+        "representative_nidissuedate": "04/2019",
+        "address": "789 Solar Avenue, Green City",
+        "governorate": "giza",
+        "city": "Giza",
+        "district": "6th October",
+        "Street": "Solar Avenue",
+        "companyWebsite": "https://www.greenenergy-tech.com",
+        "hasBranches": true,
+        "branches": [
+          {
+            "branchName": "Giza Main Branch",
+            "branchCountry": "Egypt",
+            "branchGovernorate": "Giza",
+            "branchCity": "Giza",
+            "branchDistrict": "6th October",
+            "branchEmail": "giza@greenenergy-tech.com",
+            "mobilePhone": "+201234567892"
+          },
+          {
+            "branchName": "Sharm El Sheikh Branch",
+            "branchCountry": "Egypt",
+            "branchGovernorate": "south-sinai",
+            "branchCity": "Sharm El Sheikh",
+            "branchDistrict": "Naama Bay",
+            "branchEmail": "sharm@greenenergy-tech.com",
+            "mobilePhone": "+201234567893"
+          }
+        ],
+        "activities": {
+          "softwareDesign": false,
+          "itSystems": true,
+          "trustServices": false,
+          "websitesPlatforms": true,
+          "electronicsEmbedded": true,
+          "contentDigitization": false,
+          "callCenterBusiness": false,
+          "consultingResearch": true,
+          "trainingLearning": true
+        },
+        "attachments": {
+          "commercialRegister": "commercial_register_get.pdf",
+          "taxCard": "tax_card_get.jpg",
+          "nationalId": "national_id_get.jpg",
+          "investmentGazette": "investment_gazette_get.pdf",
+          "declarationUndertaking": "declaration_get.pdf",
+          "representativeAuthorization": "rep_auth_get.pdf",
+          "representativeNationalId": "rep_national_id_get.jpg"
+        },
+        "fiscalCapital": "8000000",
+        "domesticSalesDetails": [
+          {
+            "year": "2023",
+            "value": "5000000",
+            "totalRevenueYear": "7500000"
+          },
+          {
+            "year": "2022",
+            "value": "3500000",
+            "totalRevenueYear": "5200000"
+          }
+        ],
+        "domesticSalesValue": "5000000",
+        "totalRevenueYear": "7500000",
+        "annualRevenue": "7500000",
+        "auditedBalanceSheet": "balance_sheet_2023_get.pdf",
+        "export": "yes",
+        "exportInformation": [
+          {
+            "year": "2023",
+            "marketRegion": "Middle East",
+            "country": "Saudi Arabia",
+            "valueExported": "Solar Panels",
+            "totalAmountExported": 1200000
+          },
+          {
+            "year": "2023",
+            "marketRegion": "Africa",
+            "country": "Morocco",
+            "valueExported": "Wind Turbines",
+            "totalAmountExported": 800000
+          }
+        ],
+        "ownershipNationality": "yes",
+        "percentageEgyptianOwnership": "100",
+        "percentageNonEgyptianOwnership": "0",
+        "partnersNationalities": "Egyptian",
+        "totalNoOfEmployees": "60",
+        "yearOfEstablishment": "2021",
+        "companySize": "large",
+        "typeOfOwnership": "Private",
+        "owners": [
+          {
+            "name": "Hassan Mohamed El-Mahdy",
+            "mobile": "+201234567892",
+            "telephone": "+20234567892",
+            "email": "hassan.elmahdy@greenenergy-tech.com"
+          },
+          {
+            "name": "Youssef Ahmed Hassan",
+            "mobile": "+201112233446",
+            "telephone": "+20234567893",
+            "email": "youssef.ahmed@greenenergy-tech.com"
+          }
+        ],
+        "companyData": "Leading provider of green energy solutions and solar technology",
+        "products": [
+          {
+            "name": "Solar Panel Systems",
+            "description": "High-efficiency solar panel systems for residential and commercial use"
+          },
+          {
+            "name": "Wind Turbine Generators",
+            "description": "Advanced wind turbine systems for renewable energy generation"
+          }
+        ],
+        "services": [
+          {
+            "name": "Solar Installation Services",
+            "description": "Professional solar panel installation and maintenance services"
+          },
+          {
+            "name": "Energy Consulting",
+            "description": "Consulting services for renewable energy solutions and implementation"
+          }
+        ],
+        "customerReferences": [
+          {
+            "name": "Egyptian Electricity Authority",
+            "country": "Egypt",
+            "projectSize": "Large",
+            "scope": "Solar Farm Development",
+            "industriesSector": "Energy",
+            "description": "Developed 50MW solar farm project"
+          },
+          {
+            "name": "Saudi Solar Company",
+            "country": "Saudi Arabia",
+            "projectSize": "Large",
+            "scope": "Solar Panel Manufacturing",
+            "industriesSector": "Manufacturing",
+            "description": "Supplied solar panels for 100MW project"
+          }
+        ],
+        "parent": "",
+        "child": "",
+        "grandChild": "",
+        "industrySectors": "Energy",
+        "keyTechnologies": ["Solar Technology", "Wind Energy", "Battery Storage", "Smart Grid", "IoT"],
+        "certificates": ["ISO 9001 Quality", "ISO 14001 Environmental", "IEC 61215", "IEC 61730"],
+        "affiliation": ["Renewable Energy Association", "Solar Industry Association"],
+        "memberships": ["CIT", "EITISAL", "Renewable Energy Society"],
+        "partnerships": ["Siemens Energy Partner", "General Electric Partner", "Samsung SDI Partner"],
+        "companyOverview": "We are a leading green energy technology company specializing in solar and wind energy solutions. Our mission is to accelerate the transition to renewable energy through innovative technology and sustainable practices.",
+        "companyHeads": [
+          {
+            "name": "Hassan Mohamed El-Mahdy",
+            "position": "CEO",
+            "mobile": "+201234567892",
+            "nationalId": "12345678901235",
+            "email": "hassan.elmahdy@greenenergy-tech.com",
+            "email2": "hassan.elmahdy.personal@gmail.com"
+          },
+          {
+            "name": "Aisha Ahmed Hassan",
+            "position": "CTO",
+            "mobile": "+201987654324",
+            "nationalId": "98765432109879",
+            "email": "aisha.ahmed@greenenergy-tech.com",
+            "email2": "aisha.ahmed.personal@gmail.com"
+          }
+        ],
+        "contactPersons": [
+          {
+            "name": "Mahmoud Ali Hassan",
+            "position": "Operations Manager",
+            "mobile": "+201987654325",
+            "nationalId": "98765432109880",
+            "email": "mahmoud.ali@greenenergy-tech.com"
+          },
+          {
+            "name": "Dina Mohamed Ibrahim",
+            "position": "Project Manager",
+            "mobile": "+201987654326",
+            "nationalId": "98765432109881",
+            "email": "dina.mohamed@greenenergy-tech.com"
+          }
+        ],
+        "licenseReceiptMethod": "email",
+        "declarationAgreement": true,
+        "companyOverView": "We are a leading green energy technology company specializing in solar and wind energy solutions. Our mission is to accelerate the transition to renewable energy through innovative technology and sustainable practices."
+      }
+    },
+    {
+      "id": "comp_003",
+      "registrationStatus": "incomplete",
+      "completionPercentage": 45,
+      "credentials": {
+        "username": "startupinnovations",
+        "password": "sih2024!",
+        "email": "info@startupinnovations-hub.com"
+      },
+      "registrationFormData": {
+        "ldv_englishname": "Startup Innovations Hub",
+        "ldv_arabicname": "مركز ابتكارات الشركات الناشئة",
+        "ldv_commercialdenomination": "SIH-2024-003",
+        "ldv_legaltypecode": "Limited Liability Company",
+        "emailaddress1": "info@startupinnovations-hub.com",
+        "ldv_establishmentyear": "2023",
+        "companyClassification": [
+          {
+            "companyClassification": "Technology",
+            "subClassification": "Startup Incubator"
+          }
+        ],
+        "registerUsing": {
+          "commercialRegistry": true,
+          "unifiedCommercialRegistry": false,
+          "taxRegistry": false
+        },
+        "commercialRegistryNumber": "CR-SIH-003-2024",
+        "commercialRegistryOffice": "Cairo Commercial Registry",
+        "classCode": "Main Branch",
+        "unifiedCommercialRegistryNumber": "",
+        "taxRegistryNumber": "",
+        "fullName": "Ahmed Youssef Mohamed",
+        "contact_jobtitle": "founder",
+        "contact_mobilephone": "+201234567894",
+        "contact_mail": "ahmed.youssef@startupinnovations-hub.com",
+        "contact_ldv_nationalid": "12345678901236",
+        "contact_ldv_nidissuedfrom": "Cairo",
+        "contact_ldv_nidissuedate": "01/2020",
+        "requestApplicant": "company-in-charge",
+        "representative_fullName": "",
+        "representative_jobtitle": "",
+        "representative_mobilephone": "",
+        "representative_mail": "",
+        "representative_nationalid": "",
+        "representative_nidissuedfrom": "",
+        "representative_nidissuedate": "",
+        "address": "123 Innovation Street, Tech District",
+        "governorate": "cairo",
+        "city": "Cairo",
+        "district": "Maadi",
+        "Street": "Innovation Street",
+        "companyWebsite": "https://www.startupinnovations-hub.com",
+        "hasBranches": false,
+        "branches": [],
+        "activities": {
+          "softwareDesign": true,
+          "itSystems": false,
+          "trustServices": false,
+          "websitesPlatforms": true,
+          "electronicsEmbedded": false,
+          "contentDigitization": false,
+          "callCenterBusiness": false,
+          "consultingResearch": true,
+          "trainingLearning": true
+        },
+        "attachments": {
+          "commercialRegister": null,
+          "taxCard": null,
+          "nationalId": null,
+          "investmentGazette": null,
+          "declarationUndertaking": null,
+          "representativeAuthorization": null,
+          "representativeNationalId": null
+        },
+        "fiscalCapital": "500000",
+        "domesticSalesDetails": [],
+        "domesticSalesValue": "",
+        "totalRevenueYear": "",
+        "annualRevenue": "",
+        "auditedBalanceSheet": null,
+        "export": "no",
+        "exportInformation": [],
+        "ownershipNationality": "yes",
+        "percentageEgyptianOwnership": "100",
+        "percentageNonEgyptianOwnership": "0",
+        "partnersNationalities": "Egyptian",
+        "totalNoOfEmployees": "8",
+        "yearOfEstablishment": "2023",
+        "companySize": "small",
+        "typeOfOwnership": "Private",
+        "owners": [
+          {
+            "name": "Ahmed Youssef Mohamed",
+            "mobile": "+201234567894",
+            "telephone": "+20234567894",
+            "email": "ahmed.youssef@startupinnovations-hub.com"
+          }
+        ],
+        "companyData": "Innovation hub supporting startup companies",
+        "products": [],
+        "services": [
+          {
+            "name": "Startup Incubation",
+            "description": "Comprehensive incubation services for early-stage startups"
+          }
+        ],
+        "customerReferences": [],
+        "parent": "",
+        "child": "",
+        "grandChild": "",
+        "industrySectors": "Technology",
+        "keyTechnologies": ["React", "Node.js", "Open Source"],
+        "certificates": [],
+        "affiliation": [],
+        "memberships": [],
+        "partnerships": [],
+        "companyOverview": "We are a startup innovation hub focused on supporting and incubating early-stage technology companies.",
+        "companyHeads": [
+          {
+            "name": "Ahmed Youssef Mohamed",
+            "position": "CEO",
+            "mobile": "+201234567894",
+            "nationalId": "12345678901236",
+            "email": "ahmed.youssef@startupinnovations-hub.com",
+            "email2": ""
+          }
+        ],
+        "contactPersons": [],
+        "licenseReceiptMethod": "email",
+        "declarationAgreement": false,
+        "companyOverView": "We are a startup innovation hub focused on supporting and incubating early-stage technology companies."
+      }
+    },
+    {
+      "id": "comp_004",
+      "registrationStatus": "incomplete",
+      "completionPercentage": 30,
+      "credentials": {
+        "username": "creativedesign",
+        "password": "cds2024!",
+        "email": "info@creativedesign-studio.com"
+      },
+      "registrationFormData": {
+        "ldv_englishname": "Creative Design Studio",
+        "ldv_arabicname": "استوديو التصميم الإبداعي",
+        "ldv_commercialdenomination": "CDS-2024-004",
+        "ldv_legaltypecode": "Sole proprietorship Co",
+        "emailaddress1": "info@creativedesign-studio.com",
+        "ldv_establishmentyear": "2022",
+        "companyClassification": [
+          {
+            "companyClassification": "Services",
+            "subClassification": "Design"
+          }
+        ],
+        "registerUsing": {
+          "commercialRegistry": false,
+          "unifiedCommercialRegistry": false,
+          "taxRegistry": false
+        },
+        "commercialRegistryNumber": "",
+        "commercialRegistryOffice": "",
+        "classCode": "",
+        "unifiedCommercialRegistryNumber": "",
+        "taxRegistryNumber": "",
+        "fullName": "Sara Mohamed Ali",
+        "contact_jobtitle": "owner",
+        "contact_mobilephone": "+201234567895",
+        "contact_mail": "sara.mohamed@creativedesign-studio.com",
+        "contact_ldv_nationalid": "12345678901237",
+        "contact_ldv_nidissuedfrom": "Giza",
+        "contact_ldv_nidissuedate": "03/2019",
+        "requestApplicant": "company-in-charge",
+        "representative_fullName": "",
+        "representative_jobtitle": "",
+        "representative_mobilephone": "",
+        "representative_mail": "",
+        "representative_nationalid": "",
+        "representative_nidissuedfrom": "",
+        "representative_nidissuedate": "",
+        "address": "456 Design Avenue, Creative District",
+        "governorate": "giza",
+        "city": "Giza",
+        "district": "Dokki",
+        "Street": "Design Avenue",
+        "companyWebsite": "https://www.creativedesign-studio.com",
+        "hasBranches": false,
+        "branches": [],
+        "activities": {
+          "softwareDesign": false,
+          "itSystems": false,
+          "trustServices": false,
+          "websitesPlatforms": true,
+          "electronicsEmbedded": false,
+          "contentDigitization": true,
+          "callCenterBusiness": false,
+          "consultingResearch": false,
+          "trainingLearning": false
+        },
+        "attachments": {
+          "commercialRegister": null,
+          "taxCard": null,
+          "nationalId": null,
+          "investmentGazette": null,
+          "declarationUndertaking": null,
+          "representativeAuthorization": null,
+          "representativeNationalId": null
+        },
+        "fiscalCapital": "100000",
+        "domesticSalesDetails": [],
+        "domesticSalesValue": "",
+        "totalRevenueYear": "",
+        "annualRevenue": "",
+        "auditedBalanceSheet": null,
+        "export": "no",
+        "exportInformation": [],
+        "ownershipNationality": "yes",
+        "percentageEgyptianOwnership": "100",
+        "percentageNonEgyptianOwnership": "0",
+        "partnersNationalities": "Egyptian",
+        "totalNoOfEmployees": "3",
+        "yearOfEstablishment": "2022",
+        "companySize": "small",
+        "typeOfOwnership": "Private",
+        "owners": [
+          {
+            "name": "Sara Mohamed Ali",
+            "mobile": "+201234567895",
+            "telephone": "+20234567895",
+            "email": "sara.mohamed@creativedesign-studio.com"
+          }
+        ],
+        "companyData": "Creative design and branding services",
+        "products": [],
+        "services": [
+          {
+            "name": "Graphic Design",
+            "description": "Professional graphic design services for branding and marketing"
+          },
+          {
+            "name": "Web Design",
+            "description": "Custom website design and development services"
+          }
+        ],
+        "customerReferences": [],
+        "parent": "",
+        "child": "",
+        "grandChild": "",
+        "industrySectors": "Design",
+        "keyTechnologies": ["Adobe Creative Suite", "Figma", "Sketch"],
+        "certificates": [],
+        "affiliation": [],
+        "memberships": [],
+        "partnerships": [],
+        "companyOverview": "We are a creative design studio specializing in graphic design, branding, and web design services.",
+        "companyHeads": [
+          {
+            "name": "Sara Mohamed Ali",
+            "position": "Owner",
+            "mobile": "+201234567895",
+            "nationalId": "12345678901237",
+            "email": "sara.mohamed@creativedesign-studio.com",
+            "email2": ""
+          }
+        ],
+        "contactPersons": [],
+        "licenseReceiptMethod": "email",
+        "declarationAgreement": false,
+        "companyOverView": "We are a creative design studio specializing in graphic design, branding, and web design services."
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2024-12-19T12:00:00Z",
+    "description": "Fake companies data for testing - 2 completed and 2 incomplete registrations",
+    "totalCompanies": 4,
+    "completedCompanies": 2,
+    "incompleteCompanies": 2,
+    "dataStructure": "Based on ITIDA registration form requirements"
+  }
+}

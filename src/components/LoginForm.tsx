@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../contexts/LanguageContext'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 interface LoginFormProps {
   onForgotPassword?: () => void
@@ -12,6 +13,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
   const { language } = useLanguage()
   const t = translations[language]
   const navigate = useNavigate()
+  const { login, loading } = useAuth()
   
   const [formData, setFormData] = useState({
     username: '',
@@ -20,6 +22,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
     rememberMe: true
   })
   const [showPassword, setShowPassword] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
@@ -31,18 +35,29 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Fake login credentials
-    const fakeUsername = 'testuser'
-    const fakePassword = 'password123'
+    setIsSubmitting(true)
+    setErrorMessage('')
 
-    if (formData.username === fakeUsername && formData.password === fakePassword) {
-      // Redirect to profile page
-      navigate('/profile')
-    } else {
-      // Invalid credentials - could add error handling here
-      console.log('Invalid username or password')
+    console.log('Form submitted with:', { username: formData.username, password: formData.password })
+
+    try {
+      const result = await login(formData.username, formData.password)
+      
+      console.log('Login result:', result)
+      
+      if (result.success) {
+        // Redirect to profile page
+        navigate('/profile')
+      } else {
+        setErrorMessage(result.message)
+      }
+    } catch (error) {
+      console.error('Login form error:', error)
+      setErrorMessage('An unexpected error occurred. Please try again.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -62,6 +77,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Error Message */}
+              {errorMessage && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                  {errorMessage}
+                </div>
+              )}
+
               {/* Username/Email Field */}
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
@@ -145,13 +167,35 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
               {/* Login Button */}
               <button
                 type="submit"
-                className="w-full btn-primary text-lg py-4"
+                disabled={isSubmitting || loading}
+                className="w-full btn-primary text-lg py-4 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t.login}
+                {isSubmitting || loading ? (
+                  <div className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {t.login}...
+                  </div>
+                ) : (
+                  t.login
+                )}
               </button>
             </form>
 
-                               {/* Additional Info */}
+                               {/* Demo Credentials */}
+                   <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                     <h4 className="text-sm font-medium text-blue-900 mb-2">Demo Credentials:</h4>
+                     <div className="text-xs text-blue-700 space-y-1">
+                       <div><strong>Advanced Digital:</strong> advancedigital / ads2024!</div>
+                       <div><strong>Green Energy:</strong> greenenergy / get2024!</div>
+                       <div><strong>Startup Hub:</strong> startupinnovations / sih2024!</div>
+                       <div><strong>Creative Design:</strong> creativedesign / cds2024!</div>
+                     </div>
+                   </div>
+
+                   {/* Additional Info */}
                    <div className="mt-8 text-center">
                      <p className="text-sm text-gray-600">
                        {t.dontHaveAccount}{' '}

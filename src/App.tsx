@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LanguageContext, getInitialLanguage, saveLanguageToStorage } from './contexts/LanguageContext';
+import { LanguageContext, getInitialLanguage, saveLanguageToStorage, translations } from './contexts/LanguageContext';
+import { AuthProvider } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import RegistrationPage from './pages/RegistrationPage';
@@ -27,17 +28,19 @@ function App() {
   }, [language]);
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage }}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="registration" element={<RegistrationPage onBackToHome={() => window.location.href = '/'} />} />
-            <Route path="forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="profile" element={<ProfilePage />} />
-          </Route>
-        </Routes>
-      </Router>
+    <LanguageContext.Provider value={{ language, toggleLanguage, translations: translations[language] as any }}>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="registration" element={<RegistrationPage onBackToHome={() => window.location.href = '/'} />} />
+              <Route path="forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+            </Route>
+          </Routes>
+        </Router>
+      </AuthProvider>
     </LanguageContext.Provider>
   );
 }

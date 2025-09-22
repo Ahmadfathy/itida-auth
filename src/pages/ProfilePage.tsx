@@ -1,7 +1,9 @@
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { translations, useLanguage } from '../contexts/LanguageContext';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface FinancialData {
   fiscalCapital: string;
@@ -34,12 +36,21 @@ interface FinancialData {
 
 const ProfilePage: React.FC = () => {
   const { language } = useLanguage();
+  const { isAuthenticated, currentCompany, logout } = useAuth();
+  const navigate = useNavigate();
 
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);
   const [showInfo, setShowInfo] = useState(true);
 
   const [isEditMode, setIsEditMode] = useState(false);
+
+  // Redirect to home if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   const [financialData, setFinancialData] = useState<FinancialData>({
     fiscalCapital: '1000000 EGP',
@@ -69,6 +80,151 @@ const ProfilePage: React.FC = () => {
     owners: [{ name: 'John Doe', mobile: '01234567890', telephone: '02-12345678', email: 'john.doe@dummycompany.com' }],
     branches: [{ branchName: 'Dummy Branch', branchCountry: 'Egypt', branchGovernorate: 'Cairo', branchCity: 'Alexandria', branchDistrict: 'Downtown', branchEmail: 'branch@dummycompany.com', mobilePhone: '01987654321' }]
   });
+
+  // Update financial data when company changes
+  useEffect(() => {
+    if (currentCompany) {
+      const companyData = currentCompany.registrationFormData;
+      setFinancialData({
+        fiscalCapital: companyData.fiscalCapital ? `${companyData.fiscalCapital} EGP` : 'N/A',
+        domesticSalesDetails: companyData.domesticSalesDetails || [],
+        annualRevenue: companyData.annualRevenue ? `${companyData.annualRevenue} EGP` : 'N/A',
+        auditedBalanceSheet: companyData.auditedBalanceSheet,
+        export: companyData.export || 'No',
+        exportInformation: companyData.exportInformation || [],
+        ownershipNationality: companyData.ownershipNationality || 'N/A',
+        percentageEgyptianOwnership: companyData.percentageEgyptianOwnership ? `${companyData.percentageEgyptianOwnership}%` : 'N/A',
+        percentageNonEgyptianOwnership: companyData.percentageNonEgyptianOwnership ? `${companyData.percentageNonEgyptianOwnership}%` : 'N/A',
+        partnersNationalities: companyData.partnersNationalities || 'N/A',
+        totalNoOfEmployees: companyData.totalNoOfEmployees || 'N/A',
+        yearOfEstablishment: companyData.yearOfEstablishment || 'N/A',
+        companySize: companyData.companySize || 'N/A',
+        typeOfOwnership: companyData.typeOfOwnership || 'N/A',
+        companyData: companyData.companyData || 'N/A',
+        keyTechnologies: companyData.keyTechnologies || [],
+        affiliation: companyData.affiliation || [],
+        memberships: companyData.memberships || [],
+        certificates: companyData.certificates || [],
+        partnerships: companyData.partnerships || [],
+        products: companyData.products || [],
+        services: companyData.services || [],
+        customerReferences: companyData.customerReferences || [],
+        companyClassification: companyData.companyClassification || [],
+        owners: companyData.owners || [],
+        branches: companyData.branches || []
+      });
+    }
+  }, [currentCompany]);
+
+  // Update form data when company changes
+  useEffect(() => {
+    if (currentCompany) {
+      const companyData = currentCompany.registrationFormData;
+      setFormData({
+        // Dynamic arrays for repeatable sections
+        companyHeads: companyData.companyHeads || [{ name: '', position: '', mobile: '', nationalId: '', email: '', email2: '' }],
+        contactPersons: companyData.contactPersons || [{ name: '', position: '', mobile: '', nationalId: '', email: '' }],
+        products: companyData.products || [{ name: '', description: '' }],
+        services: companyData.services || [{ name: '', description: '' }],
+        customerReferences: companyData.customerReferences || [{ name: '', country: '', projectSize: '', scope: '', industriesSector: '', description: '' }],
+        exportInformation: companyData.exportInformation || [{ year: '', marketRegion: '', country: '', valueExported: '' }],
+        owners: companyData.owners || [{ name: '', mobile: '', telephone: '', email: '' }],
+        domesticSalesDetails: companyData.domesticSalesDetails || [{ year: '', value: '', totalRevenueYear: '' }],
+        // Tab 1: Company Legal Information
+        companyNameEn: companyData.ldv_englishname || 'N/A',
+        companyNameAr: companyData.ldv_arabicname || 'غير متوفر',
+        commercialDenomination: companyData.ldv_commercialdenomination || 'N/A',
+        legalType: companyData.ldv_legaltypecode || 'N/A',
+        companyClassification: companyData.companyClassification || [{ companyClassification: 'N/A', subClassification: 'N/A' }],
+        registerUsing: companyData.registerUsing || {
+          commercialRegistry: false,
+          unifiedCommercialRegistry: false,
+          taxRegistry: false
+        },
+        commercialRegistryNumber: companyData.commercialRegistryNumber || 'N/A',
+        unifiedCommercialRegistryNumber: companyData.unifiedCommercialRegistryNumber || 'N/A',
+        taxRegistryNumber: companyData.taxRegistryNumber || 'N/A',
+        commercialRegistrationDate: companyData.ldv_establishmentyear || 'N/A',
+
+        // Tab 2: Contact Information & Company Representative
+        governorate: companyData.governorate || 'N/A',
+        city: companyData.city || 'N/A',
+        district: companyData.district || 'N/A',
+        street: companyData.Street || 'N/A',
+        address: companyData.address || 'N/A',
+        companyWebsite: companyData.companyWebsite || 'N/A',
+        fullName: companyData.fullName || 'N/A',
+        contactJobTitle: companyData.contact_jobtitle || 'N/A',
+        contactMobilePhone: companyData.contact_mobilephone || 'N/A',
+        contactMail: companyData.contact_mail || 'N/A',
+        contactNationalId: companyData.contact_ldv_nationalid || 'N/A',
+        contactNationalIdIssuedFrom: companyData.contact_ldv_nidissuedfrom || 'N/A',
+        contactNationalIdIssueDate: companyData.contact_ldv_nidissuedate || 'N/A',
+        requestApplicant: companyData.requestApplicant || 'N/A',
+        representativeFullName: companyData.representative_fullName || 'N/A',
+        representativeJobTitle: companyData.representative_jobtitle || 'N/A',
+        representativeMobilePhone: companyData.representative_mobilephone || 'N/A',
+        representativeMail: companyData.representative_mail || 'N/A',
+        representativeNationalId: companyData.representative_nationalid || 'N/A',
+        representativeNationalIdIssuedFrom: companyData.representative_nidissuedfrom || 'N/A',
+        representativeNationalIdIssueDate: companyData.representative_nidissuedate || 'N/A',
+        hasBranches: companyData.hasBranches || false,
+        branches: companyData.branches || [],
+
+        // Tab 3: Activities and Attachments
+        activities: companyData.activities || {
+          softwareDesign: false,
+          itSystems: false,
+          trustServices: false,
+          websitesPlatforms: false,
+          electronicsEmbedded: false,
+          contentDigitization: false,
+          callCenterBusiness: false,
+          consultingResearch: false,
+          trainingLearning: false
+        },
+        attachments: companyData.attachments || {
+          commercialRegister: null,
+          taxCard: null,
+          nationalId: null,
+          investmentGazette: null,
+          declarationUndertaking: null,
+          representativeAuthorization: null,
+          representativeNationalId: null
+        },
+
+        // Tab 4: Financial Information
+        fiscalCapital: companyData.fiscalCapital || 'N/A',
+        domesticSalesValue: companyData.domesticSalesValue || 'N/A',
+        totalRevenueYear: companyData.totalRevenueYear || 'N/A',
+        annualRevenue: companyData.annualRevenue || 'N/A',
+        auditedBalanceSheet: companyData.auditedBalanceSheet || null,
+        export: companyData.export || 'No',
+        ownershipNationality: companyData.ownershipNationality || 'N/A',
+        percentageEgyptianOwnership: companyData.percentageEgyptianOwnership || 'N/A',
+        percentageNonEgyptianOwnership: companyData.percentageNonEgyptianOwnership || 'N/A',
+        partnersNationalities: companyData.partnersNationalities || 'N/A',
+        totalNoOfEmployees: companyData.totalNoOfEmployees || 'N/A',
+        yearOfEstablishment: companyData.yearOfEstablishment || 'N/A',
+        companySize: companyData.companySize || 'N/A',
+        typeOfOwnership: companyData.typeOfOwnership || 'N/A',
+        companyData: companyData.companyData || 'N/A',
+        parent: companyData.parent || '',
+        child: companyData.child || '',
+        grandChild: companyData.grandChild || '',
+        industrySectors: companyData.industrySectors || 'N/A',
+        keyTechnologies: companyData.keyTechnologies || [],
+        certificates: companyData.certificates || [],
+        affiliation: companyData.affiliation || [],
+        memberships: companyData.memberships || [],
+        partnerships: companyData.partnerships || [],
+        companyOverview: companyData.companyOverview || 'N/A',
+        licenseReceiptMethod: companyData.licenseReceiptMethod || 'N/A',
+        declarationAgreement: companyData.declarationAgreement || false,
+        companyOverView: companyData.companyOverView || 'N/A'
+      });
+    }
+  }, [currentCompany]);
 
   const [formData, setFormData] = useState<any>({
     // Dynamic arrays for repeatable sections
@@ -351,7 +507,7 @@ const ProfilePage: React.FC = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold flex items-center space-x-2 mb-6">
-                <span>{translations[language].dummyCompanyName}</span>
+                <span>{currentCompany ? currentCompany.registrationFormData.ldv_englishname : translations[language].dummyCompanyName}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-blue-600"
@@ -365,6 +521,12 @@ const ProfilePage: React.FC = () => {
                   />
                 </svg>
               </h1>
+              {currentCompany && (
+                <div className="text-sm text-gray-600 mb-2">
+                  <div className="font-medium">{currentCompany.registrationFormData.ldv_arabicname}</div>
+                  <div className="text-xs text-gray-500">Status: {currentCompany.registrationStatus} ({currentCompany.completionPercentage}%)</div>
+                </div>
+              )}
               <div className="text-gray-500 flex space-x-4 mt-1 text-sm">
                 <div className='grid grid-cols-2 gap-3'>
 
@@ -373,7 +535,7 @@ const ProfilePage: React.FC = () => {
                       <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth={2} stroke="currentColor" fill="none" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 8h8M8 12h8M8 16h4" />
                     </svg>
-                    <span>123456789</span>
+                    <span>{currentCompany ? currentCompany.registrationFormData.commercialRegistryNumber : '123456789'}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -381,14 +543,14 @@ const ProfilePage: React.FC = () => {
                         d="M12 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm0 0c4.418 0 8 3.582 8 8 0 1.657-1.343 3-3 3H7c-1.657 0-3-1.343-3-3 0-4.418 3.582-8 8-8z"
                       />
                     </svg>
-                    <span>Cairo, Egypt</span>
+                    <span>{currentCompany ? `${currentCompany.registrationFormData.city}, ${currentCompany.registrationFormData.governorate}` : 'Cairo, Egypt'}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <rect x="3" y="5" width="18" height="14" rx="2" strokeWidth={2} stroke="currentColor" fill="none" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7l9 6 9-6" />
                     </svg>
-                    <span>info@dummycompany.com</span>
+                    <span>{currentCompany ? currentCompany.registrationFormData.emailaddress1 : 'info@dummycompany.com'}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -396,7 +558,7 @@ const ProfilePage: React.FC = () => {
                         d="M22 16.92V19a2 2 0 01-2.18 2A19.86 19.86 0 013 5.18 2 2 0 015 3h2.09a2 2 0 012 1.72c.13.81.36 1.6.68 2.34a2 2 0 01-.45 2.11l-1.27 1.27a16 16 0 006.58 6.58l1.27-1.27a2 2 0 012.11-.45c.74.32 1.53.55 2.34.68a2 2 0 011.72 2z"
                       />
                     </svg>
-                    <span>01234567890</span>
+                    <span>{currentCompany ? currentCompany.registrationFormData.contact_mobilephone : '01234567890'}</span>
                   </div>
                 </div>
               </div>
@@ -406,14 +568,19 @@ const ProfilePage: React.FC = () => {
             <div className="flex flex-col items-end">
               <p className="text-sm text-gray-400 mb-1">{translations[language].profileCompletion}</p>
               <div className="w-48 bg-gray-200 rounded-full h-4">
-                <div className="bg-yellow-500 h-4 rounded-full" style={{ width: '50%' }}>
-                  <p className="text-xs text-white px-3 text-end">50%</p>
+                <div className="bg-yellow-500 h-4 rounded-full" style={{ width: `${currentCompany ? currentCompany.completionPercentage : 50}%` }}>
+                  <p className="text-xs text-white px-3 text-end">{currentCompany ? currentCompany.completionPercentage : 50}%</p>
                 </div>
               </div>
             </div>
-            {/* <div className="flex space-x-2">
-              <button className="btn-primary px-6 py-2">Export PDF</button>
-            </div> */}
+            <div className="flex space-x-2">
+              <button 
+                onClick={logout}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
 
@@ -2336,3 +2503,4 @@ const ProfilePage: React.FC = () => {
 };
 
 export default ProfilePage;
+
