@@ -5,6 +5,8 @@ import Hero from '../components/Hero';
 import LoginForm from '../components/LoginForm';
 import Services from '../components/Services';
 import AdditionalBenefits from '../components/AdditionalBenefits'
+import ComprehensiveDataTest from '../components/ComprehensiveDataTest';
+import LoginTestComponent from '../components/LoginTestComponent';
 // import Footer from '../components/Footer';
 
 const HomePage: React.FC = () => {
@@ -34,6 +36,10 @@ const HomePage: React.FC = () => {
         </div>
         <AdditionalBenefits onRegister={handleRegister} />
         <Services />
+        <div className="container mx-auto px-4 py-8 space-y-8">
+          <ComprehensiveDataTest />
+          <LoginTestComponent />
+        </div>
       </main>
       {/* <Footer onLogoClick={() => navigate('/')} /> */}
     </>
