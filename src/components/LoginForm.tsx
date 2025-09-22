@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { translations, useLanguage } from '../contexts/LanguageContext'
+import { getValidationMessage, validateLoginForm } from '../utils/validation'
+import Alert from './Alert'
 
 interface LoginFormProps {
   onForgotPassword?: () => void
@@ -23,6 +25,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
   const [showPassword, setShowPassword] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
@@ -36,8 +40,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
     setErrorMessage('')
+    setShowAlert(false)
+
+    // Validate form data
+    const validation = validateLoginForm(formData)
+
+    if (!validation.isValid) {
+      setAlertMessage(getValidationMessage(validation, t))
+      setShowAlert(true)
+      return
+    }
+
+    setIsSubmitting(true)
 
     console.log('Form submitted with:', { username: formData.username, password: formData.password })
 
@@ -81,6 +96,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
                   {errorMessage}
                 </div>
+              )}
+
+              {/* Validation Alert */}
+              {showAlert && (
+                <Alert
+                  type="error"
+                  title={t.alertTitle}
+                  message={alertMessage}
+                  onClose={() => setShowAlert(false)}
+                  show={showAlert}
+                />
               )}
 
               {/* Username/Email Field */}
@@ -233,8 +259,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword, onRegister }) =
                     <label
                       key={role.value}
                       className={`relative cursor-pointer rounded-lg border-2 p-4 text-center text-gray-500 transition-all duration-300 ${formData.userRole === role.value
-                          ? 'border-itida-blue bg-blue-50 text-itida-blue'
-                          : 'border-gray-200 hover:border-gray-300'
+                        ? 'border-itida-blue bg-blue-50 text-itida-blue'
+                        : 'border-gray-200 hover:border-gray-300'
                         }`}
                     >
                       <input

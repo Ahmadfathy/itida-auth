@@ -1,9 +1,9 @@
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import React, { useState, useEffect } from 'react';
-import { translations, useLanguage } from '../contexts/LanguageContext';
-import { useAuth } from '../contexts/AuthContext';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { translations, useLanguage } from '../contexts/LanguageContext';
 
 interface FinancialData {
   fiscalCapital: string;
@@ -53,32 +53,32 @@ const ProfilePage: React.FC = () => {
   }, [isAuthenticated, navigate]);
 
   const [financialData, setFinancialData] = useState<FinancialData>({
-    fiscalCapital: '1000000 EGP',
-    domesticSalesDetails: [{ year: '2023', value: '500000', totalRevenueYear: '500000' }],
-    annualRevenue: '500000 EGP',
+    fiscalCapital: '',
+    domesticSalesDetails: [],
+    annualRevenue: '',
     auditedBalanceSheet: null,
-    export: 'Yes',
-    exportInformation: [{ year: '2023', marketRegion: 'Middle East', country: 'UAE', valueExported: '100000', totalAmountExported: 100000 }],
-    ownershipNationality: 'Egyptian',
-    percentageEgyptianOwnership: '100%',
-    percentageNonEgyptianOwnership: '0%',
-    partnersNationalities: 'Egyptian',
-    totalNoOfEmployees: '50',
-    yearOfEstablishment: '2010',
-    companySize: 'Small',
-    typeOfOwnership: 'Private',
-    companyData: 'Technology Company',
-    keyTechnologies: ['React', 'Node.js', 'Python'],
-    affiliation: ['ITIDA'],
-    memberships: ['Egyptian Software Association'],
-    certificates: ['ISO 9001'],
-    partnerships: ['Microsoft', 'Google'],
-    products: [{ name: 'Dummy Product', description: 'A sample product for demonstration' }],
-    services: [{ name: 'Dummy Service', description: 'A sample service for demonstration' }],
-    customerReferences: [{ name: 'Client A', country: 'Egypt', projectSize: 'Medium', scope: 'Web Development', industriesSector: 'Technology', description: 'Successful project delivery' }],
-    companyClassification: [{ companyClassification: 'Technology', subClassification: 'Software' }],
-    owners: [{ name: 'John Doe', mobile: '01234567890', telephone: '02-12345678', email: 'john.doe@dummycompany.com' }],
-    branches: [{ branchName: 'Dummy Branch', branchCountry: 'Egypt', branchGovernorate: 'Cairo', branchCity: 'Alexandria', branchDistrict: 'Downtown', branchEmail: 'branch@dummycompany.com', mobilePhone: '01987654321' }]
+    export: '',
+    exportInformation: [],
+    ownershipNationality: '',
+    percentageEgyptianOwnership: '',
+    percentageNonEgyptianOwnership: '',
+    partnersNationalities: '',
+    totalNoOfEmployees: '',
+    yearOfEstablishment: '',
+    companySize: '',
+    typeOfOwnership: '',
+    companyData: '',
+    keyTechnologies: [],
+    affiliation: [],
+    memberships: [],
+    certificates: [],
+    partnerships: [],
+    products: [],
+    services: [],
+    customerReferences: [],
+    companyClassification: [],
+    owners: [],
+    branches: []
   });
 
   // Update financial data when company changes
@@ -237,98 +237,98 @@ const ProfilePage: React.FC = () => {
     owners: [{ name: '', mobile: '', telephone: '', email: '' }],
     domesticSalesDetails: [{ year: '', value: '', totalRevenueYear: '' }],
     // Tab 1: Company Legal Information
-    companyNameEn: 'Dummy Company Name English',
-    companyNameAr: 'اسم الشركة الوهمي',
-    commercialDenomination: 'Dummy Commercial Denomination',
-    legalType: 'LLC',
-    companyClassification: [{ companyClassification: 'Technology', subClassification: 'Software' }],
+    companyNameEn: '',
+    companyNameAr: '',
+    commercialDenomination: '',
+    legalType: '',
+    companyClassification: [],
     registerUsing: {
-      commercialRegistry: true,
-      unifiedCommercialRegistry: true,
-      taxRegistry: true
+      commercialRegistry: false,
+      unifiedCommercialRegistry: false,
+      taxRegistry: false
     },
-    commercialRegistryNumber: '123456789',
-    unifiedCommercialRegistryNumber: '987654321',
-    taxRegistryNumber: '456789123',
-    commercialRegistrationDate: '01/01/2010',
+    commercialRegistryNumber: '',
+    unifiedCommercialRegistryNumber: '',
+    taxRegistryNumber: '',
+    commercialRegistrationDate: '',
 
     // Tab 2: Contact Information & Company Representative
-    governorate: 'Cairo',
-    district: 'Nasr City',
-    streetAddress: '123 Dummy Street',
-    companyWebsite: 'www.dummycompany.com',
-    officialEmail: 'contact@dummycompany.com',
-    phoneMobile: '01234567890',
-    branches: [{ branchName: 'Dummy Branch', branchCountry: 'Egypt', branchGovernorate: 'Cairo', branchCity: 'Alexandria', branchDistrict: 'Downtown', branchEmail: 'branch@dummycompany.com', mobilePhone: '01987654321' }],
-    representativeName: 'John Doe',
-    representativeTitle: 'CEO',
-    representativeMobile: '01234567890',
-    representativeNationalId: '12345678901234',
-    representativeEmail: 'john.doe@dummycompany.com',
-    requestApplicant: 'company-in-charge',
+    governorate: '',
+    district: '',
+    streetAddress: '',
+    companyWebsite: '',
+    officialEmail: '',
+    phoneMobile: '',
+    branches: [],
+    representativeName: '',
+    representativeTitle: '',
+    representativeMobile: '',
+    representativeNationalId: '',
+    representativeEmail: '',
+    requestApplicant: '',
 
     // Tab 3: Activities, Attachments & Declaration
     activities: {
-      softwareDesign: true,
-      itSystems: true,
-      trustServices: true,
-      websitesPlatforms: true,
-      electronicsEmbedded: true,
-      contentDigitization: true,
-      callCenterBusiness: true,
-      consultingResearch: true,
-      trainingLearning: true
+      softwareDesign: false,
+      itSystems: false,
+      trustServices: false,
+      websitesPlatforms: false,
+      electronicsEmbedded: false,
+      contentDigitization: false,
+      callCenterBusiness: false,
+      consultingResearch: false,
+      trainingLearning: false
     },
     attachments: {
-      commercialRegister: 'Available',
-      taxCard: 'Available',
-      nationalId: 'Available',
-      investmentGazette: 'Available',
-      declarationUndertaking: 'Available',
-      representativeAuthorization: 'Available',
-      representativeNationalId: 'Available'
+      commercialRegister: null,
+      taxCard: null,
+      nationalId: null,
+      investmentGazette: null,
+      declarationUndertaking: null,
+      representativeAuthorization: null,
+      representativeNationalId: null
     },
-    licenseReceiptMethod: 'Available',
-    declarationAgreement: true,
+    licenseReceiptMethod: '',
+    declarationAgreement: false,
 
     // Company Head Information
-    companyHeadName: 'Jane Smith',
-    companyHeadTitle: 'CTO',
-    companyHeadMobile: '01123456789',
-    companyHeadNationalId: '98765432109876',
-    companyHeadEmail: 'jane.smith@dummycompany.com',
-    companyHeadEmail2: 'jane.smith2@dummycompany.com',
+    companyHeadName: '',
+    companyHeadTitle: '',
+    companyHeadMobile: '',
+    companyHeadNationalId: '',
+    companyHeadEmail: '',
+    companyHeadEmail2: '',
 
     // Contact Persons
-    contactPersonName: 'Alex Johnson',
-    contactPersonTitle: 'Manager',
-    contactPersonMobile: '01987654321',
-    contactPersonNationalId: '12345678901234',
-    contactPersonEmail: 'alex.johnson@dummycompany.com',
+    contactPersonName: '',
+    contactPersonTitle: '',
+    contactPersonMobile: '',
+    contactPersonNationalId: '',
+    contactPersonEmail: '',
 
     // Financial Information
-    fiscalCapital: '1000000 EGP',
+    fiscalCapital: '',
     domesticSalesValue: '',
     totalRevenueYear: '',
-    annualRevenue: '500000 EGP',
+    annualRevenue: '',
     auditedBalanceSheet: null,
-    export: 'Yes',
-    ownershipNationality: 'Egyptian',
-    percentageEgyptianOwnership: '100%',
-    percentageNonEgyptianOwnership: '0%',
-    partnersNationalities: 'Egyptian',
-    totalNoOfEmployees: '50',
-    yearOfEstablishment: '2010',
-    companySize: 'Small',
-    typeOfOwnership: 'Private',
-    companyData: 'Technology Company',
+    export: '',
+    ownershipNationality: '',
+    percentageEgyptianOwnership: '',
+    percentageNonEgyptianOwnership: '',
+    partnersNationalities: '',
+    totalNoOfEmployees: '',
+    yearOfEstablishment: '',
+    companySize: '',
+    typeOfOwnership: '',
+    companyData: '',
 
     // Updated fields to arrays for multi-select
-    keyTechnologies: ['React', 'Node.js', 'Python'],
-    certificates: ['ISO 9001'],
-    affiliation: ['ITIDA'],
-    memberships: ['Egyptian Software Association'],
-    partnerships: ['Microsoft', 'Google']
+    keyTechnologies: [],
+    certificates: [],
+    affiliation: [],
+    memberships: [],
+    partnerships: []
   });
 
   // Handlers for editing functionality
@@ -501,13 +501,13 @@ const ProfilePage: React.FC = () => {
               <img
                 src="/images/itida-logo.png"
                 alt={translations[language].companyLogo}
-                className="border w-24 h-24 rounded-full object-cover"
+                className="border w-24 h-24 rounded-xl object-cover"
               />
               <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></span>
             </div>
             <div>
               <h1 className="text-2xl font-bold flex items-center space-x-2 mb-6">
-                <span>{currentCompany ? currentCompany.registrationFormData.ldv_englishname : translations[language].dummyCompanyName}</span>
+                <span>{currentCompany ? currentCompany.registrationFormData.ldv_englishname : ''}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-blue-600"
@@ -550,7 +550,7 @@ const ProfilePage: React.FC = () => {
                       <rect x="3" y="5" width="18" height="14" rx="2" strokeWidth={2} stroke="currentColor" fill="none" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7l9 6 9-6" />
                     </svg>
-                    <span>{currentCompany ? currentCompany.registrationFormData.emailaddress1 : 'info@dummycompany.com'}</span>
+                    <span>{currentCompany ? currentCompany.registrationFormData.emailaddress1 : ''}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -558,7 +558,7 @@ const ProfilePage: React.FC = () => {
                         d="M22 16.92V19a2 2 0 01-2.18 2A19.86 19.86 0 013 5.18 2 2 0 015 3h2.09a2 2 0 012 1.72c.13.81.36 1.6.68 2.34a2 2 0 01-.45 2.11l-1.27 1.27a16 16 0 006.58 6.58l1.27-1.27a2 2 0 012.11-.45c.74.32 1.53.55 2.34.68a2 2 0 011.72 2z"
                       />
                     </svg>
-                    <span>{currentCompany ? currentCompany.registrationFormData.contact_mobilephone : '01234567890'}</span>
+                    <span>{currentCompany ? currentCompany.registrationFormData.contact_mobilephone : ''}</span>
                   </div>
                 </div>
               </div>
@@ -574,7 +574,7 @@ const ProfilePage: React.FC = () => {
               </div>
             </div>
             <div className="flex space-x-2">
-              <button 
+              <button
                 onClick={logout}
                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
@@ -1288,7 +1288,7 @@ const ProfilePage: React.FC = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="font-semibold">{formData.companyHeadName || 'Jane Smith'}</p>
+                    <p className="font-semibold">{formData.companyHeadName || ''}</p>
                   )}
                 </div>
                 <div>
@@ -1316,7 +1316,7 @@ const ProfilePage: React.FC = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="font-semibold">{formData.companyHeadMobile || '01123456789'}</p>
+                    <p className="font-semibold">{formData.companyHeadMobile || ''}</p>
                   )}
                 </div>
                 <div>
@@ -1330,7 +1330,7 @@ const ProfilePage: React.FC = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="font-semibold">{formData.companyHeadNationalId || '98765432109876'}</p>
+                    <p className="font-semibold">{formData.companyHeadNationalId || ''}</p>
                   )}
                 </div>
                 <div>
@@ -1344,7 +1344,7 @@ const ProfilePage: React.FC = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="font-semibold">{formData.companyHeadEmail || 'jane.smith@dummycompany.com'}</p>
+                    <p className="font-semibold">{formData.companyHeadEmail || ''}</p>
                   )}
                 </div>
                 <div>
@@ -1358,7 +1358,7 @@ const ProfilePage: React.FC = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="font-semibold">{formData.companyHeadEmail2 || 'jane.smith2@dummycompany.com'}</p>
+                    <p className="font-semibold">{formData.companyHeadEmail2 || ''}</p>
                   )}
                 </div>
               </div>
@@ -1379,7 +1379,7 @@ const ProfilePage: React.FC = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="font-semibold">{formData.contactPersonName || 'Alex Johnson'}</p>
+                    <p className="font-semibold">{formData.contactPersonName || ''}</p>
                   )}
                 </div>
                 <div>
@@ -1407,7 +1407,7 @@ const ProfilePage: React.FC = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="font-semibold">{formData.contactPersonMobile || '01987654321'}</p>
+                    <p className="font-semibold">{formData.contactPersonMobile || ''}</p>
                   )}
                 </div>
                 <div>
@@ -1421,7 +1421,7 @@ const ProfilePage: React.FC = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="font-semibold">{formData.contactPersonNationalId || '12345678901234'}</p>
+                    <p className="font-semibold">{formData.contactPersonNationalId || ''}</p>
                   )}
                 </div>
                 <div>
@@ -1435,7 +1435,7 @@ const ProfilePage: React.FC = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
-                    <p className="font-semibold">{formData.contactPersonEmail || 'alex.johnson@dummycompany.com'}</p>
+                    <p className="font-semibold">{formData.contactPersonEmail || ''}</p>
                   )}
                 </div>
               </div>
@@ -1443,7 +1443,9 @@ const ProfilePage: React.FC = () => {
 
             {/* Products */}
             <div>
-              <h3 className="text-md font-semibold mb-4">{translations[language].products}</h3>
+              <h3 className="text-md font-semibold mb-4">
+                {translations[language].products}
+              </h3>
               <div className="grid md:grid-cols-4 gap-6">
                 {financialData.products.length > 0 ? (
                   financialData.products.map((product, index) => (
@@ -1481,12 +1483,16 @@ const ProfilePage: React.FC = () => {
                     </div>
                   ))
                 ) : (
-                  <div>
-                    <p className="text-sm text-gray-400 mb-1">{translations[language].productName}</p>
-                    <p className="font-semibold">-</p>
-                    <p className="text-sm text-gray-400 mb-1">{translations[language].description}</p>
-                    <p className="font-semibold">-</p>
-                  </div>
+                  <>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].productName} ;ldf;lsdf</p>
+                      <p className="font-semibold">-</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">{translations[language].description}</p>
+                      <p className="font-semibold">-</p>
+                    </div>
+                  </>
                 )}
               </div>
             </div>

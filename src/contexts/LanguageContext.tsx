@@ -210,6 +210,25 @@ export const translations = {
     unifiedCommercialRegistryNumberRequired: 'Unified Commercial Registry Number is required',
     taxRegistryNumberRequired: 'Tax Registry Number is required',
 
+    // Alert Messages
+    alertTitle: 'Validation Error',
+    alertTitleSuccess: 'Success',
+    alertTitleWarning: 'Warning',
+    alertTitleError: 'Error',
+    pleaseCompleteAllRequiredFields: 'Please complete all required fields before proceeding',
+    pleaseCompleteEmptyFields: 'Please complete the following empty fields:',
+    formSubmissionBlocked: 'Form submission is blocked due to incomplete required fields',
+    pleaseFillRequiredInformation: 'Please fill in all required information to continue',
+    missingRequiredData: 'Missing required data',
+    incompleteFormData: 'Incomplete form data',
+    validationFailed: 'Validation failed',
+    pleaseCheckFormData: 'Please check your form data and try again',
+    requiredFieldsEmpty: 'Some required fields are empty',
+    pleaseCompleteForm: 'Please complete the form before submitting',
+    dataValidationError: 'Data validation error',
+    formNotComplete: 'Form is not complete',
+    pleaseReviewForm: 'Please review and complete the form',
+
     // Company Classification Options
     technology: 'Technology',
     consulting: 'Consulting',
@@ -854,6 +873,25 @@ export const translations = {
     commercialRegistryNumberRequired: 'رقم السجل التجاري مطلوب',
     unifiedCommercialRegistryNumberRequired: 'رقم السجل التجاري الموحد مطلوب',
     taxRegistryNumberRequired: 'رقم التسجيل الضريبي مطلوب',
+
+    // Alert Messages
+    alertTitle: 'خطأ في التحقق',
+    alertTitleSuccess: 'نجح',
+    alertTitleWarning: 'تحذير',
+    alertTitleError: 'خطأ',
+    pleaseCompleteAllRequiredFields: 'يرجى إكمال جميع الحقول المطلوبة قبل المتابعة',
+    pleaseCompleteEmptyFields: 'يرجى إكمال الحقول الفارغة التالية:',
+    formSubmissionBlocked: 'تم منع إرسال النموذج بسبب عدم اكتمال الحقول المطلوبة',
+    pleaseFillRequiredInformation: 'يرجى ملء جميع المعلومات المطلوبة للمتابعة',
+    missingRequiredData: 'بيانات مطلوبة مفقودة',
+    incompleteFormData: 'بيانات النموذج غير مكتملة',
+    validationFailed: 'فشل التحقق',
+    pleaseCheckFormData: 'يرجى مراجعة بيانات النموذج والمحاولة مرة أخرى',
+    requiredFieldsEmpty: 'بعض الحقول المطلوبة فارغة',
+    pleaseCompleteForm: 'يرجى إكمال النموذج قبل الإرسال',
+    dataValidationError: 'خطأ في التحقق من البيانات',
+    formNotComplete: 'النموذج غير مكتمل',
+    pleaseReviewForm: 'يرجى مراجعة وإكمال النموذج',
 
     // Company Classification Options
     technology: 'تكنولوجيا',

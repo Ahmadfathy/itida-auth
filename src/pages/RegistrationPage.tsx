@@ -1,5 +1,15 @@
 import React, { useState } from 'react'
+import Alert from '../components/Alert'
 import { useTranslation } from '../hooks/useTranslation'
+import {
+  getValidationMessage,
+  validateActivities,
+  validateAttachments,
+  validateCompanyHeads,
+  validateContactPersons,
+  validateRegistrationForm,
+  ValidationResult
+} from '../utils/validation'
 
 import CompanyHeadInformation from '../components/registration/CompanyHeadInformation'
 // import CompanyHeadInformation from '../components/registration/registrationCompany/CompanyHeadInformation'
@@ -13,6 +23,9 @@ interface RegistrationPageProps {
 const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => {
   const t = useTranslation()
   const [activeSidebarTab, setActiveSidebarTab] = useState(1)
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null)
 
   const multipleTypes = [
     'Sole Corporation',
@@ -231,8 +244,91 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
+    // Validate the form based on active tab
+    let validation: ValidationResult
+
+    switch (activeSidebarTab) {
+      case 1:
+        validation = validateRegistrationForm(formData)
+        break
+      case 2:
+        const companyHeadsValidation = validateCompanyHeads(formData.companyHeads)
+        const contactPersonsValidation = validateContactPersons(formData.contactPersons)
+        validation = {
+          isValid: companyHeadsValidation.isValid && contactPersonsValidation.isValid,
+          errors: [...companyHeadsValidation.errors, ...contactPersonsValidation.errors],
+          emptyFields: [...companyHeadsValidation.emptyFields, ...contactPersonsValidation.emptyFields]
+        }
+        break
+      case 3:
+        const activitiesValidation = validateActivities(formData.activities)
+        const attachmentsValidation = validateAttachments(formData.attachments)
+        validation = {
+          isValid: activitiesValidation.isValid && attachmentsValidation.isValid,
+          errors: [...activitiesValidation.errors, ...attachmentsValidation.errors],
+          emptyFields: [...activitiesValidation.emptyFields, ...attachmentsValidation.emptyFields]
+        }
+        break
+      default:
+        validation = { isValid: true, errors: [], emptyFields: [] }
+    }
+
+    setValidationResult(validation)
+
+    if (!validation.isValid) {
+      setAlertMessage(getValidationMessage(validation, t))
+      setShowAlert(true)
+      return
+    }
+
+    // If validation passes, proceed with submission
     console.log('Form submitted:', formData)
+    setShowAlert(false)
     // Handle form submission here
+  }
+
+  const handleTabChange = (tabNumber: number) => {
+    // Validate current tab before switching
+    if (activeSidebarTab !== tabNumber) {
+      let validation: ValidationResult
+
+      switch (activeSidebarTab) {
+        case 1:
+          validation = validateRegistrationForm(formData)
+          break
+        case 2:
+          const companyHeadsValidation = validateCompanyHeads(formData.companyHeads)
+          const contactPersonsValidation = validateContactPersons(formData.contactPersons)
+          validation = {
+            isValid: companyHeadsValidation.isValid && contactPersonsValidation.isValid,
+            errors: [...companyHeadsValidation.errors, ...contactPersonsValidation.errors],
+            emptyFields: [...companyHeadsValidation.emptyFields, ...contactPersonsValidation.emptyFields]
+          }
+          break
+        case 3:
+          const activitiesValidation = validateActivities(formData.activities)
+          const attachmentsValidation = validateAttachments(formData.attachments)
+          validation = {
+            isValid: activitiesValidation.isValid && attachmentsValidation.isValid,
+            errors: [...activitiesValidation.errors, ...attachmentsValidation.errors],
+            emptyFields: [...activitiesValidation.emptyFields, ...attachmentsValidation.emptyFields]
+          }
+          break
+        default:
+          validation = { isValid: true, errors: [], emptyFields: [] }
+      }
+
+      if (!validation.isValid) {
+        setValidationResult(validation)
+        setAlertMessage(getValidationMessage(validation, t))
+        setShowAlert(true)
+        return
+      }
+    }
+
+    setActiveSidebarTab(tabNumber)
+    setShowAlert(false)
   }
 
 
@@ -321,7 +417,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                 <ul className="space-y-2">
                   <li>
                     <button
-                      onClick={() => setActiveSidebarTab(1)}
+                      onClick={() => handleTabChange(1)}
                       className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-between ${activeSidebarTab === 1 ? 'bg-itida-blue text-white' : 'hover:bg-gray-200 text-gray-700'}`}
                     >
                       <div className="flex items-center">
@@ -335,7 +431,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                   </li>
                   <li>
                     <button
-                      onClick={() => setActiveSidebarTab(2)}
+                      onClick={() => handleTabChange(2)}
                       className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-between ${activeSidebarTab === 2 ? 'bg-itida-blue text-white' : 'hover:bg-gray-200 text-gray-700'}`}
                     >
                       <div className="flex items-center">
@@ -349,7 +445,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
                   </li>
                   <li>
                     <button
-                      onClick={() => setActiveSidebarTab(3)}
+                      onClick={() => handleTabChange(3)}
                       className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-between ${activeSidebarTab === 3 ? 'bg-itida-blue text-white' : 'hover:bg-gray-200 text-gray-700'}`}
                     >
                       <div className="flex items-center">
@@ -368,6 +464,18 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
             {/* Main Content Area */}
             <div className="flex-1">
               <div className="p-8">
+                {/* Alert for validation errors */}
+                {showAlert && (
+                  <div className="mb-6">
+                    <Alert
+                      type="error"
+                      title={t.alertTitle}
+                      message={alertMessage}
+                      onClose={() => setShowAlert(false)}
+                      show={showAlert}
+                    />
+                  </div>
+                )}
                 {/* Only show the wizard form in the first sidebar tab */}
                 {activeSidebarTab === 1 && (
                   <RegistrationCompany

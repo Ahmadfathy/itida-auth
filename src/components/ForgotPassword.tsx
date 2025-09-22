@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useLanguage } from '../contexts/LanguageContext'
-import { translations } from '../contexts/LanguageContext'
+import { translations, useLanguage } from '../contexts/LanguageContext'
+import { getValidationMessage, validateForgotPasswordForm } from '../utils/validation'
+import Alert from './Alert'
 // import Logo from './Logo'
 
 interface ForgotPasswordProps {
@@ -14,23 +15,31 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToHome }) => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    
-    if (!email) {
-      setError(t.pleaseEnterEmail)
+    setShowAlert(false)
+
+    // Validate form data
+    const validation = validateForgotPasswordForm({ email })
+
+    if (!validation.isValid) {
+      setAlertMessage(getValidationMessage(validation, t))
+      setShowAlert(true)
       return
     }
 
-    if (!/\S+@\S+\.\S+\.\S+/.test(email)) {
+    // Additional email format validation
+    if (!/\S+@\S+\.\S+/.test(email)) {
       setError(t.pleaseEnterValidEmail)
       return
     }
 
     setIsLoading(true)
-    
+
     // Simulate API call
     try {
       await new Promise(resolve => setTimeout(resolve, 2000))
@@ -55,7 +64,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToHome }) => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
         <div className="max-w-md w-full">
-          
+
           {/* Success Message */}
           <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -63,11 +72,11 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToHome }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            
+
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               {t.checkYourEmail}
             </h2>
-            
+
             <p className="text-gray-600 mb-6 leading-relaxed">
               {t.resetInstructions.replace('{email}', email)}
             </p>
@@ -79,7 +88,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToHome }) => {
               >
                 {t.backToLogin}
               </button>
-              
+
               <button
                 onClick={() => {
                   setIsSubmitted(false)
@@ -105,7 +114,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToHome }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
       <div className="max-w-md w-full">
-        
+
 
         {/* Forgot Password Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -147,6 +156,19 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToHome }) => {
                   </svg>
                   {error}
                 </p>
+              )}
+
+              {/* Validation Alert */}
+              {showAlert && (
+                <div className="mt-4">
+                  <Alert
+                    type="error"
+                    title={t.alertTitle}
+                    message={alertMessage}
+                    onClose={() => setShowAlert(false)}
+                    show={showAlert}
+                  />
+                </div>
               )}
             </div>
 
