@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useFormValidation, useLookups, useRegistration, useValidation } from '../hooks/useApi'
+import { useLookups, useRegistration, useValidation } from '../hooks/useApi'
 
 const ApiDemo: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState('lookups')
@@ -8,7 +8,6 @@ const ApiDemo: React.FC = () => {
   const lookups = useLookups()
   const validation = useValidation()
   const registration = useRegistration()
-  const formValidation = useFormValidation()
 
   // Demo state
   const [companyName, setCompanyName] = useState('')
@@ -31,7 +30,7 @@ const ApiDemo: React.FC = () => {
   }, [])
 
   const handleValidation = async (type: string, value: string) => {
-    let result
+    let result: any
     switch (type) {
       case 'company':
         result = await validation.validateCompanyName.execute(value, '')
@@ -43,7 +42,7 @@ const ApiDemo: React.FC = () => {
         result = await validation.validateEmail.execute(value)
         break
     }
-    setValidationResults(prev => ({ ...prev, [type]: result.data }))
+    setValidationResults((prev: any) => ({ ...prev, [type]: result.data }))
   }
 
   const handleSubmitRegistration = async () => {

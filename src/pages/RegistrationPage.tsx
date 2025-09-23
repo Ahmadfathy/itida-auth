@@ -25,7 +25,6 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
   const [activeSidebarTab, setActiveSidebarTab] = useState(1)
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
-  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null)
 
   const multipleTypes = [
     'Sole Corporation',
@@ -274,7 +273,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
         validation = { isValid: true, errors: [], emptyFields: [] }
     }
 
-    setValidationResult(validation)
+    // Validation result stored in validation variable
 
     if (!validation.isValid) {
       setAlertMessage(getValidationMessage(validation, t))
@@ -320,7 +319,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ onBackToHome }) => 
       }
 
       if (!validation.isValid) {
-        setValidationResult(validation)
+        // Validation result stored in validation variable
         setAlertMessage(getValidationMessage(validation, t))
         setShowAlert(true)
         return

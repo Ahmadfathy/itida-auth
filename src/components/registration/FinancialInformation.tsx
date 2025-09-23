@@ -415,14 +415,6 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
     )
   }
 
-  // Helper to handle multi-select change
-  const handleMultiSelectChange = (fieldName: string, selectedOptions: MultiValue<OptionType>) => {
-    const values = selectedOptions ? selectedOptions.map((option: OptionType) => option.value) : []
-    setFormData((prev: any) => ({
-      ...prev,
-      [fieldName]: values
-    }))
-  }
 
   const handlePartnersNationalitiesChange = (selectedOption: OptionType | null) => {
     setFormData((prev: any) => ({
@@ -605,12 +597,12 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
     <form onSubmit={onSubmit} className="py-4">
       <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
         {t.financialInformation}
-        </h2>
+      </h2>
 
       {/* Financial Information */}
       <div className="space-y-6 mb-10">
         <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-        {t.financialInformation}
+          {t.financialInformation}
         </h3>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -664,7 +656,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
               <div key={`domesticSales-${index}`} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 border border-gray-200 rounded-lg p-4 bg-gray-50">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-{t.domesticSalesYear} <span className="text-red-500">*</span>
+                    {t.domesticSalesYear} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -769,7 +761,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
       {/* Market Information */}
       <div className="space-y-6 mb-10">
         <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-{t.marketInformation}
+          {t.marketInformation}
         </h3>
 
         {/* Key Technologies, Affiliations, Memberships */}
@@ -1072,15 +1064,15 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
                 </div>
               </div>
               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.projectDescription}</label>
-                  <input
-                    type="text"
-                    value={reference.description}
-                    onChange={(e) => handleDynamicInputChange('customerReferences', index, 'description', e.target.value)}
-                    className="input-field"
-                    placeholder={t.projectDescription}
-                  />
-                </div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t.projectDescription}</label>
+                <input
+                  type="text"
+                  value={reference.description}
+                  onChange={(e) => handleDynamicInputChange('customerReferences', index, 'description', e.target.value)}
+                  className="input-field"
+                  placeholder={t.projectDescription}
+                />
+              </div>
               <div className="flex justify-end mt-2">
                 <button
                   type="button"
@@ -1097,7 +1089,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
           <div className="flex justify-end mt-2">
             <button
               type="button"
-              onClick={() => addRow('customerReferences', { name: '', country: '', projectSize: '', scope: '', industriesSector: '',  description: '' })}
+              onClick={() => addRow('customerReferences', { name: '', country: '', projectSize: '', scope: '', industriesSector: '', description: '' })}
               className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -1115,7 +1107,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-{t.companyClassifications} <span className="text-red-500">*</span>
+                    {t.companyClassifications} <span className="text-red-500">*</span>
                   </label>
                   <Select
                     options={companyClassificationOptions}
@@ -1316,7 +1308,7 @@ const FinancialInformation: React.FC<FinancialInformationProps> = ({
         {/* Type of Ownership */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-{t.ownership} ({t.selected100PercentEgyptian})? <span className="text-red-500">*</span>
+            {t.ownership} ({t.selected100PercentEgyptian})? <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center gap-4">
             <label className="inline-flex items-center">

@@ -18,7 +18,7 @@ const Alert: React.FC<AlertProps> = ({
   show = true,
   className = ''
 }) => {
-  const { language, translations } = useLanguage()
+  const { language } = useLanguage()
   const isRTL = language === 'ar'
 
   if (!show) return null
@@ -71,20 +71,6 @@ const Alert: React.FC<AlertProps> = ({
     }
   }
 
-  const getDefaultTitle = () => {
-    switch (type) {
-      case 'success':
-        return translations.alertTitleSuccess
-      case 'warning':
-        return translations.alertTitleWarning
-      case 'error':
-        return translations.alertTitleError
-      case 'info':
-        return translations.alertTitle
-      default:
-        return translations.alertTitle
-    }
-  }
 
   return (
     <div className={`${getAlertStyles()} ${className}`} role="alert">

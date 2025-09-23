@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLookups, useRegistrationForm, useValidation } from '../hooks/useApi'
+import { useLookups, useRegistrationForm } from '../hooks/useApi'
 import { useTranslation } from '../hooks/useTranslation'
 
 import CompanyHeadInformation from '../components/registration/CompanyHeadInformation'
@@ -20,7 +20,6 @@ const RegistrationPageWithApi: React.FC<RegistrationPageWithApiProps> = ({ onBac
   const {
     formData,
     isDirty,
-    isSubmitting,
     isSaving,
     lastSaved,
     errors,
@@ -32,12 +31,10 @@ const RegistrationPageWithApi: React.FC<RegistrationPageWithApiProps> = ({ onBac
     validateField,
     saveDraftManually,
     loadDraftData,
-    submitForm,
-    resetForm
+    submitForm
   } = useRegistrationForm()
 
   const lookups = useLookups()
-  const validation = useValidation()
 
   // Load lookup data on component mount
   useEffect(() => {
@@ -202,9 +199,9 @@ const RegistrationPageWithApi: React.FC<RegistrationPageWithApiProps> = ({ onBac
           formData.contact_jobtitle && formData.contact_mobilephone &&
           formData.contact_ldv_nationalid && formData.contact_mail)
       case 3:
-        return formData.declarationAgreement
+        return !!formData.declarationAgreement
       case 4:
-        return formData.declarationAgreement
+        return !!formData.declarationAgreement
       default:
         return false
     }
@@ -233,7 +230,7 @@ const RegistrationPageWithApi: React.FC<RegistrationPageWithApiProps> = ({ onBac
         // Check if at least one activity is selected and required attachments are uploaded
         const hasSelectedActivity = formData.activities ? Object.values(formData.activities).some((activity: any) => activity) : false
         const hasRequiredAttachments = formData.attachments?.commercialRegister && formData.attachments?.taxCard
-        return hasSelectedActivity && hasRequiredAttachments
+        return !!(hasSelectedActivity && hasRequiredAttachments)
       default:
         return false
     }
@@ -418,7 +415,41 @@ const RegistrationPageWithApi: React.FC<RegistrationPageWithApiProps> = ({ onBac
                 {/* Financial Information Tab Content */}
                 {activeSidebarTab === 3 && (
                   <FinancialInformation
-                    formData={formData}
+                    formData={{
+                      ownershipNationality: formData.ownershipNationality || '',
+                      percentageEgyptianOwnership: formData.percentageEgyptianOwnership || '',
+                      percentageNonEgyptianOwnership: formData.percentageNonEgyptianOwnership || '',
+                      partnersNationalities: formData.partnersNationalities || '',
+                      subClassification: '',
+                      companyClassification: formData.companyClassification || [],
+                      fiscalCapital: formData.fiscalCapital || '',
+                      domesticSalesDetails: formData.domesticSalesDetails || [],
+                      domesticSalesValue: formData.domesticSalesValue || '',
+                      totalRevenueYear: formData.totalRevenueYear || '',
+                      annualRevenue: formData.annualRevenue || '',
+                      auditedBalanceSheet: formData.auditedBalanceSheet || null,
+                      export: formData.export || '',
+                      exportInformation: formData.exportInformation || [],
+                      totalNoOfEmployees: formData.totalNoOfEmployees || '',
+                      yearOfEstablishment: formData.yearOfEstablishment || '',
+                      companySize: formData.companySize || '',
+                      typeOfOwnership: formData.typeOfOwnership || '',
+                      owners: formData.owners || [],
+                      companyData: formData.companyData || '',
+                      products: formData.products || [],
+                      services: formData.services || [],
+                      customerReferences: formData.customerReferences || [],
+                      parent: formData.parent || '',
+                      child: formData.child || '',
+                      grandChild: formData.grandChild || '',
+                      industrySectors: formData.industrySectors || '',
+                      keyTechnologies: formData.keyTechnologies || [],
+                      certificates: formData.certificates || [],
+                      affiliation: formData.affiliation || [],
+                      memberships: formData.memberships || [],
+                      partnerships: formData.partnerships || [],
+                      companyOverview: formData.companyOverview || ''
+                    }}
                     setFormData={(newData) => {
                       Object.keys(newData).forEach(key => {
                         updateField(key, newData[key])
@@ -430,7 +461,7 @@ const RegistrationPageWithApi: React.FC<RegistrationPageWithApiProps> = ({ onBac
                     removeRow={removeRow}
                     t={t}
                     onSubmit={handleSubmit}
-                    handleFileChange={handleFileChange}
+                    handleFileChange={(file: File | null) => handleFileChange('auditedBalanceSheet', file)}
                   />
                 )}
               </div>
