@@ -1,0 +1,7 @@
+- [x] Add useEffect import
+- [x] Add useEffect to set default checked for checkboxes
+- [x] Update yup validationSchema for conditional required fields
+- [x] Add yup test for at least one checkbox checked
+- [x] Add useEffect to validate registerUsing on change
+- [x] Add disabled props to form fields under each checkbox
+- [x] Test the implementation

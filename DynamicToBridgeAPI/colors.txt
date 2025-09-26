@@ -1,0 +1,18 @@
+blue :
+#1b92b8 light
+#0174a4 dark
+
+green :
+#63d074 light
+#94c045 dark
+
+grey :
+#d4dadf light
+#d4dadf dark
+
+red :
+#e47971 light
+#d4dadf dark
+
+black : #171717
+
