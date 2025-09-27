@@ -11,7 +11,7 @@ import CompanyHeadInformation from '../components/registration/CompanyHeadInform
 // import CompanyHeadInformation from '../components/registration/registrationCompany/CompanyHeadInformation'
 import FinancialInformation from '../components/registration/FinancialInformation'
 
-interface RegistrationPageProps {
+interface RegistrationPageProps { 
   onBackToHome?: () => void
 }
 

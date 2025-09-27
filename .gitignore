@@ -119,3 +119,6 @@ packages/
 *.vspscc
 *.vssscc
 *.sln.ide/
+
+# Exclude Backend API
+BridgeAPI/
