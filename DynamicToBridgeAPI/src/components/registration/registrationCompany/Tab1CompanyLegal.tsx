@@ -22,7 +22,7 @@ const Tab1CompanyLegal: React.FC<Tab1CompanyLegalProps> = ({ formData, onInputCh
       .required('This field is required')
       .matches(/^[A-Za-z\s]+$/, 'Only English letters are allowed'),
     ldv_arabicname: yup
-      .string()
+      .string() 
       .required('This field is required')
       .matches(/^[\u0600-\u06FF\s]+$/, 'Only Arabic letters are allowed'),
     ldv_commercialdenomination: yup.string().required('This field is required'),
