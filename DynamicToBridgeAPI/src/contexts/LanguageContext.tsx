@@ -207,7 +207,7 @@ export const translations = {
     generalCenter: 'مركز عام',
 
     // Tab 2: Contact Information
-    contactInfoTitle: 'Contact Information',
+    contactInfoTitle: 'Contact Information.',
     contactInfoSubtitle: 'Contact Information & Company Representative',
     companyAddress: 'Company Address',
     governorate: 'Governorate',
