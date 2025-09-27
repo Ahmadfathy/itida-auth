@@ -208,7 +208,7 @@ export const translations = {
 
     // Tab 2: Contact Information
     contactInfoTitle: 'Contact Information.',
-    contactInfoSubtitle: 'Contact Information & Company Representative',
+    contactInfoSubtitle: 'Contact Information & Company Representative.',
     companyAddress: 'Company Address',
     governorate: 'Governorate',
     selectGovernorate: 'Select Governorate',
